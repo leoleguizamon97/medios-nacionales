@@ -3,7 +3,7 @@
 		<div class="container-fluid p-0">
 			<a class="navbar-brand p-0">
 				<img src="@/assets/rosa.webp" alt="A" width="35" height="35" class="rounded-5 p-0">
-				Powered by: Abakus Accounting
+				Abakus Accounting
 			</a>
 			<div type="btn" class="btn border-0" v-on:click=cambiartema(this.luz)>
 				<i v-if=luz class="bi bi-sun"></i>
