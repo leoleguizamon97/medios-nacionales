@@ -3,9 +3,8 @@ const mysql		= require("mysql2");
 const app		= express()
 const port		= 3000
 
-
-app.get('/', (req, res) => {
-	res.send('Hello World!')
+app.listen(port, () => {
+	console.log(`Servicio corriendo en ${port}`)
 })
 
 require('dotenv').config()
@@ -17,10 +16,6 @@ const conexion = mysql.createConnection({
 	database:	process.env.DATABASE
 });
 
-app.listen(port, () => {
-	console.log(`Servicio corriendo en ${port}`)
-})
-
 conexion.connect((error) => {
 	if (error) {
 		console.error("No se pudo conectar a la BD: " + error);
@@ -28,3 +23,5 @@ conexion.connect((error) => {
 	}
 	console.log("Conectado a la DB");
 });
+
+module.exports = conexion;
