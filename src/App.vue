@@ -1,11 +1,11 @@
 <template>
 	<CabeceraN />
-	<div class=" h-100 d-flex flex-column overflow-auto" style="margin-bottom:25px;">
+	<div class=" h-100 d-flex flex-column " style="margin-bottom:25px;">
 		<div id="Contenido" class="flex-grow-1 d-flex">
-			<div class="d-flex align-items-center ">
+			<div class="d-flex align-items-center " >
 				<MenuP />
 			</div>
-			<div class="flex-grow-1 border rounded-2 p-1 my-1">
+			<div class="flex-grow-1 border rounded-2 p-1 my-2 me-1" style="max-height: ;">
 				<ContenidoP />
 			</div>
 		</div>

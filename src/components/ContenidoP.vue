@@ -2,7 +2,7 @@
 	<div class="tab-content" id="v-pills-tabContent">
 		<div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"
 			tabindex="0">
-			Este es el contenido
+			<TercerosP />
 		</div>
 		<div class="tab-pane fade" id="v-pills-1001" role="tabpanel" aria-labelledby="v-pills-1001-tab" tabindex="0">
 			1001</div>
@@ -32,5 +32,12 @@
 	</div>
 </template>
 
-<script></script>
+<script>
+import TercerosP from '@/components/TercerosP.vue';
+export default {
+	components: {
+		TercerosP
+	}
+}
+</script>
 <style></style>

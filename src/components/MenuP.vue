@@ -1,7 +1,7 @@
 <template>
 	<div class="tab-pane" id="home" tabindex="0">		
 		<div class="nav flex-column nav-pills h-75 overflow-auto" id="v-pills-tab" role="tablist" aria-orientation="vertical">
-			<button class="nav-link fs-5 p-2 ms-1 rounded-end-0 active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"><i class="bi bi-house-gear-fill"></i> Inicio</button>
+			<button class="nav-link fs-5 p-2 ms-1 rounded-end-0 text-nowrap active" id="v-pills-home-tab" data-bs-toggle="pill" data-bs-target="#v-pills-home" type="button" role="tab" aria-controls="v-pills-home"><i class="bi bi-house-gear-fill"></i> Inicio</button>
 			<button class="nav-link fs-5 p-2 ms-1 rounded-end-0" id="v-pills-1001-tab" data-bs-toggle="pill" data-bs-target="#v-pills-1001" type="button" role="tab" aria-controls="v-pills-1001"><i class="bi bi-file-earmark-bar-graph"></i> 1001</button>
 			<button class="nav-link fs-5 p-2 ms-1 rounded-end-0" id="v-pills-1002-tab" data-bs-toggle="pill" data-bs-target="#v-pills-1002" type="button" role="tab" aria-controls="v-pills-1002"><i class="bi bi-file-earmark-bar-graph"></i> 1002</button>
 			<button class="nav-link fs-5 p-2 ms-1 rounded-end-0" id="v-pills-1003-tab" data-bs-toggle="pill" data-bs-target="#v-pills-1003" type="button" role="tab" aria-controls="v-pills-1003"><i class="bi bi-file-earmark-bar-graph"></i> 1003</button>
