@@ -8,6 +8,7 @@ app.listen(port, () => {
 })
 
 require('dotenv').config()
+app.use(express.json());
 
 const conexion = mysql.createConnection({
 	host:		process.env.HOST,
