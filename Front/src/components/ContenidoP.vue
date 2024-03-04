@@ -1,9 +1,7 @@
 <template>
-	<div class="tab-content" id="v-pills-tabContent">
-		<div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab"
-			tabindex="0">
-			<TercerosP />
-		</div>
+	<div class="tab-content mb-4" id="v-pills-tabContent">
+		<div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab" tabindex="0">
+			<TercerosP /></div>
 		<div class="tab-pane fade" id="v-pills-1001" role="tabpanel" aria-labelledby="v-pills-1001-tab" tabindex="0">
 			1001</div>
 		<div class="tab-pane fade" id="v-pills-1002" role="tabpanel" aria-labelledby="v-pills-1002-tab" tabindex="0">
@@ -28,7 +26,6 @@
 			1011</div>
 		<div class="tab-pane fade" id="v-pills-1012" role="tabpanel" aria-labelledby="v-pills-1012-tab" tabindex="0">
 			1012</div>
-
 	</div>
 </template>
 
@@ -40,4 +37,5 @@ export default {
 	}
 }
 </script>
+
 <style></style>

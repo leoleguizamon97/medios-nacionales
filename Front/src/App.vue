@@ -1,17 +1,16 @@
 <template>
-	<CabeceraN />
-	<div class=" h-100 d-flex flex-column " style="margin-bottom:25px;">
-		<div id="Contenido" class="flex-grow-1 d-flex">
-			<div class="d-flex align-items-center " >
-				<MenuP />
-			</div>
-			<div class="flex-grow-1 border rounded-2 p-1 my-2 me-1" style="max-height: ;">
+	<div>
+		<CabeceraN />
+		<div id="Contenido" class="">
+			<MenuP />
+			<div class="m-1 p-1">
 				<ContenidoP />
 			</div>
 		</div>
+		<PieN />
 	</div>
-	<PieN />
 </template>
+
 <script>
 import MenuP from '@/components/MenuP.vue'
 import CabeceraN from '@/components/CabeceraN.vue'
@@ -27,4 +26,5 @@ export default {
 	},
 }
 </script>
+
 <style></style>
