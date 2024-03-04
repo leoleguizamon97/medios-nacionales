@@ -51,7 +51,7 @@
 					<button class="btn btn-success w-25 ms-1 w-50" title="Cargar">
 						<i class="bi bi-cloud-upload m-1"></i>
 					</button>
-					<button class="btn btn-outline-warning w-25 ms-1 w-25" title="Limpiar">
+					<button class="btn btn-outline-warning w-25 ms-1 w-25" title="Limpiar" @click="limpiar()">
 						<i class="bi bi-stars m-1"></i>
 					</button>
 					<button class="btn btn-outline-danger w-25 ms-1 w-25" title="Borrar DB">
@@ -138,6 +138,10 @@ export default {
 				alerta.classList.add('alert-secondary');
 				alerta.innerHTML = 'Archivo de ' + archivo + ' seleccionado';
 				return;
+			} else if(tipo == 'reset') {
+				alerta.classList.add('alert-secondary');
+				alerta.innerHTML = archivo.charAt(0).toUpperCase() + archivo.slice(1);
+				return;
 			}
 
 			return;
@@ -184,6 +188,21 @@ export default {
 				//Si hay un error al cargar el archivo
 				lector.onerror = reject
 			});
+		},
+		limpiar() {
+			this.archivoTerceros = null;
+			this.archivoBalance = null;
+			this.archivoMovTer = null;
+			this.terceros = [];
+			this.balance = [];
+			this.movimientos = [];
+			this.errores = [];
+			this.avisoArchivos('terceros', 'reset');
+			this.avisoArchivos('balance', 'reset');
+			this.avisoArchivos('movimientos', 'reset');
+			document.getElementById('terceros-path').value = '';
+			document.getElementById('balance-path').value = '';
+			document.getElementById('movTer-path').value = '';
 		},
 	},
 	data() {
