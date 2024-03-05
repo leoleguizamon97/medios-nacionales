@@ -12,27 +12,27 @@ export default {
 async function cargarTerceros(terceros) {
 	try {
 		const response = await axios.post(url + "/cargar/terceros", terceros);
-		console.log(response.data);
 		return response.data;
 	} catch (error) {
 		console.log(error);
+		return false;
 	}
 }
-
 async function cargarBalance(balance) {
 	try {
-		const response = await axios.post(url + "/cargar/balance"+balance);
+		const response = await axios.post(url + "/cargar/balance", balance);
 		return response.data;
 	} catch (error) {
 		console.log(error);
+		return false;
 	}
 }
-
 async function cargarMov(mov) {
 	try {
-		const response = await axios.post(url + "/cargar/mov"+mov);
+		const response = await axios.post(url + "/cargar/mov", mov);
 		return response.data;
 	} catch (error) {
 		console.log(error);
+		return false;
 	}
 }

@@ -1,23 +1,67 @@
+let terceros = [];
+let balance = [];
+let mov = [];
 
 //Terceros
 exports.cargarTerceros = (req, res) => {
-	console.log(req.body.terceros);
-	res.json({ mensaje: "Cargando terceros" });
-		
-	/*conexion.query("SELECT * FROM User WHERE nickname = '" + req.params.id + "'", (error, results) => {
-		if (error) {
-			console.log(error);
-			res.json(error);
-		} else {
-			res.json({ results: results });
-		}
-	});*/
+	terceros = req.body;
+	console.log(terceros.length);
+	res.json({
+		estado: true,
+		errores: [],
+	});
 }
 exports.cargarBalance = (req, res) => {
-	console.log(req.body.terceros);
-	res.json({ mensaje: "Cargando terceros" });
+	balance = req.body;
+	console.log(balance.length);
+	res.json({
+		estado: true,
+		errores: [
+			{
+				id: 1+'B',
+				archivo: "Balance",
+				error: "Error de prueba 1",
+				contenido: "Contenido de prueba 1"
+			},
+			{
+				id: 2+'B',
+				archivo: "Balance",
+				error: "Error de prueba 2",
+				contenido: "Contenido de prueba 2"
+			},
+			{
+				id: 3+'B',
+				archivo: "Balance",
+				error: "Error de prueba 3",
+				contenido: "Contenido de prueba 3"
+			},
+		],
+	});
 }
 exports.cargarMov = (req, res) => {
-	console.log(req.body.terceros);
-	res.json({ mensaje: "Cargando terceros" });
+	mov = req.body;
+	console.log(mov.length);
+	res.json({
+		estado: true,
+		errores: [
+			{
+				id: 1+'M',
+				archivo: "Movimientos",
+				error: "Error de prueba 1",
+				contenido: "Contenido de prueba 1"
+			},
+			{
+				id: 2+'M',
+				archivo: "Movimientos",
+				error: "Error de prueba 2",
+				contenido: "Contenido de prueba 2"
+			},
+			{
+				id: 3+'M',
+				archivo: "Movimientos",
+				error: "Error de prueba 3",
+				contenido: "Contenido de prueba 3"
+			},
+		],
+	});
 }

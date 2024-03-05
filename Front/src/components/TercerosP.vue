@@ -73,7 +73,7 @@
 						<th class="col" scope="col">#</th>
 						<th class="col" scope="col">Archivo</th>
 						<th class="col-9" scope="col">Error</th>
-						<th class="col-1" scope="col">Corregir</th>
+						<th class="col-1" scope="col">Acción</th>
 					</tr>
 				</thead>
 				<tbody class="table-group-divider">
@@ -91,7 +91,7 @@
 								<button class="btn btn-outline-primary me-1 w-50" title="Corregir">
 									<i class="bi bi-pencil-square"></i>
 								</button>
-								<button class="btn btn-outline-danger w-50" title="Eliminar">
+								<button class="btn btn-outline-danger w-50" title="Eliminar" @click="eliminarError(error.id)">
 									<i class="bi bi-x-circle"></i>
 								</button>
 							</div>
@@ -107,7 +107,6 @@
 <script>
 import datos from '../dataManagment.js'
 export default {
-	
 	methods: {
 		avisoArchivos(archivo, tipo) {
 			//Selecciona el alerta correspondiente
@@ -140,7 +139,7 @@ export default {
 				alerta.classList.add('alert-secondary');
 				alerta.innerHTML = 'Archivo de ' + archivo + ' seleccionado';
 				return;
-			} else if(tipo == 'reset') {
+			} else if (tipo == 'reset') {
 				alerta.classList.add('alert-secondary');
 				alerta.innerHTML = archivo.charAt(0).toUpperCase() + archivo.slice(1);
 				return;
@@ -168,31 +167,50 @@ export default {
 				this.avisoArchivos(tipo, 'warning');
 				return;
 			}
+			//Elimina los errores anteriores
+			this.eliminarErrores(tipo);
 			//Limpia el arreglo y lo carga con el contenido del archivo
 			var arreglo = [];
-			return new Promise((resolve, reject) => {
-				const lector = new FileReader();
-				lector.readAsText(archivo);
-				lector.onload = () => {
-					const lineas = lector.result.split('\n')
-					console.log(lineas.length + '<- Cantidad de lineas' + ' ' + tipo + ' ' + archivo.name);
-					lineas.forEach(linea => {
-						arreglo.push(linea)
-					})
-					//Guarda el arreglo en el tipo de archivo correspondiente
-					if (tipo == 'terceros') {
-						this.terceros = arreglo;
-						datos.cargarTerceros(arreglo);
-					} else if (tipo == 'balance') {
-						this.balance = arreglo;
-					} else if (tipo == 'movimientos') {
-						this.movimientos = arreglo;
+			const lector = new FileReader();
+			lector.readAsText(archivo);
+			//Carga el archivo
+			lector.onload = async () => {
+				const lineas = lector.result.split('\n')
+				console.log(lineas.length + '<- Cantidad de lineas' + ' ' + tipo + ' ' + archivo.name);
+				lineas.forEach(linea => {
+					arreglo.push(linea)
+				})
+				//Guarda el arreglo en el tipo de archivo correspondiente
+				if (tipo == 'terceros') {
+					this.terceros = arreglo;
+					//Manda el archivo a back, y gestiona su respuesta
+					let respuesta = await datos.cargarTerceros(arreglo);
+					if (respuesta.estado == true) {
+						this.avisoArchivos('terceros', 'success');
+					}else{
+						this.avisoArchivos('terceros', 'error');
 					}
-					resolve('Cargado')
+				} else if (tipo == 'balance') {
+					this.balance = arreglo;
+					let respuesta = await datos.cargarBalance(arreglo);
+					if (respuesta.estado == true) {
+						this.avisoArchivos('balance', 'success');
+						this.agregarErrores(respuesta.errores);
+					}else{
+						this.avisoArchivos('balance', 'error');
+					}
+				} else if (tipo == 'movimientos') {
+					this.movimientos = arreglo;
+					let respuesta = await datos.cargarMov(arreglo);
+					console.log(respuesta);
+					if (respuesta.estado == true) {
+						this.avisoArchivos('movimientos', 'success');
+						this.agregarErrores(respuesta.errores);
+					}else{
+						this.avisoArchivos('movimientos', 'error');
+					}
 				}
-				//Si hay un error al cargar el archivo
-				lector.onerror = reject
-			});
+			}
 		},
 		limpiar() {
 			this.archivoTerceros = null;
@@ -209,6 +227,17 @@ export default {
 			document.getElementById('balance-path').value = '';
 			document.getElementById('movTer-path').value = '';
 		},
+		agregarErrores(errores) {
+			errores.forEach(error => {
+				this.errores.push(error);
+			});
+		},
+		eliminarError(id) {
+			this.errores = this.errores.filter(error => error.id != id);
+		},
+		eliminarErrores(archivo) {
+			this.errores = this.errores.filter(error => error.archivo != (archivo.charAt(0).toUpperCase() + archivo.slice(1)));
+		},
 	},
 	data() {
 		return {
@@ -220,265 +249,7 @@ export default {
 			terceros: [],
 			balance: [],
 			movimientos: [],
-			errores: [
-				// {
-				// 	id: 1,
-				// 	archivo: 'Terceros',
-				// 	error: 'Contenido de la linea  lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pha',
-				// 	contenido: 'Contenido de la linea  lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quam velit, vulputate eu pharetra nec, mattis ac neque. 1'
-				// },
-				// {
-				// 	id: 2,
-				// 	archivo: 'Balance',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 3,
-				// 	archivo: 'Movimientos',
-				// 	error: 'loremp ',
-				// 	contenido: 'Contenido de la linea 1'
-				// }, {
-				// 	id: 100,
-				// 	archivo: 'Terceros',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 2,
-				// 	archivo: 'Balance',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 3,
-				// 	archivo: 'Movimientos',
-				// 	error: 'loremp ',
-				// 	contenido: 'Contenido de la linea 1'
-				// }, {
-				// 	id: 1,
-				// 	archivo: 'Terceros',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 2,
-				// 	archivo: 'Balance',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 3,
-				// 	archivo: 'Movimientos',
-				// 	error: 'loremp ',
-				// 	contenido: 'Contenido de la linea 1'
-				// }, {
-				// 	id: 1,
-				// 	archivo: 'Terceros',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 2,
-				// 	archivo: 'Balance',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 3,
-				// 	archivo: 'Movimientos',
-				// 	error: 'loremp ',
-				// 	contenido: 'Contenido de la linea 1'
-				// }, {
-				// 	id: 1,
-				// 	archivo: 'Terceros',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 2,
-				// 	archivo: 'Balance',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 3,
-				// 	archivo: 'Movimientos',
-				// 	error: 'loremp ',
-				// 	contenido: 'Contenido de la linea 1'
-				// }, {
-				// 	id: 1,
-				// 	archivo: 'Terceros',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 2,
-				// 	archivo: 'Balance',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 3,
-				// 	archivo: 'Movimientos',
-				// 	error: 'loremp ',
-				// 	contenido: 'Contenido de la linea 1'
-				// }, {
-				// 	id: 1,
-				// 	archivo: 'Terceros',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 2,
-				// 	archivo: 'Balance',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 3,
-				// 	archivo: 'Movimientos',
-				// 	error: 'loremp ',
-				// 	contenido: 'Contenido de la linea 1'
-				// }, {
-				// 	id: 1,
-				// 	archivo: 'Terceros',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 2,
-				// 	archivo: 'Balance',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 3,
-				// 	archivo: 'Movimientos',
-				// 	error: 'loremp ',
-				// 	contenido: 'Contenido de la linea 1'
-				// }, {
-				// 	id: 1,
-				// 	archivo: 'Terceros',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 2,
-				// 	archivo: 'Balance',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 3,
-				// 	archivo: 'Movimientos',
-				// 	error: 'loremp ',
-				// 	contenido: 'Contenido de la linea 1'
-				// }, {
-				// 	id: 1,
-				// 	archivo: 'Terceros',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 2,
-				// 	archivo: 'Balance',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 3,
-				// 	archivo: 'Movimientos',
-				// 	error: 'loremp ',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 1,
-				// 	archivo: 'Terceros',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 2,
-				// 	archivo: 'Balance',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 3,
-				// 	archivo: 'Movimientos',
-				// 	error: 'loremp ',
-				// 	contenido: 'Contenido de la linea 1'
-				// }, {
-				// 	id: 1,
-				// 	archivo: 'Terceros',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 2,
-				// 	archivo: 'Balance',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 3,
-				// 	archivo: 'Movimientos',
-				// 	error: 'loremp ',
-				// 	contenido: 'Contenido de la linea 1'
-				// }, {
-				// 	id: 1,
-				// 	archivo: 'Terceros',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 2,
-				// 	archivo: 'Balance',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 3,
-				// 	archivo: 'Movimientos',
-				// 	error: 'loremp ',
-				// 	contenido: 'Contenido de la linea 1'
-				// }, {
-				// 	id: 1,
-				// 	archivo: 'Terceros',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 2,
-				// 	archivo: 'Balance',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 3,
-				// 	archivo: 'Movimientos',
-				// 	error: 'loremp ',
-				// 	contenido: 'Contenido de la linea 1'
-				// }, {
-				// 	id: 1,
-				// 	archivo: 'Terceros',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 2,
-				// 	archivo: 'Balance',
-				// 	error: 'Error en la linea 1',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-				// {
-				// 	id: 3,
-				// 	archivo: 'Movimientos',
-				// 	error: 'loremp ',
-				// 	contenido: 'Contenido de la linea 1'
-				// },
-			]
+			errores: []
 
 		}
 	}
