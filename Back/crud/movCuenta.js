@@ -1,11 +1,4 @@
-export default {
-	createMovCuenta,
-	viewMovCuenta,
-	viewAllMovCuenta,
-	updateMovCuenta,
-	deleteMovCuenta
-}
-createMovCuenta = (req, res) => {
+exports.createMovCuenta = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {
@@ -15,7 +8,7 @@ createMovCuenta = (req, res) => {
 		}
 	});
 }
-viewMovCuenta = (req, res) => {
+exports.viewMovCuenta = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {
@@ -25,7 +18,7 @@ viewMovCuenta = (req, res) => {
 		}
 	});
 }
-viewAllMovCuenta = (req, res) => {
+exports.viewAllMovCuenta = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {
@@ -35,7 +28,7 @@ viewAllMovCuenta = (req, res) => {
 		}
 	});
 }
-updateMovCuenta = (req, res) => {
+exports.updateMovCuenta = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {
@@ -45,7 +38,7 @@ updateMovCuenta = (req, res) => {
 		}
 	});
 }
-deleteMovCuenta = (req, res) => {
+exports.deleteMovCuenta = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {

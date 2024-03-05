@@ -1,11 +1,4 @@
-export default {
-	createTercero,
-	viewTercero,
-	viewAllTercero,
-	updateTercero,
-	deleteTercero
-}
-createTercero = (req, res) => {
+exports.createTercero = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {
@@ -15,7 +8,7 @@ createTercero = (req, res) => {
 		}
 	});
 }
-viewTercero = (req, res) => {
+exports.viewTercero = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {
@@ -25,7 +18,7 @@ viewTercero = (req, res) => {
 		}
 	});
 }
-viewAllTercero = (req, res) => {
+exports.viewAllTercero = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {
@@ -35,7 +28,7 @@ viewAllTercero = (req, res) => {
 		}
 	});
 }
-updateTercero = (req, res) => {
+exports.updateTercero = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {
@@ -45,7 +38,7 @@ updateTercero = (req, res) => {
 		}
 	});
 }
-deleteTercero = (req, res) => {
+exports.deleteTercero = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {

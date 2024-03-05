@@ -1,11 +1,4 @@
-export default {
-	createMovTercero,
-	viewMovTercero,
-	viewAllMovTercero,
-	updateMovTercero,
-	deleteMovTercero
-}
-createMovTercero = (req, res) => {
+exports.createMovTercero = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {
@@ -15,7 +8,7 @@ createMovTercero = (req, res) => {
 		}
 	});
 }
-viewMovTercero = (req, res) => {
+exports.viewMovTercero = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {
@@ -25,7 +18,7 @@ viewMovTercero = (req, res) => {
 		}
 	});
 }
-viewAllMovTercero = (req, res) => {
+exports.viewAllMovTercero = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {
@@ -35,7 +28,7 @@ viewAllMovTercero = (req, res) => {
 		}
 	});
 }
-updateMovTercero = (req, res) => {
+exports.updateMovTercero = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {
@@ -45,7 +38,7 @@ updateMovTercero = (req, res) => {
 		}
 	});
 }
-deleteMovTercero = (req, res) => {
+exports.deleteMovTercero = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {

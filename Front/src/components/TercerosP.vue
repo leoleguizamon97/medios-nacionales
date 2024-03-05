@@ -105,7 +105,9 @@
 </template>
 
 <script>
+import datos from '../dataManagment.js'
 export default {
+	
 	methods: {
 		avisoArchivos(archivo, tipo) {
 			//Selecciona el alerta correspondiente
@@ -142,9 +144,11 @@ export default {
 				alerta.classList.add('alert-secondary');
 				alerta.innerHTML = archivo.charAt(0).toUpperCase() + archivo.slice(1);
 				return;
+			} else {
+				//Muestra un error si no se le indica un tipo de alerta
+				window.alert('No se ha indicado un tipo de alerta');
+				return;
 			}
-
-			return;
 		},
 		guardarPathTerceros(evento) {
 			this.archivoTerceros = evento.target.files[0];
@@ -178,6 +182,7 @@ export default {
 					//Guarda el arreglo en el tipo de archivo correspondiente
 					if (tipo == 'terceros') {
 						this.terceros = arreglo;
+						datos.cargarTerceros(arreglo);
 					} else if (tipo == 'balance') {
 						this.balance = arreglo;
 					} else if (tipo == 'movimientos') {

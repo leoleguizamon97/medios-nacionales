@@ -1,26 +1,38 @@
 import axios from 'axios';
-import router from "./router/Router.js";
 
+//URL de la API
 const url = 'http://localhost:3000';
 
 export default {
-	getTerceros,
+	cargarTerceros,
+	cargarBalance,
+	cargarMov,
 }
 
-async function getTerceros() {
+async function cargarTerceros(terceros) {
 	try {
-		const response = await axios.get(url + "");
-		array = response.data.results;
-		for(var i=0; i < array.length; i++){
-			
-		}
-		return nuevosgigs;
-	
-	}catch (error) {
-		console.log(error.status);
-		let status = error.message;
-		if (error.response) {
-			status = error.response.status + " " + error.response.statusText;
-		}
+		const response = await axios.post(url + "/cargar/terceros", terceros);
+		console.log(response.data);
+		return response.data;
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+async function cargarBalance(balance) {
+	try {
+		const response = await axios.post(url + "/cargar/balance"+balance);
+		return response.data;
+	} catch (error) {
+		console.log(error);
+	}
+}
+
+async function cargarMov(mov) {
+	try {
+		const response = await axios.post(url + "/cargar/mov"+mov);
+		return response.data;
+	} catch (error) {
+		console.log(error);
 	}
 }

@@ -1,11 +1,4 @@
-export default {
-	createCuenta,
-	viewCuenta,
-	viewAllCuenta,
-	updateCuenta,
-	deleteCuenta
-}
-createCuenta = (req, res) => {
+exports.createCuenta = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {
@@ -15,7 +8,7 @@ createCuenta = (req, res) => {
 		}
 	});
 }
-viewCuenta = (req, res) => {
+exports.viewCuenta = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {
@@ -25,7 +18,7 @@ viewCuenta = (req, res) => {
 		}
 	});
 }
-viewAllCuenta = (req, res) => {
+exports.viewAllCuenta = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {
@@ -35,7 +28,7 @@ viewAllCuenta = (req, res) => {
 		}
 	});
 }
-updateCuenta = (req, res) => {
+exports.updateCuenta = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {
@@ -45,7 +38,7 @@ updateCuenta = (req, res) => {
 		}
 	});
 }
-deleteCuenta = (req, res) => {
+exports.deleteCuenta = (req, res) => {
 	let query = ''
 	conexion.query(query, (error, results) => {
 		if (error) {
