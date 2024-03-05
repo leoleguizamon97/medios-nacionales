@@ -3,7 +3,7 @@ const router = express.Router();
 const bodyParser = require('body-parser')
 
 //Cargue y limpieza de información
-const cargar = require('./cargueInfo.js');
+const info = require('./infoMang.js');
 
 //Consulta de información
 const cuenta = require('../crud/cuenta.js');
@@ -16,6 +16,8 @@ module.exports = router;
 
 /************************ Metodos *******************************/
 //Cargue de información
-router.post('/cargar/terceros', cargar.cargarTerceros);
-router.post('/cargar/balance', cargar.cargarBalance);
-router.post('/cargar/mov', cargar.cargarMov);
+router.post('/cargar/terceros', info.cargarTerceros);
+router.post('/cargar/balance', info.cargarBalance);
+router.post('/cargar/mov', info.cargarMov);
+//Eliminar DB
+router.delete('/eliminarDB', info.eliminarDB);

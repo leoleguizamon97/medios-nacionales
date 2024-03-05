@@ -65,3 +65,12 @@ exports.cargarMov = (req, res) => {
 		],
 	});
 }
+//DB Eliminar
+exports.eliminarDB = (req, res) => {
+	terceros = [];
+	balance = [];
+	mov = [];
+	res.json({
+		estado: true,
+	});
+}

@@ -54,7 +54,7 @@
 					<button class="btn btn-outline-warning w-25 ms-1 w-25" title="Limpiar" @click="limpiar()">
 						<i class="bi bi-stars m-1"></i>
 					</button>
-					<button class="btn btn-outline-danger w-25 ms-1 w-25" title="Borrar DB">
+					<button class="btn btn-outline-danger w-25 ms-1 w-25" title="Borrar DB" @click="eliminarDB()">
 						<i class="bi bi-exclamation-octagon-fill m-1"></i>
 					</button>
 				</div>
@@ -161,6 +161,7 @@ export default {
 			this.archivoMovTer = evento.target.files[0];
 			this.avisoArchivos('movimientos', 'secondary');
 		},
+		//Revisar por codigo limpio
 		cargarArchivo(tipo, archivo) {
 			//Verifica si ya se cargo un archivo
 			if (archivo == null) {
@@ -237,6 +238,14 @@ export default {
 		},
 		eliminarErrores(archivo) {
 			this.errores = this.errores.filter(error => error.archivo != (archivo.charAt(0).toUpperCase() + archivo.slice(1)));
+		},
+		async eliminarDB() {
+			//Elimina la base de datos
+			let respuesta = await datos.eliminarDB();
+			if (respuesta.estado == true) {
+				this.limpiar();
+				window.alert('Base de datos eliminada');
+			}
 		},
 	},
 	data() {
