@@ -21,3 +21,5 @@ router.post('/cargar/balance', info.cargarBalance);
 router.post('/cargar/mov', info.cargarMov);
 //Eliminar DB
 router.delete('/eliminarDB', info.eliminarDB);
+//Correcion de errores
+router.post('/corregir/:tipo', info.corregirErrores);

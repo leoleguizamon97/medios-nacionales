@@ -74,3 +74,12 @@ exports.eliminarDB = (req, res) => {
 		estado: true,
 	});
 }
+
+//Correcion de errores
+exports.corregirErrores = (req, res) => {
+	console.log(req.params.tipo);
+	console.log(req.body);
+	res.json({
+		estado: true,
+	});
+}

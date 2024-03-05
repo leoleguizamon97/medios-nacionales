@@ -84,11 +84,11 @@
 							<div>
 								{{ error.error }}
 							</div>
-							<input class="form-control" type="text" :value="error.contenido">
+							<input class="form-control" type="text" :value="error.contenido" :id="error.id + 'tf'" >
 						</td>
 						<td class="align-middle p-1">
 							<div class="d-flex">
-								<button class="btn btn-outline-primary me-1 w-50" title="Corregir">
+								<button class="btn btn-outline-primary me-1 w-50" title="Corregir" @click="corregirError(error.archivo, error.id)">
 									<i class="bi bi-pencil-square"></i>
 								</button>
 								<button class="btn btn-outline-danger w-50" title="Eliminar" @click="eliminarError(error.id)">
@@ -232,6 +232,16 @@ export default {
 			errores.forEach(error => {
 				this.errores.push(error);
 			});
+		},
+		async corregirError(tipo, id) {
+			let linea = document.getElementById(id + 'tf')
+			let respuesta = await datos.corregirErrores(tipo, linea.value);
+			if (respuesta.estado == true) {
+				window.alert('Error corregido');
+				this.eliminarError(id);
+			} else {
+				window.alert('Error al corregir' + respuesta.error);
+			}
 		},
 		eliminarError(id) {
 			this.errores = this.errores.filter(error => error.id != id);

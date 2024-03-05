@@ -8,10 +8,10 @@ export default {
 	cargarBalance,
 	cargarMov,
 	eliminarDB,
+	corregirErrores,
 }
 
 //Carga de informacion
-
 async function cargarTerceros(terceros) {
 	try {
 		const response = await axios.post(url + "/cargar/terceros", terceros);
@@ -41,7 +41,6 @@ async function cargarMov(mov) {
 }
 
 //Eliminar DB
-
 async function eliminarDB() {
 	try {
 		const response = await axios.delete(url + "/eliminarDB");
@@ -51,3 +50,20 @@ async function eliminarDB() {
 		return false;
 	}
 }
+
+//Correcion de errores
+async function corregirErrores(tipo, linea) {
+	tipo = tipo.toLowerCase();
+	let data = {
+		linea: linea
+	}
+	try {
+		const response = await axios.post(url + "/corregir/" + tipo,data);
+		return response.data;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+
+//Solicitar informes
