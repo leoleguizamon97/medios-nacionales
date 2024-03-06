@@ -175,7 +175,7 @@ export default {
 			//Limpia el arreglo y lo carga con el contenido del archivo
 			var arreglo = [];
 			const lector = new FileReader();
-			lector.readAsText(archivo);
+			lector.readAsText(archivo, 'iso-8859-1');
 			//Carga el archivo
 			lector.onload = async () => {
 				const lineas = lector.result.split('\n')
@@ -190,6 +190,7 @@ export default {
 					let respuesta = await datos.cargarTerceros(arreglo);
 					if (respuesta.estado == true) {
 						this.avisoArchivos('terceros', 'success');
+						this.agregarErrores(respuesta.errores);
 					} else {
 						this.avisoArchivos('terceros', 'error');
 					}
