@@ -84,14 +84,16 @@
 							<div>
 								{{ error.error }}
 							</div>
-							<input class="form-control" type="text" :value="error.contenido" :id="error.id + 'tf'" >
+							<input class="form-control" type="text" :value="error.contenido" :id="error.id + 'tf'">
 						</td>
 						<td class="align-middle p-1">
 							<div class="d-flex">
-								<button class="btn btn-outline-primary me-1 w-50" title="Corregir" @click="corregirError(error.archivo, error.id)">
+								<button class="btn btn-outline-primary me-1 w-50" title="Corregir"
+									@click="corregirError(error.archivo, error.id)">
 									<i class="bi bi-pencil-square"></i>
 								</button>
-								<button class="btn btn-outline-danger w-50" title="Eliminar" @click="eliminarError(error.id)">
+								<button class="btn btn-outline-danger w-50" title="Eliminar"
+									@click="eliminarError(error.id)">
 									<i class="bi bi-x-circle"></i>
 								</button>
 							</div>
@@ -188,7 +190,7 @@ export default {
 					let respuesta = await datos.cargarTerceros(arreglo);
 					if (respuesta.estado == true) {
 						this.avisoArchivos('terceros', 'success');
-					}else{
+					} else {
 						this.avisoArchivos('terceros', 'error');
 					}
 				} else if (tipo == 'balance') {
@@ -197,7 +199,7 @@ export default {
 					if (respuesta.estado == true) {
 						this.avisoArchivos('balance', 'success');
 						this.agregarErrores(respuesta.errores);
-					}else{
+					} else {
 						this.avisoArchivos('balance', 'error');
 					}
 				} else if (tipo == 'movimientos') {
@@ -207,7 +209,7 @@ export default {
 					if (respuesta.estado == true) {
 						this.avisoArchivos('movimientos', 'success');
 						this.agregarErrores(respuesta.errores);
-					}else{
+					} else {
 						this.avisoArchivos('movimientos', 'error');
 					}
 				}
@@ -269,7 +271,6 @@ export default {
 			balance: [],
 			movimientos: [],
 			errores: []
-
 		}
 	}
 }

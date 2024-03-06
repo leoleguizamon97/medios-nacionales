@@ -18,19 +18,19 @@ exports.cargarBalance = (req, res) => {
 		estado: true,
 		errores: [
 			{
-				id: 1+'B',
+				id: 1 + 'B',
 				archivo: "Balance",
 				error: "Error de prueba 1",
 				contenido: "Contenido de prueba 1"
 			},
 			{
-				id: 2+'B',
+				id: 2 + 'B',
 				archivo: "Balance",
 				error: "Error de prueba 2",
 				contenido: "Contenido de prueba 2"
 			},
 			{
-				id: 3+'B',
+				id: 3 + 'B',
 				archivo: "Balance",
 				error: "Error de prueba 3",
 				contenido: "Contenido de prueba 3"
@@ -45,19 +45,19 @@ exports.cargarMov = (req, res) => {
 		estado: true,
 		errores: [
 			{
-				id: 1+'M',
+				id: 1 + 'M',
 				archivo: "Movimientos",
 				error: "Error de prueba 1",
 				contenido: "Contenido de prueba 1"
 			},
 			{
-				id: 2+'M',
+				id: 2 + 'M',
 				archivo: "Movimientos",
 				error: "Error de prueba 2",
 				contenido: "Contenido de prueba 2"
 			},
 			{
-				id: 3+'M',
+				id: 3 + 'M',
 				archivo: "Movimientos",
 				error: "Error de prueba 3",
 				contenido: "Contenido de prueba 3"

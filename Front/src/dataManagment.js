@@ -58,7 +58,7 @@ async function corregirErrores(tipo, linea) {
 		linea: linea
 	}
 	try {
-		const response = await axios.post(url + "/corregir/" + tipo,data);
+		const response = await axios.post(url + "/corregir/" + tipo, data);
 		return response.data;
 	} catch (error) {
 		console.log(error);
