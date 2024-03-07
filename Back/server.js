@@ -10,7 +10,7 @@ require('dotenv').config();
 //Permite el acceso a la API desde el front
 app.use(
 	cors({
-		origin: 'http://localhost:8080',
+		origin: 'http://localhost:5173',
 	})
 );
 
