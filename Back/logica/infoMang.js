@@ -1,10 +1,16 @@
-let balance = [];
 let mov = [];
 
+//Datos de la empresa
+let año = 2023;
+let nombreEmpresa = 'Empresa de Prueba';
+let nitEmpresa = '123456789';
+let dvEmpresa = '0';
+
 //Listas
-let listaTerceros = new Map();
+let listaTercero = new Map();
 let listaBalance = new Map();
 let listaMov = new Map();
+let listaCuenta = new Map();
 
 //Clases
 class Error {
@@ -13,6 +19,13 @@ class Error {
 		this.archivo = archivo;
 		this.error = error;
 		this.contenido = contenido;
+	}
+}
+
+class Cuenta {
+	constructor(cuenta, nombre) {
+		this.cuenta = cuenta;
+		this.nombre = nombre;
 	}
 }
 
@@ -29,9 +42,8 @@ class Tercero {
 		//Eliminar espacios de ID
 		campos[0] = campos[0].replace(/\s/g, '');
 
-		//Eliminar \r
+		//Eliminar \r de celular
 		campos[18] = campos[18].replace(/\r/g, '');
-
 
 		//Guardar campos
 		this.guardarCampos(campos);
@@ -104,16 +116,25 @@ class Tercero {
 	}
 }
 
+class Balance {
+	constructor(campos) {
+		this.error = '';
+	}
+}
+
 //Carga de informacion
 exports.cargarTerceros = (req, res) => {
+	let estado = true;
 	let terceros = req.body;
-	terceros.pop();
 	let errores = [];
-	console.log('Terceros: ' + terceros.length);
+
+	terceros.pop();
+	console.log('Cargando ' + terceros.length + ' terceros');
+
 	//filtrar informacion
 	terceros.forEach(linea => {
 		let tercero = new Tercero(linea);
-		listaTerceros.set(tercero.id, tercero);
+		listaTercero.set(tercero.id, tercero);
 		//tercero.cargar();
 		if (tercero.error != '') {
 			let idError = errores.length + 'T';
@@ -121,70 +142,96 @@ exports.cargarTerceros = (req, res) => {
 			errores.push(error);
 		}
 	});
-	console.log('Errores: ' + errores.length);
+	console.log('Errores encontrados: ' + errores.length);
 	res.json({
-		estado: true,
+		estado: estado,
 		errores: errores,
 	});
 }
 exports.cargarBalance = (req, res) => {
-	balance = req.body;
-	console.log('Balance: ' + balance.length);
+	let estado = true;
+	let balances = req.body;
+	let errores = [];
+
+	console.log('Cargando ' + balances.length + ' balances');
+
+	let id = 1;
+	let cuentaPrincipal = '';
+
+	let cDescartadas = 0;
+	//Filtrar informacion
+	balances.forEach(linea => {
+		//Limpiar linea
+		linea = linea.replace(/\x00/g, '');
+		linea = linea.replace(/(")\1+/g, '$1');
+		//Separar campos
+		let campos = linea.split('"');
+
+		//Eliminar espacios al inicio y final de los campos
+		for (let i = 0; i < campos.length; i++) {
+			campos[i] = campos[i].trim();
+			this.id = i;
+		}
+		//Decidir si es cuenta o balance
+		if (campos.length == 7) {			//Es una cuenta
+			//Elimina espacios en blanco y tabulaciones
+			let temp = campos[1].replace(/\s+/g, ' ')
+
+			//Divide la cadena en nombre y cuenta
+			let sep = temp.indexOf(' ');
+			if (sep == -1) {					//Error en cuenta
+				if (/^[0-9]+$/.test(temp)) {
+					let error = new Error(id++ + 'B', 'Balance', 'Error: Cuenta sin nombre', linea);
+					errores.push(error);
+				} else {
+					let error = new Error(id++ + 'B', 'Balance', 'Error: desconocido', linea);
+					errores.push(error);
+				}
+			} else {							//Creacion de cuenta
+				let numCuenta = temp.substring(0, sep);
+				let nombreCuenta = temp.substring(sep + 1, temp.length);
+				//Crear cuenta
+				if (/^[0-9]+$/.test(numCuenta)) {
+					let cuenta = new Cuenta(numCuenta, nombreCuenta);
+					listaCuenta.set(cuenta.cuenta, cuenta);
+					cuentaPrincipal = cuenta.cuenta;
+				} else {						//Es un encabezado
+					cDescartadas++;
+				}
+			}
+		} else if (campos.length == 8) {	//Es un balance
+			//Crear balance
+			if (campos[1] == 'CUENTA') {		//Es un encabezado
+				cDescartadas++;
+			} else {
+				let balance = new Balance(cuentaPrincipal, campos);
+				listaBalance.set(id++, balance);
+				//balance.cargar();
+				if (balance.error != '') {
+					let idError = balance.id + 'B';
+					let error = new Error(idError, 'Balance', balance.error, linea);
+					errores.push(error);
+				}
+			}
+		} else {							//Es un encabezado
+			cDescartadas++;
+		}
+	});
+	//Reporte de errores
+	console.log('Lineas descartadas : ' + cDescartadas);
+	console.log('Errores encontrados: ' + errores.length);
 	res.json({
-		estado: true,
-		errores: [
-			{
-				id: 1 + 'B',
-				archivo: "Balance",
-				error: "Error de prueba 1",
-				contenido: "Contenido de prueba 1"
-			},
-			{
-				id: 2 + 'B',
-				archivo: "Balance",
-				error: "Error de prueba 2",
-				contenido: "Contenido de prueba 2"
-			},
-			{
-				id: 3 + 'B',
-				archivo: "Balance",
-				error: "Error de prueba 3",
-				contenido: "Contenido de prueba 3"
-			},
-		],
+		estado: estado,
+		errores: errores,
 	});
 }
 exports.cargarMov = (req, res) => {
-	mov = req.body;
-	console.log('Movimiento: ' + mov.length);
-	res.json({
-		estado: true,
-		errores: [
-			{
-				id: 1 + 'M',
-				archivo: "Movimientos",
-				error: "Error de prueba 1",
-				contenido: "Contenido de prueba 1"
-			},
-			{
-				id: 2 + 'M',
-				archivo: "Movimientos",
-				error: "Error de prueba 2",
-				contenido: "Contenido de prueba 2"
-			},
-			{
-				id: 3 + 'M',
-				archivo: "Movimientos",
-				error: "Error de prueba 3",
-				contenido: "Contenido de prueba 3"
-			},
-		],
-	});
+	
 }
 
 //DB Eliminar
 exports.eliminarDB = (req, res) => {
-	listaTerceros.clear();
+	listaTercero.clear();
 	listaBalance.clear();
 	listaMov.clear();
 
