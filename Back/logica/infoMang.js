@@ -1,7 +1,7 @@
 //Datos de la empresa
 let año = 2023;
-let nombreEmpresa = 'CARRILLO FERNANDEZ BRAYAN JAVIER';
-let nitEmpresa = '79285488';
+let nombreEmpresa = 'N/A';
+let nitEmpresa = '0';
 let dvEmpresa = '0';
 
 //Listas
@@ -147,18 +147,23 @@ class Balance {
 }
 
 class Movimiento {
+	constructor(nit, cuentaLinea, campos) {
+		this.error = '';
+		this.guardarCampos(campos);
+		this.idTercero = nit;
+		this.idCuenta = cuentaLinea;
+		this.idEmpresa = nitEmpresa;
+	}
 
 	guardarCampos(campos) {
-		this.idCuenta = campos[0];
 
-		this.debito = campos[4];
-		this.credito = campos[5];
-		this.neto = campos[6];
-		this.concepto = campos[6];
+		this.debito = campos[4].replace(/\./g, '');
+		this.credito = campos[5].replace(/\./g, '');
+		this.neto = campos[6].replace(/\./g, '');
+		this.concepto = campos[3];
 		this.fecha = campos[1];
+		this.documento = campos[2];
 
-		this.idTercero = campos[2];
-		this.idEmpresa = campos[3];
 		//this.verErrores();
 	}
 }
@@ -246,6 +251,24 @@ function crearBalance(cuentaPrincipal, linea, id) {
 
 	return error;
 }
+//Funciones para movimientos
+function crearMovimiento(cuentaLinea, nit, campos, id) {
+	let error = 'null';
+	let movimiento = new Movimiento(nit, cuentaLinea, campos);
+	//Verificar tercero en lista
+	if (listaMov.has(nit)) {
+		let listaMovxTercero = listaMov.get(nit);
+		//Verificar cuenta en lista
+		listaMovxTercero.set(id, movimiento);
+	} else {
+		let listaMovxTercero = new Map();
+		listaMovxTercero.set(cuentaLinea, movimiento);
+		listaMov.set(nit, listaMovxTercero);
+	}
+	//cargar movimiento
+	return error;
+}
+
 
 //Carga de informacion*
 exports.cargarTerceros = (req, res) => {
@@ -312,7 +335,6 @@ exports.cargarBalance = (req, res) => {
 	console.log('Lineas descartadas : ' + cDescartadas);
 	console.log('Cuentas creadas : ' + listaCuenta.size);
 	console.log('Balances creados : ' + listaBalance.size);
-
 	console.log('Errores encontrados: ' + errores.length);
 	res.json({
 		estado: estado,
@@ -332,6 +354,11 @@ exports.cargarMov = (req, res) => {
 	let descartadas = 0;
 	let cuentas = 0;
 	let errorId = 0;
+
+	//Variables de mov
+	let nit = '';
+	let cuentaLinea = '';
+
 	movimientos.forEach(linea => {
 		//Id de error
 		errorId++;
@@ -361,11 +388,12 @@ exports.cargarMov = (req, res) => {
 					cuentas++;
 					//Busca la cuenta
 					if (listaCuenta.has(tempCuenta[1].trim())) {
-						console.log('Cuenta '+ tempCuenta[1]+'  \tencontrada');
+						console.log('Cuenta ' + tempCuenta[1] + '  \tencontrada');
 					} else {
 						//Crear cuenta
-						cuentaLinea = tempCuenta[1].trim() +' '+ tempCuenta[2].trim();
-						let error = crearCuenta(cuentaLinea, errorId);
+						let cuenta = tempCuenta[1].trim() + ' ' + tempCuenta[2].trim();
+						let error = crearCuenta(cuenta, errorId);
+						cuentaLinea = tempCuenta[1].trim();
 						if (error[0] != 'null') {
 							errores.push(error[0]);
 						} else if (error[1] == 1) {
@@ -379,16 +407,19 @@ exports.cargarMov = (req, res) => {
 			} else if (tamaño == 4) {				//Descartar totales
 				descartadas++;
 			} else if (tamaño == 5) {				//Informacion de tercero
-				let tempNit = campos[1].split(',')[0].replace(/\./g, '').split('-');
-				nit = tempNit[0];
-				dv = tempNit[1];
+				nit = campos[1].split(',')[0].replace(/\./g, '');
 			} else if (tamaño == 8) {				//Lineas de movimientos
-				//console.log(linea);
+				let error = crearMovimiento(cuentaLinea, nit, campos, errorId);
+				if (error != 'null') {
+					errores.push(error);
+				}
 			} else {
 				descartadas++;
 			}
 		}
 	});
+
+	console.log(listaMov);
 	console.log('Cuentas creadas: ' + cuentas);
 	console.log('Errores encontrados: ' + errores.length);
 	console.log('Lineas descartadas : ' + descartadas);
