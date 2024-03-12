@@ -163,6 +163,7 @@ class Movimiento {
 	}
 }
 
+//Funciones generales
 function limpiarLinea(linea) {
 	//Limpiar linea
 	linea = linea.replace(/\x00/g, '');
@@ -329,13 +330,17 @@ exports.cargarMov = (req, res) => {
 	let head = true;
 	let count = -1;
 	let descartadas = 0;
+	let cuentas = 0;
+	let errorId = 0;
 	movimientos.forEach(linea => {
+		//Id de error
+		errorId++;
 		//Limpiar linea
-		temp = limpiarLinea(linea);
+		let temp = limpiarLinea(linea);
 		linea = temp[0];
 		let campos = temp[1];
 
-		if (head) {									//Obtener nombre de la empresa
+		if (head) {									//Obtener nombre de la empresa general
 			head = false;
 			nombreEmpresa = campos[1];
 			descartadas++;
@@ -349,20 +354,45 @@ exports.cargarMov = (req, res) => {
 				count = 9;
 			}
 		} else {									//Movimientos
-			//console.log(campos);
 			let tamaño = campos.length;
-			if (tamaño == 1) {						//Descartar totales
-				
-			} else if(tamaño == 8){
-				console.log(linea);
-
+			if (tamaño == 3) {						//Obtener cuenta
+				let tempCuenta = campos[1].replace(/\:/g, ',').split(',');
+				if (tempCuenta[0] == 'Cuenta') {
+					cuentas++;
+					//Busca la cuenta
+					if (listaCuenta.has(tempCuenta[1].trim())) {
+						console.log('Cuenta '+ tempCuenta[1]+'  \tencontrada');
+					} else {
+						//Crear cuenta
+						cuentaLinea = tempCuenta[1].trim() +' '+ tempCuenta[2].trim();
+						let error = crearCuenta(cuentaLinea, errorId);
+						if (error[0] != 'null') {
+							errores.push(error[0]);
+						} else if (error[1] == 1) {
+							console.log(linea);
+						}
+					}
+				} else {
+					//Descartada por ser suma total
+					descartadas++;
+				}
+			} else if (tamaño == 4) {				//Descartar totales
+				descartadas++;
+			} else if (tamaño == 5) {				//Informacion de tercero
+				let tempNit = campos[1].split(',')[0].replace(/\./g, '').split('-');
+				nit = tempNit[0];
+				dv = tempNit[1];
+			} else if (tamaño == 8) {				//Lineas de movimientos
+				//console.log(linea);
+			} else {
+				descartadas++;
 			}
 		}
-
 	});
-
+	console.log('Cuentas creadas: ' + cuentas);
 	console.log('Errores encontrados: ' + errores.length);
 	console.log('Lineas descartadas : ' + descartadas);
+
 	res.json({
 		estado: estado,
 		errores: errores,
