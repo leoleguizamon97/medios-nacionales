@@ -1,6 +1,6 @@
 //Datos de la empresa
 let año = 2023;
-let nombreEmpresa = 'Empresa de Prueba';
+let nombreEmpresa = 'CARRILLO FERNANDEZ BRAYAN JAVIER';
 let nitEmpresa = '79285488';
 let dvEmpresa = '0';
 
@@ -24,6 +24,7 @@ class Cuenta {
 	constructor(cuenta, nombre) {
 		this.cuenta = cuenta;
 		this.nombre = nombre;
+		this.empresa = nitEmpresa;
 	}
 }
 
@@ -68,7 +69,7 @@ class Tercero {
 		this.correo = campos[10];
 		this.celular = campos[18];
 		this.esEmpresa = this.esEmpresa();
-		if(this.esEmpresa) console.log(this.esEmpresa + ' ' + this.idTercero + ' ' + nitEmpresa);
+		if (this.esEmpresa) console.log(this.esEmpresa + ' ' + this.idTercero + ' ' + nitEmpresa);
 		//No necesarios
 		this.nombreCompleto = campos[3];
 		this.telefono = campos[5];
@@ -144,6 +145,39 @@ class Balance {
 		}
 	}
 }
+
+class Movimiento {
+
+	guardarCampos(campos) {
+		this.idCuenta = campos[0];
+
+		this.debito = campos[4];
+		this.credito = campos[5];
+		this.neto = campos[6];
+		this.concepto = campos[6];
+		this.fecha = campos[1];
+
+		this.idTercero = campos[2];
+		this.idEmpresa = campos[3];
+		//this.verErrores();
+	}
+}
+
+function limpiarLinea(linea) {
+	//Limpiar linea
+	linea = linea.replace(/\x00/g, '');
+	linea = linea.replace(/(")\1+/g, '$1');
+	linea = linea.replace(/\r/g, '');
+
+	//Separar campos
+	let campos = linea.split('"');
+
+	//Eliminar espacios al inicio y final de los campos
+	for (let i = 0; i < campos.length; i++) {
+		campos[i] = campos[i].trim();
+	}
+	return [linea, campos];
+}
 //Funciones para terceros
 function crearTercero(linea, id) {
 	let error = 'null';
@@ -160,21 +194,6 @@ function crearTercero(linea, id) {
 }
 
 //Funciones para balance de prueba
-function limpiarLinea(linea) {
-	//Limpiar linea
-	linea = linea.replace(/\x00/g, '');
-	linea = linea.replace(/(")\1+/g, '$1');
-	linea = linea.replace(/\r/g, '');
-
-	//Separar campos
-	let campos = linea.split('"');
-
-	//Eliminar espacios al inicio y final de los campos
-	for (let i = 0; i < campos.length; i++) {
-		campos[i] = campos[i].trim();
-	}
-	return [linea, campos];
-}
 function crearCuenta(linea, id) {
 	if (linea == '') {
 		return ['null', 1];
@@ -208,16 +227,16 @@ function crearCuenta(linea, id) {
 		return ['null', descartado];
 	}
 }
-function crearBalance(cuentaPrincipal,linea,id) {
+function crearBalance(cuentaPrincipal, linea, id) {
 	let error = 'null';
 	let campos = linea.split('"');
 
-	if(campos.length != 8){
+	if (campos.length != 8) {
 		error = new Error(id, 'Balance', 'Formato incorrecto', linea);
 	} else {
 		let balance = new Balance(cuentaPrincipal, campos);
 		listaBalance.set(id, balance);
-		
+
 		if (balance.error != '') {
 			let idError = id + 'B';
 			error = new Error(idError, 'Balance', balance.error, linea);
@@ -279,7 +298,7 @@ exports.cargarBalance = (req, res) => {
 			if (campos[1] == 'CUENTA') {	//Es un encabezado
 				cDescartadas++;
 			} else {
-				let temp = crearBalance(cuentaPrincipal,linea,idBalance++);
+				let temp = crearBalance(cuentaPrincipal, linea, idBalance++);
 				if (temp != 'null') {
 					errores.push(temp);
 				}
@@ -307,17 +326,43 @@ exports.cargarMov = (req, res) => {
 	console.log('Cargando ' + movimientos.length + ' movimientos');
 
 	//filtrar informacion
+	let head = true;
+	let count = -1;
+	let descartadas = 0;
 	movimientos.forEach(linea => {
-		let mov = new Movimiento(linea);
-		listaMov.set(mov.id, mov);
-		//mov.cargar();
-		if (mov.error != '') {
-			let idError = errores.length + 'M';
-			let error = new Error(idError, 'Movimientos', mov.error, linea);
-			errores.push(error);
+		//Limpiar linea
+		temp = limpiarLinea(linea);
+		linea = temp[0];
+		let campos = temp[1];
+
+		if (head) {									//Obtener nombre de la empresa
+			head = false;
+			nombreEmpresa = campos[1];
+			descartadas++;
+		} else if (campos[1] == nombreEmpresa) {	//Descartar encabezado
+			count = 0;
+			descartadas++;
+		} else if (count <= 3) {					//Lineas de encabezado
+			count++;
+			descartadas++;
+			if (count == 3) {
+				count = 9;
+			}
+		} else {									//Movimientos
+			//console.log(campos);
+			let tamaño = campos.length;
+			if (tamaño == 1) {						//Descartar totales
+				
+			} else if(tamaño == 8){
+				console.log(linea);
+
+			}
 		}
+
 	});
+
 	console.log('Errores encontrados: ' + errores.length);
+	console.log('Lineas descartadas : ' + descartadas);
 	res.json({
 		estado: estado,
 		errores: errores,
