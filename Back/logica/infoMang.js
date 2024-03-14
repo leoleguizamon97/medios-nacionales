@@ -147,10 +147,9 @@ class Balance {
 }
 
 class Movimiento {
-	constructor(nit, cuentaLinea, campos) {
+	constructor(cuentaLinea, campos) {
 		this.error = '';
 		this.guardarCampos(campos);
-		this.idTercero = nit;
 		this.idCuenta = cuentaLinea;
 		this.idEmpresa = nitEmpresa;
 	}
@@ -184,7 +183,6 @@ function limpiarLinea(linea) {
 	}
 	return [linea, campos];
 }
-//Funciones para terceros
 function crearTercero(linea, id) {
 	let error = 'null';
 	if (linea.split(';').length == 19) {
@@ -198,8 +196,6 @@ function crearTercero(linea, id) {
 	}
 	return error;
 }
-
-//Funciones para balance de prueba
 function crearCuenta(linea, id) {
 	if (linea == '') {
 		return ['null', 1];
@@ -251,10 +247,9 @@ function crearBalance(cuentaPrincipal, linea, id) {
 
 	return error;
 }
-//Funciones para movimientos
 function crearMovimiento(cuentaLinea, nit, campos, id) {
 	let error = 'null';
-	let movimiento = new Movimiento(nit, cuentaLinea, campos);
+	let movimiento = new Movimiento(cuentaLinea, campos);
 	//Verificar tercero en lista
 	if (listaMov.has(nit)) {
 		let listaMovxTercero = listaMov.get(nit);
@@ -262,17 +257,15 @@ function crearMovimiento(cuentaLinea, nit, campos, id) {
 		listaMovxTercero.set(id, movimiento);
 	} else {
 		let listaMovxTercero = new Map();
-		listaMovxTercero.set(cuentaLinea, movimiento);
+		listaMovxTercero.set(id, movimiento);
 		listaMov.set(nit, listaMovxTercero);
 	}
 	//cargar movimiento
 	return error;
 }
 
-
 //Carga de informacion*
-exports.cargarTerceros = (req, res) => {
-	let estado = true;
+exports.procTerceros = (req, res) => {
 	let terceros = req.body;
 	let errores = [];
 
@@ -286,13 +279,14 @@ exports.cargarTerceros = (req, res) => {
 			errores.push(error);
 		}
 	});
+	
 	console.log('Errores encontrados: ' + errores.length);
 	res.json({
-		estado: estado,
+		estado: true,
 		errores: errores,
 	});
 }
-exports.cargarBalance = (req, res) => {
+exports.procBalance = (req, res) => {
 	let estado = true;
 	let balances = req.body;
 	let errores = [];
@@ -341,7 +335,7 @@ exports.cargarBalance = (req, res) => {
 		errores: errores,
 	});
 }
-exports.cargarMov = (req, res) => {
+exports.procMov = (req, res) => {
 	let estado = true;
 	let movimientos = req.body;
 	let errores = [];
@@ -419,7 +413,6 @@ exports.cargarMov = (req, res) => {
 		}
 	});
 
-	console.log(listaMov);
 	console.log('Cuentas creadas: ' + cuentas);
 	console.log('Errores encontrados: ' + errores.length);
 	console.log('Lineas descartadas : ' + descartadas);

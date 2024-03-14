@@ -15,10 +15,10 @@ const movTercero = require('../crud/movTercero.js');
 module.exports = router;
 
 /************************ Metodos *******************************/
-//Cargue de información
-router.post('/cargar/terceros', info.cargarTerceros);
-router.post('/cargar/balance', info.cargarBalance);
-router.post('/cargar/mov', info.cargarMov);
+//Procesamiento de información
+router.post('/proc/terceros', info.procTerceros);
+router.post('/proc/balance', info.procBalance);
+router.post('/proc/mov', info.procMov);
 //Eliminar DB
 router.delete('/eliminarDB', info.eliminarDB);
 //Correcion de errores

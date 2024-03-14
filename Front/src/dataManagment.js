@@ -11,10 +11,10 @@ export default {
 	corregirErrores,
 }
 
-//Carga de informacion
+//Procesar informacion
 async function cargarTerceros(terceros) {
 	try {
-		const response = await axios.post(url + "/cargar/terceros", terceros);
+		const response = await axios.post(url + "/proc/terceros", terceros);
 		return response.data;
 	} catch (error) {
 		console.log(error);
@@ -23,7 +23,7 @@ async function cargarTerceros(terceros) {
 }
 async function cargarBalance(balance) {
 	try {
-		const response = await axios.post(url + "/cargar/balance", balance);
+		const response = await axios.post(url + "/proc/balance", balance);
 		return response.data;
 	} catch (error) {
 		console.log(error);
@@ -32,7 +32,7 @@ async function cargarBalance(balance) {
 }
 async function cargarMov(mov) {
 	try {
-		const response = await axios.post(url + "/cargar/mov", mov);
+		const response = await axios.post(url + "/proc/mov", mov);
 		return response.data;
 	} catch (error) {
 		console.log(error);
