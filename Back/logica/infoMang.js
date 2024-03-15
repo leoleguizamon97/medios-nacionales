@@ -1,3 +1,9 @@
+const Error = require('../modelos/Error.js');
+const Tercero = require('../modelos/Tercero.js');
+const Cuenta = require('../modelos/Cuenta.js');
+const Balance = require('../modelos/Balance.js');
+const Movimiento = require('../modelos/Movimiento.js');
+
 //Datos de la empresa
 let año = 2023;
 let nombreEmpresa = 'N/A';
@@ -9,163 +15,6 @@ let listaTercero = new Map();
 let listaBalance = new Map();
 let listaMov = new Map();
 let listaCuenta = new Map();
-
-//Clases
-class Error {
-	constructor(id, archivo, error, contenido) {
-		this.id = id;
-		this.archivo = archivo;
-		this.error = error;
-		this.contenido = contenido;
-	}
-}
-
-class Cuenta {
-	constructor(cuenta, nombre) {
-		this.cuenta = cuenta;
-		this.nombre = nombre;
-		this.empresa = nitEmpresa;
-	}
-}
-
-class Tercero {
-	constructor(cadena) {
-		let campos = cadena.split(';');
-		//Limpiar campos
-
-		//Eliminar espacios al inicio y final de los campos
-		for (let i = 0; i < campos.length; i++) {
-			campos[i] = campos[i].trim();
-		}
-
-		//Eliminar espacios de ID
-		campos[0] = campos[0].replace(/\s/g, '');
-
-		//Eliminar \r de celular
-		campos[18] = campos[18].replace(/\r/g, '');
-
-		//Guardar campos
-		this.guardarCampos(campos);
-
-		// Verificar nombres
-		this.verificarNombre();
-
-		// Verificar errores
-		this.verErrores();
-
-	}
-	guardarCampos(campos) {
-		this.error = '';
-		this.idTercero = campos[0];
-		this.dv = campos[1];
-		this.tipoDocumento = campos[2];
-		this.tipoPersona = campos[15];
-		this.nombre1 = campos[13];
-		this.nombre2 = campos[14];
-		this.apellido1 = campos[11];
-		this.apellido2 = campos[12];
-		this.idMunicipio = campos[7];
-		this.direccion = campos[4];
-		this.correo = campos[10];
-		this.celular = campos[18];
-		this.esEmpresa = this.esEmpresa();
-		if (this.esEmpresa) console.log(this.esEmpresa + ' ' + this.idTercero + ' ' + nitEmpresa);
-		//No necesarios
-		this.nombreCompleto = campos[3];
-		this.telefono = campos[5];
-		this.fax = campos[6];
-		this.nombreCiudad = campos[8];
-		this.apartado = campos[9];
-		this.actEconomica = campos[16];
-		this.codArea = campos[17];
-	}
-	verificarNombre() {
-		if (this.tipoPersona != 'NATURAL') {
-			this.nombreCompleto = this.nombreCompleto.toUpperCase();
-			return;
-		}
-		if (this.nombreCompleto == '') {
-			this.nombreCompleto = this.apellido1 + ' ' + this.apellido2 + ' ' + this.nombre1 + ' ' + this.nombre2;
-		}
-		if (this.apellido1 == '' && this.apellido2 == '' && this.nombre1 == '' && this.nombre2 == '') {
-			let nombre = this.nombreCompleto.split(' ');
-			if (nombre.length == 1) {
-				this.nombre1 = nombre[0];
-			} else if (nombre.length == 2) {
-				this.apellido1 = nombre[0];
-				this.nombre1 = nombre[1];
-			} else if (nombre.length == 3) {
-				this.apellido1 = nombre[0];
-				this.apellido2 = nombre[1];
-				this.nombre1 = nombre[2];
-			} else if (nombre.length == 4) {
-				this.apellido1 = nombre[0];
-				this.apellido2 = nombre[1];
-				this.nombre1 = nombre[2];
-				this.nombre2 = nombre[3];
-			} else {
-				this.error = 'Error: Nombre incompleto o mal suministrado';
-			}
-		}
-	}
-	verErrores() {
-		//Empresas con id de natural
-		if (this.idTercero.length == 9 && this.idTercero[0] == '9' && this.naturaleza == 'NATURAL') {
-			this.error = 'Error: Posible empresa como persona natural';
-		}
-	}
-	esEmpresa() {
-		return this.idTercero == nitEmpresa && this.dv == dvEmpresa;
-	}
-}
-
-class Balance {
-	constructor(cuenta, campos) {
-		this.error = '';
-		this.idCuenta = cuenta;
-		this.año = año;
-		this.saldoInicial = campos[3].replace(/\./g, '');
-		this.debito = campos[4].replace(/\./g, '');
-		this.credito = campos[5].replace(/\./g, '');
-		this.idTercero = campos[2].replace(/\./g, '');
-		this.idEmpresa = nitEmpresa;
-		this.verErrores();
-	}
-	verErrores() {
-		//Verificar idTercero
-		let temp = this.idTercero.split('-');
-		if (temp.length == 1) {
-			//Ta bueno
-		} else {
-			if (temp.length != 2) {
-				this.error = 'Error: Formato de tercero incorrecto';
-			} else if (temp[1].length != 1) {
-				this.error = 'Error: DV de tercero incorrecto';
-			}
-		}
-	}
-}
-
-class Movimiento {
-	constructor(cuentaLinea, campos) {
-		this.error = '';
-		this.guardarCampos(campos);
-		this.idCuenta = cuentaLinea;
-		this.idEmpresa = nitEmpresa;
-	}
-
-	guardarCampos(campos) {
-
-		this.debito = campos[4].replace(/\./g, '');
-		this.credito = campos[5].replace(/\./g, '');
-		this.neto = campos[6].replace(/\./g, '');
-		this.concepto = campos[3];
-		this.fecha = campos[1];
-		this.documento = campos[2];
-
-		//this.verErrores();
-	}
-}
 
 //Funciones generales
 function limpiarLinea(linea) {
@@ -183,11 +32,18 @@ function limpiarLinea(linea) {
 	}
 	return [linea, campos];
 }
+
+//Funciones de creacion
 function crearTercero(linea, id) {
 	let error = 'null';
 	if (linea.split(';').length == 19) {
-		let tercero = new Tercero(linea);
-		listaTercero.set(tercero.id, tercero);
+		let tercero = new Tercero(linea, nitEmpresa, dvEmpresa);
+		if (listaTercero.has(tercero.idTercero)) {
+			tercero.error = 'Error: Tercero repetido';
+			console.log('Tercero ' + tercero.idTercero + ' repetido!');
+		} else {
+			listaTercero.set(tercero.idTercero, tercero);
+		}
 		if (tercero.error != '') {
 			error = new Error(id + 'T', 'Terceros', tercero.error, linea);
 		}
@@ -220,7 +76,7 @@ function crearCuenta(linea, id) {
 		let numCuenta = temp.substring(0, sep);
 		//Crear cuenta
 		if (/^[0-9]+$/.test(numCuenta)) {
-			let cuenta = new Cuenta(numCuenta, nombreCuenta);
+			let cuenta = new Cuenta(numCuenta, nombreCuenta, nitEmpresa);
 			listaCuenta.set(cuenta.cuenta, cuenta);
 			cuentaPrincipal = cuenta.cuenta;
 		} else {						//Es un encabezado
@@ -236,7 +92,7 @@ function crearBalance(cuentaPrincipal, linea, id) {
 	if (campos.length != 8) {
 		error = new Error(id, 'Balance', 'Formato incorrecto', linea);
 	} else {
-		let balance = new Balance(cuentaPrincipal, campos);
+		let balance = new Balance(cuentaPrincipal, campos, nitEmpresa, año);
 		listaBalance.set(id, balance);
 
 		if (balance.error != '') {
@@ -249,7 +105,7 @@ function crearBalance(cuentaPrincipal, linea, id) {
 }
 function crearMovimiento(cuentaLinea, nit, campos, id) {
 	let error = 'null';
-	let movimiento = new Movimiento(cuentaLinea, campos);
+	let movimiento = new Movimiento(cuentaLinea, campos, nitEmpresa, año);
 	//Verificar tercero en lista
 	if (listaMov.has(nit)) {
 		let listaMovxTercero = listaMov.get(nit);
@@ -264,7 +120,7 @@ function crearMovimiento(cuentaLinea, nit, campos, id) {
 	return error;
 }
 
-//Carga de informacion*
+//Procesar informacion
 exports.procTerceros = (req, res) => {
 	let terceros = req.body;
 	let errores = [];
@@ -279,7 +135,7 @@ exports.procTerceros = (req, res) => {
 			errores.push(error);
 		}
 	});
-	
+
 	console.log('Errores encontrados: ' + errores.length);
 	res.json({
 		estado: true,
