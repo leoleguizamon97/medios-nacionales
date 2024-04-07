@@ -35,6 +35,7 @@ function limpiarLinea(linea) {
 
 //Funciones de creacion
 function crearTercero(linea, id) {
+	linea = linea.trim()
 	let error = 'null';
 	if (linea.split(';').length == 19) {
 		let tercero = new Tercero(linea, nitEmpresa, dvEmpresa);
@@ -119,11 +120,19 @@ function crearMovimiento(cuentaLinea, nit, campos, id) {
 	//cargar movimiento
 	return error;
 }
-
+//Funciones de editar informacion
+function editarTercero(linea, id){
+	//oldT = 
+}
+function editarCuenta(linea,id){
+	crearCuenta(linea,id)
+}
 //Procesar informacion
 exports.procTerceros = (req, res) => {
 	let terceros = req.body;
 	let errores = [];
+
+	listaTercero = new Map;
 
 	terceros.pop();
 	console.log('Cargando ' + terceros.length + ' terceros');
@@ -146,6 +155,8 @@ exports.procBalance = (req, res) => {
 	let estado = true;
 	let balances = req.body;
 	let errores = [];
+
+	listaBalance = new Map;
 
 	console.log('Cargando ' + balances.length + ' lineas de balances/cuentas');
 
@@ -195,6 +206,8 @@ exports.procMov = (req, res) => {
 	let estado = true;
 	let movimientos = req.body;
 	let errores = [];
+
+	listaMov = new Map;
 
 	console.log('Cargando ' + movimientos.length + ' movimientos');
 
@@ -293,9 +306,44 @@ exports.eliminarDB = (req, res) => {
 
 //Correcion de errores
 exports.corregirErrores = (req, res) => {
-	console.log(req.params.tipo);
-	console.log(req.body);
+	let estado = true;
+	tipo = req.params.tipo.replace(/[0-9]/g, '');
+	id = req.params.tipo.replace(/[^0-9]/g, '')
+	linea = req.body.linea
+	//Filtrar por tipo de error
+	if (tipo == 'b') {			
+		//Crear balance
+		estado = 'Aún no se puede corregir este tipo de error'
+	} else if (tipo == 't') {
+		temp = crearTercero(linea,id)
+		if (temp != 'null') {
+			estado = temp.error
+		}
+	} else if (tipo == 'cb' || tipo == 'c') {
+		//Intento de crear
+		temp = crearCuenta(linea,id)
+		if (temp[0] != 'null') {
+			estado = temp[0].error
+		}
+	} else {
+		estado = false;
+	}
 	res.json({
-		estado: true,
+		estado,
 	});
+}
+
+//Enviar informacion
+exports.sendCuentas = (req,res) => {
+	let cuentas = []
+	listaCuenta.forEach((value,key)=>{
+		cuentas.push({
+			cuenta: value.cuenta,
+			nombre: value.nombre
+		});
+	});
+	cuentas = cuentas.sort()
+	res.json({
+		cuentas,
+	})
 }

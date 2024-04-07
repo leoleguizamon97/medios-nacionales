@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h1>Terceros</h1>
+		<h1>Movimientos</h1>
 	</div>
 </template>
 <script>

@@ -9,6 +9,7 @@ export default {
 	cargarMov,
 	eliminarDB,
 	corregirErrores,
+	pedirCuentas,
 }
 
 //Procesar informacion
@@ -52,14 +53,25 @@ async function eliminarDB() {
 }
 
 //Correcion de errores
-async function corregirErrores(tipo, linea) {
-	tipo = tipo.toLowerCase();
+async function corregirErrores(id, linea) {
+	id = id.toLowerCase();
 	let data = {
 		linea: linea
 	}
 	try {
-		const response = await axios.post(url + "/corregir/" + tipo, data);
+		const response = await axios.post(url + "/corregir/" + id, data);
 		return response.data;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+//Solicitar elementos
+
+async function pedirCuentas(){
+	try {
+		const response = await axios.get(url + "/elementos/cuentas");
+		return response;
 	} catch (error) {
 		console.log(error);
 		return false;

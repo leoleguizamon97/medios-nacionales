@@ -23,3 +23,8 @@ router.post('/proc/mov', info.procMov);
 router.delete('/eliminarDB', info.eliminarDB);
 //Correcion de errores
 router.post('/corregir/:tipo', info.corregirErrores);
+//Envio de elementos
+//router.get('/elementos/terceros')
+router.get('/elementos/cuentas', info.sendCuentas);
+//router.get('/elementos/balance')
+//router.get('/elementos/movterceros')
