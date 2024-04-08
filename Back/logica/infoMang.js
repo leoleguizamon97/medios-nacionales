@@ -121,11 +121,11 @@ function crearMovimiento(cuentaLinea, nit, campos, id) {
 	return error;
 }
 //Funciones de editar informacion
-function editarTercero(linea, id){
+function editarTercero(linea, id) {
 	//oldT = 
 }
-function editarCuenta(linea,id){
-	crearCuenta(linea,id)
+function editarCuenta(linea, id) {
+	crearCuenta(linea, id)
 }
 //Procesar informacion
 exports.procTerceros = (req, res) => {
@@ -311,17 +311,17 @@ exports.corregirErrores = (req, res) => {
 	id = req.params.tipo.replace(/[^0-9]/g, '')
 	linea = req.body.linea
 	//Filtrar por tipo de error
-	if (tipo == 'b') {			
+	if (tipo == 'b') {
 		//Crear balance
 		estado = 'Aún no se puede corregir este tipo de error'
 	} else if (tipo == 't') {
-		temp = crearTercero(linea,id)
+		temp = crearTercero(linea, id)
 		if (temp != 'null') {
 			estado = temp.error
 		}
 	} else if (tipo == 'cb' || tipo == 'c') {
 		//Intento de crear
-		temp = crearCuenta(linea,id)
+		temp = crearCuenta(linea, id)
 		if (temp[0] != 'null') {
 			estado = temp[0].error
 		}
@@ -334,9 +334,9 @@ exports.corregirErrores = (req, res) => {
 }
 
 //Enviar informacion
-exports.sendCuentas = (req,res) => {
+exports.sendCuentas = (req, res) => {
 	let cuentas = []
-	listaCuenta.forEach((value,key)=>{
+	listaCuenta.forEach((value, key) => {
 		cuentas.push({
 			cuenta: value.cuenta,
 			nombre: value.nombre
@@ -345,5 +345,36 @@ exports.sendCuentas = (req,res) => {
 	cuentas = cuentas.sort()
 	res.json({
 		cuentas,
+	})
+}
+exports.sendTerceros = (req, res) => {
+	let terceros = []
+	listaTercero.forEach((value, key) => {
+		terceros.push({
+			idTercero: value.idTercero,
+			dv: value.dv,
+			tipoDocumento: value.tipoDocumento,
+			tipoPersona: value.tipoPersona,
+			nombre1: value.nombre1,
+			nombre2: value.nombre2,
+			apellido1: value.apellido1,
+			apellido2: value.apellido2,
+			idMunicipio: value.idMunicipio,
+			direccion: value.direccion,
+			correo: value.correo,
+			celular: value.celular,
+			esEmpresa: value.esEmpresa,
+			nombreCompleto: value.nombreCompleto,
+			telefono: value.telefono,
+			fax: value.fax,
+			nombreCiudad: value.nombreCiudad,
+			apartado: value.apartado,
+			actEconomica: value.actEconomica,
+			codArea: value.codArea,
+		});
+	});
+	terceros = terceros.sort()
+	res.json({
+		terceros,
 	})
 }

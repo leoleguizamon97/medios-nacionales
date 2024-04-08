@@ -1,5 +1,5 @@
 <template>
-	<div>
+	<div class="h-100 d-flex flex-column">
 		<div class="d-flex">
 			<div class="card w-75 p-1">
 				<div class="p-1 bg-body-tertiary rounded-1 mb-1">
@@ -60,47 +60,48 @@
 				</div>
 			</div>
 		</div>
-		<div class="card my-1">
-			<div class="w-100 my-1">
-				<h6 class="text-center">Verificacion Errores</h6>
-			</div>
-			<div class="alert text-center" role="alert" v-if="errores.length == 0">
-				¡Sin errores! :D
-			</div>
-			<table class="table table-sm table-striped" v-else>
-				<thead>
+		<div class="card mt-1 flex-fill overflow-hidden d-flex flex-column">
+			<table>
+				<thead class="border-bottom border-secondary">
 					<tr class="text-center">
-						<th class="col" scope="col">#</th>
-						<th class="col" scope="col">Archivo</th>
+						<th class="col-1" scope="col">#</th>
+						<th class="col-1" scope="col">Archivo</th>
 						<th class="col-9" scope="col">Error</th>
 						<th class="col-1" scope="col">Acción</th>
 					</tr>
 				</thead>
-				<tbody class="table-group-divider">
-					<tr v-for="error in errores" :key="error.id">
-						<th scope="row" class="text-center align-middle">{{ error.id }}</th>
-						<td class="text-center p-auto align-middle">{{ error.archivo }}</td>
-						<td>
-							<div>
-								{{ error.error }}
-							</div>
-							<input class="form-control" type="text" :value="error.contenido" :id="error.id + 'tf'">
-						</td>
-						<td class="align-middle p-1">
-							<div class="d-flex">
-								<button class="btn btn-outline-primary me-1 w-50" title="Corregir"
-									@click="corregirError(error.id)">
-									<i class="bi bi-pencil-square"></i>
-								</button>
-								<button class="btn btn-outline-danger w-50" title="Eliminar"
-									@click="eliminarError(error.id)">
-									<i class="bi bi-x-circle"></i>
-								</button>
-							</div>
-						</td>
-					</tr>
-				</tbody>
 			</table>
+			<div class="text-center flex-fill" v-if="errores.length == 0">
+				¡Sin errores! :D
+			</div>
+			<div class="flex-fill overflow-auto" v-else>
+				<table class="table table-striped">
+					<tbody>
+						<tr v-for="error in errores" :key="error.id">
+							<th class="col-1 text-center align-middle" scope="row">{{ error.id }}</th>
+							<td class="col-1 text-center p-auto align-middle">{{ error.archivo }}</td>
+							<td class="col-9">
+								<div>
+									{{ error.error }}
+								</div>
+								<input class="form-control" type="text" :value="error.contenido" :id="error.id + 'tf'">
+							</td>
+							<td class="col-1 align-middle p-1">
+								<div class="d-flex">
+									<button class="btn btn-outline-primary me-1 w-50" title="Corregir"
+										@click="corregirError(error.id)">
+										<i class="bi bi-pencil-square"></i>
+									</button>
+									<button class="btn btn-outline-danger w-50" title="Eliminar"
+										@click="eliminarError(error.id)">
+										<i class="bi bi-x-circle"></i>
+									</button>
+								</div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
 
@@ -238,7 +239,7 @@ export default {
 		},
 		async corregirError(id) {
 			let linea = document.getElementById(id + 'tf')
-			let respuesta = await datos.corregirErrores(id,linea.value);
+			let respuesta = await datos.corregirErrores(id, linea.value);
 			if (respuesta.estado == true) {
 				window.alert('Error corregido');
 				this.eliminarError(id);

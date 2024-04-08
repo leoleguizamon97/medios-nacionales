@@ -32,7 +32,7 @@
 							<input class="form-control" type="text" :value="cuenta.nombre" :id="cuenta.cuenta + 'cu'">
 						</td>
 						<td class="text-center">
-							<button class="btn btn-outline-primary me-1 w-50" title="Corregir"
+							<button class="btn btn-outline-primary me-1 " title="Corregir"
 								@click="editar(cuenta.cuenta)">
 								<i class="bi bi-pencil-square"></i>
 							</button>

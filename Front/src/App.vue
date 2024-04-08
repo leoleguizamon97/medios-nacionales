@@ -1,28 +1,13 @@
 <template>
-	<div>
-		<CabeceraN />
-		<div id="Contenido" class="">
-			<MenuP />
-			<div class="m-1 p-1">
-				<ContenidoP />
-			</div>
-		</div>
-		<PieN />
-	</div>
+	<PrincipalP/>
 </template>
 
 <script>
-import MenuP from '@/components/MenuP.vue'
-import CabeceraN from '@/components/CabeceraN.vue'
-import ContenidoP from '@/components/ContenidoP.vue'
-import PieN from '@/components/PieN.vue'
+import PrincipalP from '@/components/PrincipalP.vue';
 export default {
 	name: 'App',
 	components: {
-		MenuP,
-		CabeceraN,
-		ContenidoP,
-		PieN
+		PrincipalP
 	},
 }
 </script>

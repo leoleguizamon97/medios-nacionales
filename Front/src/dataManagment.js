@@ -10,6 +10,7 @@ export default {
 	eliminarDB,
 	corregirErrores,
 	pedirCuentas,
+	pedirTerceros,
 }
 
 //Procesar informacion
@@ -78,4 +79,13 @@ async function pedirCuentas(){
 	}
 }
 
+async function pedirTerceros(){
+	try {
+		const response = await axios.get(url + "/elementos/terceros");
+		return response;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
 //Solicitar informes
