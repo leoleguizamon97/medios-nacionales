@@ -71,7 +71,7 @@
 					</tr>
 				</thead>
 			</table>
-			<div class="text-center flex-fill" v-if="errores.length == 0">
+			<div class="text-center flex-fill align-content-center" v-if="errores.length == 0">
 				¡Sin errores! :D
 			</div>
 			<div class="flex-fill overflow-auto" v-else>
