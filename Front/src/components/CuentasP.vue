@@ -6,7 +6,7 @@
 					<a class="navbar-brand" href="#">Cuentas</a>
 				</div>
 				<form name="cuentas" class="d-flex" role="search" @submit.prevent="">
-					<button class="btn btn-outline-secondary" title="Descargar Cuentas" @click="pedirCuentas()">
+					<button class="btn btn-outline-secondary me-1" title="Descargar Cuentas" @click="pedirCuentas()">
 						<i class="bi bi-cloud-download"></i>
 					</button>
 					<input class="form-control" type="search" placeholder="Buscar" name="buscarCuentas" @input="buscar">
@@ -37,7 +37,7 @@
 								<input class="form-control" type="text" :value="cuenta.nombre" :id="cuenta.cuenta + 'cu'">
 							</td>
 							<td class="col-1 align-middle text-center">
-								<button class="btn btn-outline-primary me-1 " title="Corregir"
+								<button class="btn btn-outline-primary" title="Corregir"
 									@click="editar(cuenta.cuenta)">
 									<i class="bi bi-pencil-square"></i>
 								</button>
