@@ -54,6 +54,7 @@ function crearTercero(linea, id) {
 	return error;
 }
 function crearCuenta(linea, id) {
+	let numCuenta = '000'
 	if (linea == '') {
 		return ['null', 1];
 	}
@@ -74,16 +75,15 @@ function crearCuenta(linea, id) {
 	} else {							//Creacion de cuenta
 		let nombreCuenta = temp.substring(sep + 1, temp.length);
 		let descartado = 0
-		let numCuenta = temp.substring(0, sep);
+		numCuenta = temp.substring(0, sep);
 		//Crear cuenta
 		if (/^[0-9]+$/.test(numCuenta)) {
 			let cuenta = new Cuenta(numCuenta, nombreCuenta, nitEmpresa);
 			listaCuenta.set(cuenta.cuenta, cuenta);
-			cuentaPrincipal = cuenta.cuenta;
 		} else {						//Es un encabezado
 			descartado = 1;
 		}
-		return ['null', descartado];
+		return ['null', descartado, numCuenta];
 	}
 }
 function crearBalance(cuentaPrincipal, linea, id) {
@@ -135,7 +135,7 @@ exports.procTerceros = (req, res) => {
 	listaTercero = new Map;
 
 	terceros.pop();
-	console.log('Cargando ' + terceros.length + ' terceros');
+	//console.log('Cargando ' + terceros.length + ' terceros');
 
 	//filtrar informacion
 	terceros.forEach(linea => {
@@ -145,7 +145,7 @@ exports.procTerceros = (req, res) => {
 		}
 	});
 
-	console.log('Errores encontrados: ' + errores.length);
+	//console.log('Errores encontrados: ' + errores.length);
 	res.json({
 		estado: true,
 		errores: errores,
@@ -158,7 +158,7 @@ exports.procBalance = (req, res) => {
 
 	listaBalance = new Map;
 
-	console.log('Cargando ' + balances.length + ' lineas de balances/cuentas');
+	//console.log('Cargando ' + balances.length + ' lineas de balances/cuentas');
 
 	let idBalance = 0;
 	let idCuenta = 0;
@@ -176,6 +176,8 @@ exports.procBalance = (req, res) => {
 			let temp = crearCuenta(campos[1], idCuenta++);
 			if (temp[0] != 'null') {
 				errores.push(temp[0]);
+			} else {
+				cuentaPrincipal = temp[2]
 			}
 			cDescartadas += temp[1];
 		} else if (campos.length == 8) {	//Es un balance
@@ -193,10 +195,10 @@ exports.procBalance = (req, res) => {
 		}
 	});
 	//Reporte de errores
-	console.log('Lineas descartadas : ' + cDescartadas);
-	console.log('Cuentas creadas : ' + listaCuenta.size);
-	console.log('Balances creados : ' + listaBalance.size);
-	console.log('Errores encontrados: ' + errores.length);
+	//console.log('Lineas descartadas : ' + cDescartadas);
+	//console.log('Cuentas creadas : ' + listaCuenta.size);
+	//console.log('Balances creados : ' + listaBalance.size);
+	//console.log('Errores encontrados: ' + errores.length);
 	res.json({
 		estado: estado,
 		errores: errores,
@@ -209,7 +211,7 @@ exports.procMov = (req, res) => {
 
 	listaMov = new Map;
 
-	console.log('Cargando ' + movimientos.length + ' movimientos');
+	//console.log('Cargando ' + movimientos.length + ' movimientos');
 
 	//filtrar informacion
 	let head = true;
@@ -260,7 +262,7 @@ exports.procMov = (req, res) => {
 						if (error[0] != 'null') {
 							errores.push(error[0]);
 						} else if (error[1] == 1) {
-							console.log(linea);
+							//console.log(linea);
 						}
 					}
 				} else {
@@ -282,9 +284,9 @@ exports.procMov = (req, res) => {
 		}
 	});
 
-	console.log('Cuentas creadas: ' + cuentas);
-	console.log('Errores encontrados: ' + errores.length);
-	console.log('Lineas descartadas : ' + descartadas);
+	//console.log('Cuentas creadas: ' + cuentas);
+	//console.log('Errores encontrados: ' + errores.length);
+	//console.log('Lineas descartadas : ' + descartadas);
 
 	res.json({
 		estado: estado,
@@ -376,5 +378,29 @@ exports.sendTerceros = (req, res) => {
 	terceros = terceros.sort()
 	res.json({
 		terceros,
+	})
+}
+exports.sendBalance = (req, res) => {
+	let balance = []
+	listaBalance.forEach((value, key) => {
+		balance.push({
+			
+		});
+	});
+	balance = balance.sort()
+	res.json({
+		balance,
+	})
+}
+exports.sendMov = (req, res) => {
+	let mov = []
+	listaMov.forEach((value, key) => {
+		mov.push({
+			
+		});
+	});
+	mov = mov.sort()
+	res.json({
+		mov,
 	})
 }

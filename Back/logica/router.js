@@ -26,5 +26,5 @@ router.post('/corregir/:tipo', info.corregirErrores);
 //Envio de elementos
 router.get('/elementos/terceros', info.sendTerceros)
 router.get('/elementos/cuentas', info.sendCuentas);
-//router.get('/elementos/balance')
-//router.get('/elementos/movterceros')
+router.get('/elementos/balance', info.sendBalance)
+router.get('/elementos/mov', info.sendMov)

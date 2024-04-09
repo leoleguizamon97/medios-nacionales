@@ -9,8 +9,10 @@ export default {
 	cargarMov,
 	eliminarDB,
 	corregirErrores,
-	pedirCuentas,
 	pedirTerceros,
+	pedirCuentas,
+	pedirBalance,
+	pedirMov,
 }
 
 //Procesar informacion
@@ -69,6 +71,16 @@ async function corregirErrores(id, linea) {
 }
 //Solicitar elementos
 
+async function pedirTerceros(){
+	try {
+		const response = await axios.get(url + "/elementos/terceros");
+		return response;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+
 async function pedirCuentas(){
 	try {
 		const response = await axios.get(url + "/elementos/cuentas");
@@ -79,9 +91,19 @@ async function pedirCuentas(){
 	}
 }
 
-async function pedirTerceros(){
+async function pedirBalance(){
 	try {
-		const response = await axios.get(url + "/elementos/terceros");
+		const response = await axios.get(url + "/elementos/balance");
+		return response;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+
+async function pedirMov(){
+	try {
+		const response = await axios.get(url + "/elementos/mov");
 		return response;
 	} catch (error) {
 		console.log(error);

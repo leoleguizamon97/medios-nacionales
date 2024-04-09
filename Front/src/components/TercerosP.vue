@@ -9,10 +9,8 @@
 					<button class="btn btn-outline-secondary me-1" title="Descargar terceros" @click="pedirTerceros()">
 						<i class="bi bi-cloud-download"></i>
 					</button>
-					<button class="btn btn-outline-secondary me-1" title="Descargar terceros" @click="test()">
-						<i class="bi bi-cloud-download"></i>
-					</button>
-					<input class="form-control" type="search" placeholder="Buscar" name="buscarTerceros" @input="buscar()">
+					<input class="form-control" type="search" placeholder="Buscar" name="buscarTerceros"
+						@input="buscar()">
 				</form>
 			</div>
 		</div>
@@ -34,11 +32,15 @@
 				<table class="table table-sm table-striped">
 					<tbody>
 						<tr v-for="ter in terceros" :key="ter.idTercero">
-							<th class="col-11 align-middle" scope="row"><FichaTercerosN :ter/></th>
+							<th class="col-11 align-middle" scope="row">
+								<FichaTercerosN :ter />
+							</th>
 							<td class="col-1 align-middle text-center">
-								<button class="btn btn-outline-primary " title="Corregir"
-									@click="editar(ter.tercero)">
+								<button class="btn btn-outline-primary me-1 " title="Corregir" @click="editar(ter.tercero)">
 									<i class="bi bi-pencil-square"></i>
+								</button>
+								<button class="btn btn-outline-danger " title="Eliminar" @click="eliminar(ter.tercero)">
+									<i class="bi bi-x-circle"></i>
 								</button>
 							</td>
 						</tr>
@@ -46,18 +48,18 @@
 				</table>
 			</div>
 		</div>
-		
+
 	</div>
 </template>
 <script>
-import FichaTercerosN from '@/components/Elementos/FichaTercerosN.vue';
-import datos from "@/dataManagment";
+import FichaTercerosN from './Elementos/FichaTercerosN.vue';
+import datos from "../dataManagment";
 export default {
 	components: {
 		FichaTercerosN
 	},
 	methods: {
-		async pedirTerceros(){
+		async pedirTerceros() {
 			this.terceros = []
 			this.tercerosCompletos = []
 			this.inicial = false
@@ -65,19 +67,22 @@ export default {
 			this.tercerosCompletos = temp.data.terceros
 			this.terceros = this.tercerosCompletos
 		},
-		buscar(){
+		buscar() {
 			console.log('Awantaaaa');
 		},
-		test(){
-			
-		}
+		editar(){
+			console.log('AwantaaaaEd');
+		},
+		eliminar(){
+			console.log('AwantaaaaDel');
+		},
 	},
 	data() {
 		return {
 			terceros: [],
 			tercerosCompletos: [],
 			inicial: true,
-			i : 0
+			i: 0
 		}
 	}
 }
