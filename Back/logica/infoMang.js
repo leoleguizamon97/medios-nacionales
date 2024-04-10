@@ -253,7 +253,7 @@ exports.procMov = (req, res) => {
 					cuentas++;
 					//Busca la cuenta
 					if (listaCuenta.has(tempCuenta[1].trim())) {
-						console.log('Cuenta ' + tempCuenta[1] + '  \tencontrada');
+						//console.log('Cuenta ' + tempCuenta[1] + '  \tencontrada');
 					} else {
 						//Crear cuenta
 						let cuenta = tempCuenta[1].trim() + ' ' + tempCuenta[2].trim();
