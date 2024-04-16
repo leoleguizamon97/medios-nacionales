@@ -6,7 +6,7 @@
 				<div class="d-flex">
 					<input id="idTercero" class="form-control me-1" type="text" :value="ter.idTercero">
 					<input class="form-control" type="text" :value="ter.dv" style="width: 40px;">
-					
+
 				</div>
 			</div>
 			<div id="infoTercero" class="card bg-black w-75">
