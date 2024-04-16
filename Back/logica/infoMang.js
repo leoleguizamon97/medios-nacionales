@@ -404,3 +404,11 @@ exports.sendMov = (req, res) => {
 		mov,
 	})
 }
+//Crear informes
+
+exports.informe1001 = (req, res) => {
+	let informe =  []
+	let cuentas1001 = [14,15,5,6,7]
+	//Imprimir cuentas que inicien con arreglo
+	
+}

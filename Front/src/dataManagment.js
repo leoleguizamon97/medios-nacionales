@@ -13,6 +13,18 @@ export default {
 	pedirCuentas,
 	pedirBalance,
 	pedirMov,
+	pedir1001,
+	pedir1003,
+	pedir1004,
+	pedir1005,
+	pedir1006,
+	pedir1007,
+	pedir1008,
+	pedir1009,
+	pedir1010,
+	pedir1011,
+	pedir1012,
+	pedir2276,
 }
 
 //Procesar informacion
@@ -111,3 +123,111 @@ async function pedirMov(){
 	}
 }
 //Solicitar informes
+async function pedir1001(){
+	try {
+		const response = await axios.get(url + "/Nacionales/1001");
+		return response;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+async function pedir1003(){
+	try {
+		const response = await axios.get(url + "/Nacionales/1001");
+		return response;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+async function pedir1004(){
+	try {
+		const response = await axios.get(url + "/Nacionales/1004");
+		return response;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+async function pedir1005(){
+	try {
+		const response = await axios.get(url + "/Nacionales/1005");
+		return response;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+async function pedir1006(){
+	try {
+		const response = await axios.get(url + "/Nacionales/1006");
+		return response;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+async function pedir1007(){
+	try {
+		const response = await axios.get(url + "/Nacionales/1007");
+		return response;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+async function pedir1008(){
+	try {
+		const response = await axios.get(url + "/Nacionales/1008");
+		return response;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+async function pedir1009(){
+	try {
+		const response = await axios.get(url + "/Nacionales/1009");
+		return response;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+async function pedir1010(){
+	try {
+		const response = await axios.get(url + "/Nacionales/1010");
+		return response;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+async function pedir1011(){
+	try {
+		const response = await axios.get(url + "/Nacionales/1011");
+		return response;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+async function pedir1012(){
+	try {
+		const response = await axios.get(url + "/Nacionales/1012");
+		return response;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+async function pedir2276(){
+	try {
+		const response = await axios.get(url + "/Nacionales/2276");
+		return response;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}

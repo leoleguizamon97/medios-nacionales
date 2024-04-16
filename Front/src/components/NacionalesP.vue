@@ -18,27 +18,52 @@
 				</div>
 			</div>
 			<div class="card h-100 tab-content flex-fill" id="medNal-tabContent">
-				<div class="tab-pane fade show active" id="medNal-1001" role="tabpanel" aria-labelledby="medNal-1001-tab" tabindex="1">1001</div>
-				<div class="tab-pane fade" id="medNal-1002" role="tabpanel" aria-labelledby="medNal-1002-tab" tabindex="2">1002</div>
-				<div class="tab-pane fade" id="medNal-1003" role="tabpanel" aria-labelledby="medNal-1003-tab" tabindex="3">1003</div>
-				<div class="tab-pane fade" id="medNal-1004" role="tabpanel" aria-labelledby="medNal-1004-tab" tabindex="4">1004</div>
-				<div class="tab-pane fade" id="medNal-1005" role="tabpanel" aria-labelledby="medNal-1005-tab" tabindex="5">1005</div>
-				<div class="tab-pane fade" id="medNal-1006" role="tabpanel" aria-labelledby="medNal-1006-tab" tabindex="6">1006</div>
-				<div class="tab-pane fade" id="medNal-1007" role="tabpanel" aria-labelledby="medNal-1007-tab" tabindex="7">1007</div>
-				<div class="tab-pane fade" id="medNal-1008" role="tabpanel" aria-labelledby="medNal-1008-tab" tabindex="8">1008</div>
-				<div class="tab-pane fade" id="medNal-1009" role="tabpanel" aria-labelledby="medNal-1009-tab" tabindex="9">1009</div>
-				<div class="tab-pane fade" id="medNal-1010" role="tabpanel" aria-labelledby="medNal-1010-tab" tabindex="10">1010</div>
-				<div class="tab-pane fade" id="medNal-1011" role="tabpanel" aria-labelledby="medNal-1011-tab" tabindex="11">1011</div>
-				<div class="tab-pane fade" id="medNal-1012" role="tabpanel" aria-labelledby="medNal-1012-tab" tabindex="12">1012</div>
+				<div class="tab-pane fade show active" id="medNal-1001" role="tabpanel" aria-labelledby="medNal-1001-tab" tabindex="1"><n1001/></div>
+				<div class="tab-pane fade" id="medNal-1003" role="tabpanel" aria-labelledby="medNal-1003-tab" tabindex="3"><n1003/></div>
+				<div class="tab-pane fade" id="medNal-1004" role="tabpanel" aria-labelledby="medNal-1004-tab" tabindex="4"><n1004/></div>
+				<div class="tab-pane fade" id="medNal-1005" role="tabpanel" aria-labelledby="medNal-1005-tab" tabindex="5"><n1005/></div>
+				<div class="tab-pane fade" id="medNal-1006" role="tabpanel" aria-labelledby="medNal-1006-tab" tabindex="6"><n1006/></div>
+				<div class="tab-pane fade" id="medNal-1007" role="tabpanel" aria-labelledby="medNal-1007-tab" tabindex="7"><n1007/></div>
+				<div class="tab-pane fade" id="medNal-1008" role="tabpanel" aria-labelledby="medNal-1008-tab" tabindex="8"><n1008/></div>
+				<div class="tab-pane fade" id="medNal-1009" role="tabpanel" aria-labelledby="medNal-1009-tab" tabindex="9"><n1009/></div>
+				<div class="tab-pane fade" id="medNal-1010" role="tabpanel" aria-labelledby="medNal-1010-tab" tabindex="10"><n1010/></div>
+				<div class="tab-pane fade" id="medNal-1011" role="tabpanel" aria-labelledby="medNal-1011-tab" tabindex="11"><n1011/></div>
+				<div class="tab-pane fade" id="medNal-1012" role="tabpanel" aria-labelledby="medNal-1012-tab" tabindex="12"><n1012/></div>
+				<div class="tab-pane fade" id="medNal-1012" role="tabpanel" aria-labelledby="medNal-1012-tab" tabindex="12"><n2276/></div>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+import n1001 from './Articulos/n-1001.vue';
+import n1003 from './Articulos/n-1003.vue';
+import n1004 from './Articulos/n-1004.vue';
+import n1005 from './Articulos/n-1005.vue';
+import n1006 from './Articulos/n-1006.vue';
+import n1007 from './Articulos/n-1007.vue';
+import n1008 from './Articulos/n-1008.vue';
+import n1009 from './Articulos/n-1009.vue';
+import n1010 from './Articulos/n-1010.vue';
+import n1011 from './Articulos/n-1011.vue';
+import n1012 from './Articulos/n-1012.vue';
+import n2276 from './Articulos/n-2276.vue';
 
 export default {
-
+	components: {
+		n1001,
+		n1003,
+		n1004,
+		n1005,
+		n1006,
+		n1007,
+		n1008,
+		n1009,
+		n1010,
+		n1011,
+		n1012,
+		n2276,
+	},
 }
 </script>
 
