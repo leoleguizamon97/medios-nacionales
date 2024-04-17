@@ -23,12 +23,10 @@
 					</tr>
 				</thead>
 			</table>
-			<div class="text-center align-content-center flex-fill" v-if="tercerosCompletos.length == 0">
-				<h4 v-if="inicial">Descargue primero los terceros</h4>
-				<div v-else class="spinner-border" role="status"></div>
-			</div>
-			<h4 class="text-center align-content-center h-100" v-else-if="terceros.length == 0">Sin resultados</h4>
-			<div class="flex-fill overflow-auto" v-else>
+			<h4 v-if="inicial" class="text-center align-content-center flex-fill" >Descargue primero los terceros</h4>
+			<div v-else-if="cargando" class="text-center align-content-center flex-fill"><div class="spinner-border" role="status" ></div></div>
+			<h4 v-else-if="terceros.length == 0" class="text-center align-content-center h-100">Sin resultados</h4>
+			<div v-else class="flex-fill overflow-auto">
 				<table class="table table-sm table-striped">
 					<tbody>
 						<tr v-for="ter in terceros" :key="ter.idTercero">
@@ -52,20 +50,22 @@
 	</div>
 </template>
 <script>
-import FichaTercerosN from './Elementos/FichaTercerosN.vue';
-import datos from "../dataManagment";
+import FichaTercerosN from '../Elementos/FichaTercerosN.vue';
+import datos from "@/dataManagment";
 export default {
 	components: {
 		FichaTercerosN
 	},
 	methods: {
 		async pedirTerceros() {
+			this.cargando = true
+			this.inicial = false
 			this.terceros = []
 			this.tercerosCompletos = []
-			this.inicial = false
 			let temp = await datos.pedirTerceros()
 			this.tercerosCompletos = temp.data.terceros
 			this.terceros = this.tercerosCompletos
+			this.cargando = false
 		},
 		buscar() {
 			console.log('Awantaaaa');
@@ -82,7 +82,7 @@ export default {
 			terceros: [],
 			tercerosCompletos: [],
 			inicial: true,
-			i: 0
+			cargando: false,
 		}
 	}
 }

@@ -24,12 +24,10 @@
 					</tr>
 				</thead>
 			</table>
-			<div class="text-center align-content-center flex-fill" v-if="movTercerosCompletos.length == 0">
-				<h4 v-if="inicial">Descargue primero los Movimientos de tercero</h4>
-				<div v-else class="spinner-border" role="status"></div>
-			</div>
-			<h4 class="text-center align-content-center h-100" v-else-if="movTerceros.length == 0">Sin resultados</h4>
-			<div class="flex-fill overflow-auto" v-else>
+			<h4 v-if="inicial" class="text-center align-content-center flex-fill">Descargue primero los Movimientos de tercero</h4>
+			<div v-else-if="cargando" class="text-center align-content-center flex-fill"><div class="spinner-border" role="status" ></div></div>
+			<h4 v-else-if="movTerceros.length == 0" class="text-center align-content-center h-100" >Sin resultados</h4>
+			<div v-else class="flex-fill overflow-auto" >
 				<table class="table table-sm table-striped">
 					<tbody>
 						<tr v-for="mov in movTerceros" :key="mov.idmovTercero">
@@ -56,21 +54,22 @@
 	</div>
 </template>
 <script>
-import FichaMovTercerosN from './Elementos/FichaMovTercerosN.vue';
-import datos from "../dataManagment";
+import FichaMovTercerosN from '../Elementos/FichaMovTercerosN.vue';
+import datos from "@/dataManagment";
 export default {
 	components: {
 		FichaMovTercerosN
 	},
 	methods: {
 		async pedirMovTerceros() {
+			this.cargando = true
+			this.inicial = false
 			this.movTerceros = []
 			this.movTercerosCompletos = []
-			this.inicial = false
 			let temp = await datos.pedirMov()
 			this.movTercerosCompletos = temp.data.mov
-			this.movTerceros = temp.data.mov
-			console.log(temp.data.mov);
+			this.movTerceros = this.movTercerosCompletos
+			this.cargando = false
 		},
 		buscar() {
 			console.log('Awantaaaa');
@@ -87,6 +86,7 @@ export default {
 			movTerceros: [],
 			movTercerosCompletos: [],
 			inicial: true,
+			cargando: false,
 		}
 	}
 }

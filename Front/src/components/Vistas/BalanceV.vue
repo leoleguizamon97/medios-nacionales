@@ -23,12 +23,10 @@
 					</tr>
 				</thead>
 			</table>
-			<div class="text-center align-content-center flex-fill" v-if="balancesCompletos.length == 0">
-				<h4 v-if="inicial">Descargue primero los balances</h4>
-				<div v-else class="spinner-border" role="status"></div>
-			</div>
-			<h4 class="text-center align-content-center h-100" v-else-if="balances.length == 0">Sin resultados</h4>
-			<div class="flex-fill overflow-auto" v-else>
+			<h4 v-if="inicial" class="text-center align-content-center flex-fill" >Descargue primero los balances</h4>
+			<div v-else-if="cargando" class="text-center align-content-center flex-fill"><div class="spinner-border" role="status" ></div></div>
+			<h4  v-else-if="balances.length == 0" class="text-center align-content-center flex-fill" >Sin resultados</h4>
+			<div v-else class="flex-fill overflow-auto" >
 				<table class="table table-sm table-striped">
 					<tbody>
 						<tr v-for="bal in balances" :key="bal.idbalance">
@@ -52,20 +50,22 @@
 	</div>
 </template>
 <script>
-import FichabalancesN from './Elementos/FichaBalancesN.vue';
-import datos from "../dataManagment";
+import FichabalancesN from '../Elementos/FichaBalancesN.vue';
+import datos from "@/dataManagment";
 export default {
 	components: {
 		FichabalancesN
 	},
 	methods: {
 		async pedirbalances() {
+			this.cargando = true
+			this.inicial = false
 			this.balances = []
 			this.balancesCompletos = []
-			this.inicial = false
 			let temp = await datos.pedirBalance()
 			this.balancesCompletos = temp.data.balance
 			this.balances = this.balancesCompletos
+			this.cargando = false
 		},
 		buscar() {
 			console.log('Awantaaaa');
@@ -82,6 +82,7 @@ export default {
 			balances: [],
 			balancesCompletos: [],
 			inicial: true,
+			cargando: false,
 		}
 	}
 }

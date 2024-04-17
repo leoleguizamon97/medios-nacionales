@@ -1,0 +1,89 @@
+{
+  "NombreEmpresa": "DEFAULT",
+  "NIT":123456789,
+  "DV":0,
+  "Nacionales": {
+    "n1001": {
+      "Titulo": "1001",
+      "Encabezados": [
+        "Concepto",
+        "Tipo de documento",
+        "Número identificación",
+        "Primer apellido del informado",
+        "Segundo apellido del informado",
+        "Primer nombre del informado",
+        "Otros nombres del informado",
+        "Razón social informado",
+        "Dirección",
+        "Código dpto",
+        "Código mcp",
+        "País de Residencia o domicilio",
+        "Pago o abono en cuenta deducible",
+        "Pago o abono en cuenta  NO deducible",
+        "IVA mayor valor del costo o gasto deducible",
+        "IVA mayor valor del costo o gasto NO deducible",
+        "Retención en la fuente practicada Renta",
+        "Retención en la fuente asumida Renta",
+        "Retención en la fuente practicada IVA a responsables del IVA",
+        "Retención en la fuente practivada IVA a no residentes o no domiciliarios"
+      ],
+      "Cuentas": [14, 15, 5, 6, 7]
+    },
+    "n1003": {
+      "Titulo": "1003",
+      "Encabezados": [],
+      "Cuentas": []
+    },
+    "n1004": {
+      "Titulo": "1004",
+      "Encabezados": [],
+      "Cuentas": []
+    },
+    "n1005": {
+      "Titulo": "1005",
+      "Encabezados": [],
+      "Cuentas": []
+    },
+    "n1006": {
+      "Titulo": "1006",
+      "Encabezados": [],
+      "Cuentas": []
+    },
+    "n1007": {
+      "Titulo": "1007",
+      "Encabezados": [],
+      "Cuentas": []
+    },
+    "n1008": {
+      "Titulo": "1008",
+      "Encabezados": [],
+      "Cuentas": []
+    },
+    "n1009": {
+      "Titulo": "1009",
+      "Encabezados": [],
+      "Cuentas": []
+    },
+    "n1010": {
+      "Titulo": "1010",
+      "Encabezados": [],
+      "Cuentas": []
+    },
+    "n1011": {
+      "Titulo": "1011",
+      "Encabezados": [],
+      "Cuentas": []
+    },
+    "n1012": {
+      "Titulo": "1012",
+      "Encabezados": [],
+      "Cuentas": []
+    },
+    "n2276": {
+      "Titulo": "2276",
+      "Encabezados": [],
+      "Cuentas": []
+    }
+  },
+  "Distritales": {}
+}

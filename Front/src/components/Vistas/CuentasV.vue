@@ -23,12 +23,10 @@
 					</tr>
 				</thead>
 			</table>
-			<div class="text-center align-content-center flex-fill" v-if="cuentasCompletas.length == 0">
-				<h4 v-if="inicial">Descargue primero las cuentas</h4>
-				<div v-else class="spinner-border" role="status"></div>
-			</div>
-			<h4 class="text-center align-content-center h-100" v-else-if="cuentas.length == 0">Sin resultados</h4>
-			<div class="flex-fill overflow-auto" v-else>
+			<h4 v-if="inicial" class="text-center align-content-center flex-fill">Descargue primero las cuentas</h4>
+			<div v-else-if="cargando" class="text-center align-content-center flex-fill"><div class="spinner-border" role="status" ></div></div>
+			<h4 v-else-if="cuentas.length == 0" class="text-center align-content-center h-100">Sin resultados</h4>
+			<div v-else class="flex-fill overflow-auto" >
 				<table class="table table-sm table-striped">
 					<tbody>
 						<tr v-for="cuenta in cuentas" :key="cuenta.cuenta">
@@ -54,12 +52,14 @@ import datos from "@/dataManagment";
 export default {
 	methods: {
 		async pedirCuentas() {
+			this.cargando = true
+			this.inicial = false
 			this.cuentas = []
 			this.cuentasCompletas = []
-			this.inicial = false
 			let temp = await datos.pedirCuentas()
 			this.cuentas = temp.data.cuentas
 			this.cuentasCompletas = temp.data.cuentas
+			this.cargando = false
 		},
 		buscar() {
 			let valor = document.forms['cuentas'].elements['buscarCuentas'].value
@@ -80,7 +80,8 @@ export default {
 		return {
 			cuentas: [],
 			cuentasCompletas: [],
-			inicial: true
+			inicial: true,
+			cargando: false,
 		}
 	}
 };

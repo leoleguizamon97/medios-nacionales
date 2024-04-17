@@ -13,10 +13,10 @@
 
 <script>
 import Inicio from './InicioP.vue';
-import Terceros from './TercerosP.vue'
-import Cuentas from './CuentasP.vue'
-import Balance from './BalanceP.vue'
-import MovTerceros from './MovTercerosP.vue'
+import Terceros from './Vistas/TercerosV.vue'
+import Cuentas from './Vistas/CuentasV.vue'
+import Balance from './Vistas/BalanceV.vue'
+import MovTerceros from './Vistas/MovTercerosV.vue'
 import NacionalesP from './NacionalesP.vue';
 import DistritalesP from '@/components/DistritalesP.vue';
 
