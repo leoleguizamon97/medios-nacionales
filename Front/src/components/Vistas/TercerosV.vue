@@ -11,13 +11,17 @@
 						Ver solo erroneos
 					</label>
 				</div>
-				<form name="terceros" class="d-flex" role="search" @submit.prevent="">
+				<div class="d-flex">
 					<button class="btn btn-outline-secondary me-1" title="Descargar terceros" @click="pedirTerceros()" name="btnBuscar">
 						<i class="bi bi-cloud-download"></i>
 					</button>
-					<input class="form-control" type="search" placeholder="Buscar" name="buscarTerceros"
-						@input="buscar()">
-				</form>
+					<form name="terceros" class="d-flex" role="search" @submit.prevent="">
+						<input class="form-control me-1" type="search" placeholder="Buscar" name="buscarTerceros">
+						<button class="btn btn-outline-secondary me-1" title="Buscar terceros" @click="buscar()" name="btnBuscar">
+							<i class="bi bi-search"></i>
+						</button>
+					</form>
+				</div>
 			</div>
 		</div>
 		<div class="card mt-1 flex-fill d-flex flex-column overflow-hidden">
@@ -72,11 +76,23 @@ export default {
 			this.tercerosCompletos = []
 			let temp = await datos.pedirTerceros()
 			this.tercerosCompletos = temp.data.terceros
-			this.terceros = this.tercerosCompletos
+			this.terceros = this.tercerosCompletos.slice(0,100)
 			this.cargando = false
 		},
 		buscar() {
 			let valor = document.forms['terceros'].elements['buscarTerceros'].value
+			
+			if(valor == ''){
+				this.terceros = this.tercerosCompletos.slice(0,100)
+				return
+			}else if(valor == '$'){
+				this.terceros = this.tercerosCompletos
+				return
+			}
+			if(valor.length <= 3){
+				alert('Mas de 3 caracteres')
+				return
+			}
 			if (/^[0-9]+$/.test(valor)) {
 				this.terceros = this.tercerosCompletos.filter(tercero => tercero.id.startsWith(valor))
 			} else {
@@ -93,7 +109,7 @@ export default {
 				this.verErrores = true
 				document.forms['terceros'].elements['buscarTerceros'].disabled= false
 				document.forms['terceros'].elements['btnBuscar'].disabled= false
-				this.terceros = this.tercerosCompletos
+				this.buscar()
 			}
 		},
 		editar() {

@@ -22,7 +22,7 @@
 				</div>
 				<div class="d-flex mt-1">
 					<input id="actEconomica" type="text" placeholder="CodActEc" class="text-center flex-fill" :value="ter.actEconomica" style="width: 80px" title="Actividad economica (Codigo)">
-					<input id="idMunicipio" type="text" placeholder="CodDpto" class="text-center flex-fill" :value="ter.idMunicipio" style="width: 72px" title="Codigo de departamento+Ciudad">
+					<input id="idMunicipio" type="text" placeholder="CodDpto" class="text-center flex-fill mx-1" :value="ter.idMunicipio" style="width: 72px" title="Codigo de departamento+Ciudad">
 					<input id="idPais" type="text" placeholder="CodPais" class="text-center flex-fill" :value="ter.idPais" style="width: 72px" title="Codigo de Departamento + Municipio">
 				</div>
 			</div>
