@@ -2,6 +2,7 @@
   "NombreEmpresa": "DEFAULT",
   "NIT":123456789,
   "DV":0,
+  "AñoActual":2023,
   "TiposDocumentos":{
 	  "11": "Registro civil de nacimiento",
 	  "12": "Tarjeta de identidad",

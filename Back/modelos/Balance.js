@@ -3,9 +3,10 @@ module.exports = class Balance {
 		this.error = '';
 		this.idCuenta = cuenta;
 		this.año = año;
-		this.saldoInicial = campos[3].replace(/\./g, '');
-		this.debito = campos[4].replace(/\./g, '');
-		this.credito = campos[5].replace(/\./g, '');
+		this.saldoInicial = parseFloat(campos[3].replace(/\./g, ''));
+		this.debito = parseFloat(campos[4].replace(/\./g, ''));
+		this.credito = parseFloat(campos[5].replace(/\./g, ''));
+		this.neto = parseFloat(campos[6].replace(/\./g, ''));
 		this.idTercero = campos[2].replace(/\./g, '');
 		this.idEmpresa = nitEmpresa;
 		this.verErrores();

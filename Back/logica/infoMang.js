@@ -380,7 +380,14 @@ exports.sendBalance = (req, res) => {
 	let balance = []
 	listaBalance.forEach((value, key) => {
 		balance.push({
-			
+			idBalance: key,
+			error: value.error,
+			idCuenta: value.idCuenta,
+			saldoInicial :value.saldoInicial,
+			debito: value.debito,
+			credito: value.credito,
+			neto: value.neto,
+			idTercero: value.idTercero,
 		});
 	});
 	balance = balance.sort()
