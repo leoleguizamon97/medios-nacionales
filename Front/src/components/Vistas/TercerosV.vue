@@ -5,33 +5,20 @@
 				<div>
 					<a class="navbar-brand" href="#">Terceros</a>
 				</div>
-				<div class="d-flex justify-content-center align-items-center mx-1">
-					<input class="form-check-input" type="checkbox" value="" id="CheckErroneos" @click="soloErroneos()">
-					<label class="ms-1 form-check-label text-nowrap" for="CheckErroneos">
-						Ver solo erroneos
-					</label>
-				</div>
 				<div class="d-flex">
-					<button class="btn btn-outline-secondary me-1" title="Descargar terceros" @click="pedirTerceros()" name="btnBuscar">
+					<button type="button" class="btn btn-outline-secondary me-1	" data-bs-toggle="button" @click="soloErroneos()"><i class="bi bi-bug"></i></button>
+					<button class="btn btn-outline-secondary me-1" title="Descargar terceros" @click="pedirTerceros()" id="btnPedirTerceros">
 						<i class="bi bi-cloud-download"></i>
 					</button>
 					<form name="terceros" class="d-flex" role="search" @submit.prevent="">
-						<input class="form-control me-1" type="search" placeholder="Buscar" name="buscarTerceros">
-						<button class="btn btn-outline-secondary me-1" title="Buscar terceros" @click="buscar()" name="btnBuscar">
-							<i class="bi bi-search"></i>
-						</button>
+						<input class="form-control me-1" type="search" placeholder="Buscar" name="buscarTerceros" @input="buscar()">
 					</form>
 				</div>
 			</div>
 		</div>
 		<div class="card mt-1 flex-fill d-flex flex-column overflow-hidden">
 			<table>
-				<thead class="border-bottom border-secondary">
-					<tr class="text-center">
-						<th class="col-11" scope="col">Ficha de tercero</th>
-						<th class="col-1 pe-4" scope="col">Editar</th>
-					</tr>
-				</thead>
+				
 			</table>
 			<h4 v-if="inicial" class="text-center align-content-center flex-fill">Descargue primero los terceros</h4>
 			<div v-else-if="cargando" class="text-center align-content-center flex-fill">
@@ -40,6 +27,12 @@
 			<h4 v-else-if="terceros.length == 0" class="text-center align-content-center h-100">Sin resultados</h4>
 			<div v-else class="flex-fill overflow-auto">
 				<table class="table table-sm table-borderless">
+					<thead class="border-bottom border-secondary">
+						<tr class="text-center sticky-top">
+							<th class="col-11" scope="col">Ficha de tercero</th>
+							<th class="col-1 pe-4" scope="col">Editar</th>
+						</tr>
+					</thead>
 					<tbody>
 						<tr v-for="ter in terceros" :key="ter.idUnico" :id="ter.idUnico+'fila'">
 							<th class="col-11 align-middle" scope="row">
@@ -90,7 +83,6 @@ export default {
 				return
 			}
 			if(valor.length <= 3){
-				alert('Mas de 3 caracteres')
 				return
 			}
 			if (/^[0-9]+$/.test(valor)) {
@@ -103,12 +95,13 @@ export default {
 			if (this.verErrores){
 				this.verErrores = false
 				document.forms['terceros'].elements['buscarTerceros'].disabled= true
-				document.forms['terceros'].elements['btnBuscar'].disabled= true
+				document.getElementById('btnPedirTerceros').disabled = true
+
 				this.terceros = this.tercerosCompletos.filter(tercero => tercero.error != '')
 			} else {
 				this.verErrores = true
 				document.forms['terceros'].elements['buscarTerceros'].disabled= false
-				document.forms['terceros'].elements['btnBuscar'].disabled= false
+				document.getElementById('btnPedirTerceros').disabled = false
 				this.buscar()
 			}
 		},

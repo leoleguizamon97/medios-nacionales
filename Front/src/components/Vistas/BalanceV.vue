@@ -6,20 +6,19 @@
 					<a class="navbar-brand" href="#">Balance de prueba</a>
 				</div>
 				<div class="d-flex justify-content-center align-items-center mx-1">
-					<input class="form-check-input" type="checkbox" value="" id="CheckErroneos" @click="soloErroneos()">
-					<label class="ms-1 form-check-label text-nowrap" for="CheckErroneos">
-						Solo errores
-					</label>
+					<button class="btn" @click="sumarPagina(false)"><i class="bi bi-dash"></i></button>
+					<input type="number" @change="actualizarPagina()" class="form-control" style="width: 70px;" value="0" id="balContador" :title="'Numero de paginas: '+ (paginasTotal+1)">
+					<button class="btn" @click="sumarPagina(true)"><i class="bi bi-plus"></i></button>
 				</div>
-				<div>
-					
-				</div>
-				<form name="balances" class="d-flex" role="search" @submit.prevent="">
-					<button class="btn btn-outline-secondary me-1" title="Descargar balances" @click="pedirbalances()">
+				<div class="d-flex align-content-center">
+					<button type="button" class="btn btn-outline-secondary me-1	" data-bs-toggle="button" @click="soloErroneos()"><i class="bi bi-bug"></i></button>
+					<button class="btn btn-outline-secondary me-1" title="Descargar balances" @click="pedirbalances()" id="btnPedirbalances">
 						<i class="bi bi-cloud-download"></i>
 					</button>
-					<input class="form-control" type="search" placeholder="Buscar" name="buscarbalances" @input="buscar()">
-				</form>
+					<form name="balances" class="d-flex" role="search" @submit.prevent="">
+						<input class="form-control" type="number" placeholder="Buscar" name="buscarbalances" @input="buscar()">
+					</form>
+				</div>
 			</div>
 		</div>
 		<div class="card mt-1 flex-fill d-flex flex-column overflow-hidden">
@@ -44,31 +43,31 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="bal in balances" :key="bal.idbalance">
-							<th class="align-middle text-nowrap" scope="row" style="width:50px;">
-								<input type="text" class="form-control-plaintext text-center" id="idValance" :value="bal.idBalance">
+						<tr v-for="bal in balanceMostrar" :key="bal.idbalance">
+							<th class="align-middle text-nowrap" scope="row">
+								<input type="text" class="form-control-plaintext text-center" id="idValance" :value="bal.idBalance" style="width: 70px;">
 							</th>
 							<td class="align-middle text-center text-nowrap">
 								<div v-if="bal.error==''" id="estado" class="text-success rounded text-center vertical"><i class="bi bi-check2-square"></i></div>
 								<div v-else id="estado" class="text-warning-emphasis rounded text-center" :title="bal.error"><i class="bi bi-exclamation-triangle"></i></div>
 							</td>
 							<th class="align-middle text-nowrap" scope="row">
-								<input type="text" class="text-end m-0 pe-2 form-control flex-fill" style="width: min-content;" id="idCuenta" :value="bal.idCuenta">
+								<input type="text" class="text-end m-0 form-control flex-fill" style="width: min-content;" id="idCuenta" :value="bal.idCuenta">
 							</th>
 							<th class="align-middle text-nowrap" scope="row">
-								<input type="text" class="text-end m-0 pe-2 form-control flex-fill" style="width: min-content;" id="idTercero" :value="bal.idTercero">
+								<input type="text" class="text-end m-0 form-control flex-fill" style="width: min-content;" id="idTercero" :value="bal.idTercero">
 							</th>
 							<th class="align-middle text-nowrap" scope="row">
-								<input type="number" class="text-end m-0 pe-2 form-control flex-fill" style="width: min-content;" id="saldoInicial" :value="parseFloat( bal.saldoInicial)">
+								<input type="number" class="text-end m-0 form-control flex-fill" style="width: min-content;" id="saldoInicial" :value="parseFloat( bal.saldoInicial)">
 							</th>
 							<th class="align-middle text-nowrap" scope="row">
-								<input type="number" class="text-end m-0 pe-2 form-control flex-fill" style="width: min-content;" id="debito" :value="parseFloat( bal.debito)">
+								<input type="number" class="text-end m-0 form-control flex-fill" style="width: min-content;" id="debito" :value="parseFloat( bal.debito)">
 							</th>
 							<th class="align-middle text-nowrap" scope="row">
-								<input type="number" class="text-end m-0 pe-2 form-control flex-fill" style="width: min-content;" id="credito" :value="parseFloat( bal.credito)">
+								<input type="number" class="text-end m-0 form-control flex-fill" style="width: min-content;" id="credito" :value="parseFloat( bal.credito)">
 							</th>
 							<th class="align-middle text-nowrap" scope="row">
-								<input type="number" class="text-end m-0 pe-2 form-control flex-fill" style="width: min-content;" id="neto" :value="parseFloat( bal.neto)">
+								<input type="number" class="text-end m-0 form-control flex-fill" style="width: min-content;" id="neto" :value="parseFloat( bal.neto)">
 							</th>
 							<td class="align-middle text-center text-nowrap">
 								<button class="btn btn-outline-primary me-1 " title="Corregir" @click="editar(bal.balance)">
@@ -97,22 +96,34 @@ export default {
 			this.balancesCompletos = []
 			let temp = await datos.pedirBalance()
 			this.balancesCompletos = temp.data.balance
-			this.balances = this.balancesCompletos.slice(0,50)
-			this.calcularPaginas()
+			this.balances = this.balancesCompletos
+			this.balanceMostrar = this.balances.slice(0,50)
+			this.paginaAcual = 0
+			this.calcularPaginas(this.balances.length)
 			this.cargando = false
 		},
 		calcularPaginas(){
-			let unidades = this.balancesCompletos.length
-			this.paginasTotal = parseInt(unidades/50)
-			console.log(this.paginasTotal);
+			this.paginasTotal = parseInt(this.balances.length/50)
+			this.paginaAcual = 0
+			document.getElementById('balContador').value = 1
+			this.mostrarPaginas()
 		},
-		calcularPagParcial(){
-			let unidades = this.balances.length
-			this.paginasParcial = parseInt(unidades/50)
-			console.log(this.paginasParcial);
+		mostrarPaginas(){
+			let inicio = this.paginaAcual * 50
+			this.balanceMostrar = this.balances.slice(inicio,inicio+50)
 		},
 		buscar() {
-			console.log('Awantaaaa');
+			let valor = document.forms['balances'].elements['buscarbalances'].value
+			
+			if(valor == ''){
+				this.balances = this.balancesCompletos
+				this.calcularPaginas()
+				return
+			}
+			if (/^[0-9]+$/.test(valor)) {
+				this.balances = this.balancesCompletos.filter( balance => balance.idCuenta.startsWith(valor) || balance.idTercero.startsWith(valor))
+			}
+			this.calcularPaginas()
 		},
 		editar() {
 			console.log('AwantaaaaEd');
@@ -120,16 +131,44 @@ export default {
 		eliminar() {
 			console.log('AwantaaaaDel');
 		},
+		actualizarPagina(){
+			this.paginaAcual = document.getElementById('balContador').value -1
+			this.mostrarPaginas()
+		},
+		sumarPagina(arg){
+			if (arg){
+				if(this.paginaAcual < this.paginasTotal) this.paginaAcual++;
+			}else{
+				if(this.paginaAcual >= 1) this.paginaAcual--;
+			}
+			document.getElementById('balContador').value = this.paginaAcual +1
+			this.mostrarPaginas()
+		},
+		soloErroneos() {
+			if (this.verErrores){
+				this.verErrores = false
+				document.forms['balances'].elements['buscarbalances'].disabled= true
+				document.getElementById('btnPedirbalances').disabled = true
+				this.balances = this.balancesCompletos.filter(tercero => tercero.error != '')
+				this.calcularPaginas(this.balances.length)
+			} else {
+				this.verErrores = true
+				document.forms['balances'].elements['buscarbalances'].disabled= false
+				document.getElementById('btnPedirbalances').disabled = false
+				this.buscar()
+			}
+		},
 	},
 	data() {
 		return {
 			balances: [],
+			balanceMostrar: [],
 			balancesCompletos: [],
 			inicial: true,
 			cargando: false,
 			paginasTotal: 0,
-			paginasParcial: 0,
-			paginaAcual:1
+			paginaAcual:0,
+			verErrores: true,
 		}
 	}
 }

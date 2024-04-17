@@ -3,5 +3,6 @@ module.exports = class Cuenta {
 		this.cuenta = cuenta;
 		this.nombre = nombre;
 		this.empresa = nitEmpresa;
+		this.error = '';
 	}
 }

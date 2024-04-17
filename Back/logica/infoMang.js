@@ -335,7 +335,7 @@ exports.sendCuentas = (req, res) => {
 	listaCuenta.forEach((value, key) => {
 		cuentas.push({
 			cuenta: value.cuenta,
-			nombre: value.nombre
+			nombre: value.nombre,
 		});
 	});
 	cuentas = cuentas.sort()
