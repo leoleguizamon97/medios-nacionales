@@ -30,3 +30,5 @@ router.get('/elementos/balance', info.sendBalance)
 router.get('/elementos/mov', info.sendMov)
 //Envio de articulos
 router.get('/nacionales/',info.informeNacional)
+//Eliminar elementos
+router.delete('/eliminar/tercero/', info.eliminarTercero)

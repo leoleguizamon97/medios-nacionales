@@ -2,6 +2,19 @@
   "NombreEmpresa": "DEFAULT",
   "NIT":123456789,
   "DV":0,
+  "TiposDocumentos":{
+	  "11": "Registro civil de nacimiento",
+	  "12": "Tarjeta de identidad",
+	  "13": "Cédula de ciudadanía",
+	  "21": "Tarjeta de extranjería",
+	  "22": "Cédula de extranjería",
+	  "31": "NIT",
+	  "41": "Pasaporte",
+	  "42": "Tipo de documento extranjero",
+	  "47": "Permiso Especial de Permanencia",
+	  "48": "Permiso por Protección Temporal",
+	  "43": "Sin identificación del exterior o para uso definido por la DIAN."
+  },
   "Nacionales": {
     "n1001": {
       "Titulo": "1001",

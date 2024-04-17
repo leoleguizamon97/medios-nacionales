@@ -36,7 +36,7 @@
 
 <script>
 import articuloNacional from './Articulos/ArticuloNacional.vue';
-import datosArticulos from '../ArticulosConfig.json'
+import datosArticulos from '../Configuracion.json'
 
 export default {
 	components: {

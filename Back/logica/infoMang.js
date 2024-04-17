@@ -347,8 +347,10 @@ exports.sendTerceros = (req, res) => {
 	let terceros = []
 	listaTercero.forEach((value, key) => {
 		terceros.push({
-			idTercero: value.idTercero,
+			error: value.error,
+			id: value.id,
 			dv: value.dv,
+			idUnico: value.idUnico,
 			tipoDocumento: value.tipoDocumento,
 			tipoPersona: value.tipoPersona,
 			nombre1: value.nombre1,
@@ -403,8 +405,6 @@ exports.sendMov = (req, res) => {
 exports.informeNacional = (req, res) => {
 	let tipo = req.query.tipo
 	let cuentas = req.query.cuentas
-	console.log(cuentas);
-	console.log(tipo);
 	let informe = []
 	let articulo = [
 		{i: 1, aaa: "asdasdas1"},
@@ -502,5 +502,13 @@ function informe2276(){
 exports.editarElementos = (req,res) => {
 	res.json({
 		condicion:false
+	})
+}
+//Funciones de eliminar informacion
+exports.eliminarTercero = (req,res) => {
+	let tercero = req.query.idUnico
+	listaTercero.delete(tercero)
+	res.json({
+		val:true
 	})
 }

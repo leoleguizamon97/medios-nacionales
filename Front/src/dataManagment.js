@@ -14,6 +14,7 @@ export default {
 	pedirBalance,
 	pedirMov,
 	pedirArticulo,
+	eliminarTercero
 }
 
 //Procesar informacion
@@ -119,6 +120,17 @@ async function pedirArticulo(tipo,cuentas){
 			cuentas
 		}
 		const response = await axios.get(url + "/nacionales/",{params});
+		return response;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+//Eliminar elementos
+async function eliminarTercero(idUnico){
+	let params = {idUnico}
+	try {
+		const response = await axios.delete(url + "/eliminar/tercero/",{params});
 		return response;
 	} catch (error) {
 		console.log(error);
