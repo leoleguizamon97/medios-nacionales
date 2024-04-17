@@ -21,6 +21,8 @@ router.post('/proc/mov', info.procMov)
 router.delete('/eliminarDB', info.eliminarDB)
 //Correcion de errores
 router.put('/corregir/:tipo', info.corregirErrores)
+//Editar elementos
+router.put('/editar/:tipo', info.editarElementos)
 //Envio de elementos
 router.get('/elementos/terceros', info.sendTerceros)
 router.get('/elementos/cuentas', info.sendCuentas)

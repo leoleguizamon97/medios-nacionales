@@ -39,11 +39,11 @@ function crearTercero(linea, id) {
 	let error = 'null';
 	if (linea.split(';').length == 19) {
 		let tercero = new Tercero(linea, nitEmpresa, dvEmpresa);
-		if (listaTercero.has(tercero.idTercero)) {
+		if (listaTercero.has(tercero.idUnico)) {
 			tercero.error = 'Error: Tercero repetido';
-			console.log('Tercero ' + tercero.idTercero + ' repetido!');
+			console.log('Tercero ' + tercero.idUnico + ' repetido!');
 		} else {
-			listaTercero.set(tercero.idTercero, tercero);
+			listaTercero.set(tercero.idUnico, tercero);
 		}
 		if (tercero.error != '') {
 			error = new Error(id + 'T', 'Terceros', tercero.error, linea);
@@ -119,13 +119,6 @@ function crearMovimiento(cuentaLinea, nit, campos, id) {
 	}
 	//cargar movimiento
 	return error;
-}
-//Funciones de editar informacion
-function editarTercero(linea, id) {
-	//oldT = 
-}
-function editarCuenta(linea, id) {
-	crearCuenta(linea, id)
 }
 //Procesar informacion
 exports.procTerceros = (req, res) => {
@@ -299,6 +292,7 @@ exports.eliminarDB = (req, res) => {
 	listaTercero.clear();
 	listaBalance.clear();
 	listaMov.clear();
+	listaCuenta.clear();
 
 	console.log('DB eliminada!');
 	res.json({
@@ -404,9 +398,8 @@ exports.sendMov = (req, res) => {
 		mov,
 	})
 }
-//Crear informes
 
-//Imprimir cuentas que inicien con arreglo
+//Crear informes
 exports.informeNacional = (req, res) => {
 	let tipo = req.query.tipo
 	let cuentas = req.query.cuentas
@@ -504,4 +497,10 @@ function informe1012(){
 }
 function informe2276(){
 	return
+}
+//Funciones de editar informacion
+exports.editarElementos = (req,res) => {
+	res.json({
+		condicion:false
+	})
 }

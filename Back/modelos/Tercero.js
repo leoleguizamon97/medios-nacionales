@@ -25,8 +25,9 @@ module.exports = class Tercero {
 	}
 	guardarCampos(campos, nitEmpresa, dvEmpresa) {
 		this.error = '';
-		this.idTercero = campos[0];
+		this.id = campos[0];
 		this.dv = campos[1];
+		this.idUnico = this.id +'-'+ this.dv
 		this.tipoDocumento = campos[2];
 		this.tipoPersona = campos[15];
 		this.nombre1 = campos[13];
@@ -38,7 +39,7 @@ module.exports = class Tercero {
 		this.correo = campos[10];
 		this.celular = campos[18];
 		this.esEmpresa = this.esEmpresa(nitEmpresa, dvEmpresa);
-		if (this.esEmpresa) console.log(this.esEmpresa + ' ' + this.idTercero + ' ' + nitEmpresa);
+		if (this.esEmpresa) console.log(this.esEmpresa + ' ' + this.id + ' ' + nitEmpresa);
 		//No necesarios
 		this.nombreCompleto = campos[3];
 		this.telefono = campos[5];
@@ -73,17 +74,17 @@ module.exports = class Tercero {
 				this.nombre1 = nombre[2];
 				this.nombre2 = nombre[3];
 			} else {
-				this.error = 'Error: Nombre incompleto o mal suministrado';
+				this.error = 'Error menor: Nombre incompleto o mal suministrado';
 			}
 		}
 	}
 	verErrores() {
 		//Empresas con id de natural
-		if (this.idTercero.length == 9 && this.idTercero[0] == '9' && this.naturaleza == 'NATURAL') {
-			this.error = 'Error: Posible empresa como persona natural';
+		if (this.id.length == 9 && this.id[0] == '9' && this.naturaleza == 'NATURAL') {
+			this.error = 'Error menor: Posible empresa como persona natural';
 		}
 	}
 	esEmpresa(nitEmpresa, dvEmpresa) {
-		return this.idTercero == nitEmpresa && this.dv == dvEmpresa;
+		return this.id == nitEmpresa && this.dv == dvEmpresa;
 	}
 }
