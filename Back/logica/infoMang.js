@@ -525,16 +525,4 @@ exports.eliminarTercero = (req, res) => {
 	res.json({
 		val: true
 	})
-
-
-<th class="" scope="col">Tercero</th>
-<th class="" scope="col">Cuenta</th>
-<th class="" scope="col">ID Tercero</th>
-<th class="" scope="col">Documento</th>
-<th class="" scope="col">Fecha</th>
-<th class="" scope="col">Concepto</th>
-<th class="" scope="col">Debito</th>
-<th class="" scope="col">Credito</th>
-<th class="" scope="col">Neto</th>
-<th class="" scope="col">Editar</th>
 }

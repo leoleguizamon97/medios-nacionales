@@ -74,14 +74,15 @@ module.exports = class Tercero {
 				this.nombre1 = nombre[2];
 				this.nombre2 = nombre[3];
 			} else {
-				this.error = 'Error menor: Nombre incompleto o mal suministrado';
+				this.error = 'Error: Nombre incompleto o mal suministrado';
 			}
 		}
 	}
 	verErrores() {
 		//Empresas con id de natural
 		if (this.id.length == 9 && this.id[0] == '9' && this.naturaleza == 'NATURAL') {
-			this.error = 'Error menor: Posible empresa como persona natural';
+			//Agregar funcion para descartar errores
+			//this.error = 'Error: Posible empresa como persona natural';
 		}
 	}
 	esEmpresa(nitEmpresa, dvEmpresa) {

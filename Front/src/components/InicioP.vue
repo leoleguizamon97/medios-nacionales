@@ -233,9 +233,24 @@ export default {
 			document.getElementById('movTer-path').value = '';
 		},
 		agregarErrores(errores) {
+			let erroresMenores = 0
+			let lista = [
+				'Error: DV de tercero incorrecto',
+				'Error: Formato de tercero incorrecto',
+				'Error: Nombre incompleto o mal suministrado',
+			]
+
 			errores.forEach(error => {
-				this.errores.push(error);
+				if(lista.includes(error.error)){
+					erroresMenores++
+				}else{
+					this.errores.push(error);
+				}
 			});
+			if (erroresMenores != 0) {
+				alert('Se encontraron '+ erroresMenores + ' errores no graves')
+			}
+
 		},
 		async corregirError(id) {
 			let linea = document.getElementById(id + 'tf')
