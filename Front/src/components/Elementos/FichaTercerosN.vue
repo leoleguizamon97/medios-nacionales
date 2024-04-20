@@ -1,7 +1,7 @@
 <template>
 	<div class="card p-1 bg-body-tertiary">
 		<div class="d-flex">
-			<div id="tipoTercero" class="w-25 border-end border-2 border-secondary pe-1">
+			<div id="tipoTercero" class="w-25 border-end border-2 border-secondary pe-1" style="min-width: 250px;">
 				<div class="d-flex">
 					<div v-if="ter.error==''" id="estado" class="text-success rounded text-center vertical"><i class="bi bi-check2-square"></i></div>
 					<div v-else id="estado" class="text-warning-emphasis rounded text-center" :title="ter.error"><i class="bi bi-exclamation-triangle"></i></div>
