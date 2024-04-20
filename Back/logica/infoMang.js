@@ -331,7 +331,6 @@ exports.corregirErrores = (req, res) => {
 exports.sendCuentas = (req, res) => {
 	let cuentas = []
 	let clavesOrdenadas = Array.from( listaCuenta.keys()).sort();
-	console.log(clavesOrdenadas);
 
 	clavesOrdenadas.forEach((key) => {
 		let value = listaCuenta.get(key);
