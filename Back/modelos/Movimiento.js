@@ -1,10 +1,12 @@
 module.exports = class Movimiento {
-	constructor(cuentaLinea, campos, nitEmpresa, año) {
+	constructor(id, cuenta, tercero, nitEmpresa, año, campos) {
 		this.error = '';
-		this.guardarCampos(campos);
-		this.idCuenta = cuentaLinea;
+		this.id = id;
+		this.idCuenta = cuenta;
+		this.idTercero = tercero;
 		this.idEmpresa = nitEmpresa;
 		this.año = año;
+		this.guardarCampos(campos);
 	}
 
 	guardarCampos(campos) {

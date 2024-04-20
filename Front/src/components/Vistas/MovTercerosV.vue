@@ -22,7 +22,7 @@
 			</div>
 		</div>
 		<div class="card mt-1 flex-fill d-flex flex-column overflow-hidden">
-			<h4 v-if="inicial" class="text-center align-content-center flex-fill">Descargue primero los movTerceros</h4>
+			<h4 v-if="inicial" class="text-center align-content-center flex-fill">Descargue primero los Movimientos de tercero</h4>
 			<div v-else-if="cargando" class="text-center align-content-center flex-fill">
 				<div class="spinner-border" role="status"></div>
 			</div>
@@ -33,9 +33,12 @@
 						<tr class="text-center text-nowrap">
 							<th class="" scope="col">ID</th>
 							<th class="" scope="col">Estado</th>
+							<th class="" scope="col">Tercero</th>
 							<th class="" scope="col">Cuenta</th>
 							<th class="" scope="col">ID Tercero</th>
-							<th class="" scope="col">Saldo inicial</th>
+							<th class="" scope="col">Documento</th>
+							<th class="" scope="col">Fecha</th>
+							<th class="" scope="col">Concepto</th>
 							<th class="" scope="col">Debito</th>
 							<th class="" scope="col">Credito</th>
 							<th class="" scope="col">Neto</th>
@@ -43,37 +46,22 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="bal in movTerceroMostrar" :key="bal.idmovTercero">
+						<tr v-for="mov in movTerceroMostrar" :key="mov.id">
 							<th class="align-middle text-nowrap" scope="row">
-								<input type="text" class="form-control-plaintext text-center" id="idValance" :value="bal.idBalance" style="width: 70px;">
+								<input type="text" class="form-control-plaintext text-center" id="idValance" :value="mov.id" style="width: 70px;">
 							</th>
 							<td class="align-middle text-center text-nowrap">
-								<div v-if="bal.error==''" id="estado" class="text-success rounded text-center vertical"><i class="bi bi-check2-square"></i></div>
-								<div v-else id="estado" class="text-warning-emphasis rounded text-center" :title="bal.error"><i class="bi bi-exclamation-triangle"></i></div>
+								<div v-if="mov.error==''" id="estado" class="text-success rounded text-center vertical"><i class="bi bi-check2-square"></i></div>
+								<div v-else id="estado" class="text-warning-emphasis rounded text-center" :title="mov.error"><i class="bi bi-exclamation-triangle"></i></div>
 							</td>
-							<th class="align-middle text-nowrap" scope="row">
-								<input type="text" class="text-end m-0 form-control flex-fill" style="width: min-content;" id="idCuenta" :value="bal.idCuenta">
+							<th class="align-middle text-nowrap" style="width: min-content;" scope="row">
+								<input type="text" class="text-end m-0 form-control-plaintext flex-fill bg-black" id="idCuenta" :value="mov.id">
 							</th>
-							<th class="align-middle text-nowrap" scope="row">
-								<input type="text" class="text-end m-0 form-control flex-fill" style="width: min-content;" id="idTercero" :value="bal.idTercero">
-							</th>
-							<th class="align-middle text-nowrap" scope="row">
-								<input type="number" class="text-end m-0 form-control flex-fill" style="width: min-content;" id="saldoInicial" :value="parseFloat( bal.saldoInicial)">
-							</th>
-							<th class="align-middle text-nowrap" scope="row">
-								<input type="number" class="text-end m-0 form-control flex-fill" style="width: min-content;" id="debito" :value="parseFloat( bal.debito)">
-							</th>
-							<th class="align-middle text-nowrap" scope="row">
-								<input type="number" class="text-end m-0 form-control flex-fill" style="width: min-content;" id="credito" :value="parseFloat( bal.credito)">
-							</th>
-							<th class="align-middle text-nowrap" scope="row">
-								<input type="number" class="text-end m-0 form-control flex-fill" style="width: min-content;" id="neto" :value="parseFloat( bal.neto)">
-							</th>
-							<td class="align-middle text-center text-nowrap">
-								<button class="btn btn-outline-primary me-1 " title="Corregir" @click="editar(bal.movTercero)">
+							<td class="align-middle text-center text-nowrap bg-black">
+								<button class="btn btn-outline-primary me-1 " title="Corregir" @click="editar(mov.movTercero)">
 									<i class="bi bi-pencil-square"></i>
 								</button>
-								<button class="btn btn-outline-danger " title="Eliminar" @click="eliminar(bal.movTercero)">
+								<button class="btn btn-outline-danger " title="Eliminar" @click="eliminar(mov.movTercero)">
 									<i class="bi bi-x-circle"></i>
 								</button>
 							</td>
