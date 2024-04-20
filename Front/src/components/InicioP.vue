@@ -234,6 +234,7 @@ export default {
 		},
 		agregarErrores(errores) {
 			let erroresMenores = 0
+			let erroresImportantes = 0
 			let lista = [
 				'Error: DV de tercero incorrecto',
 				'Error: Formato de tercero incorrecto',
@@ -244,11 +245,12 @@ export default {
 				if(lista.includes(error.error)){
 					erroresMenores++
 				}else{
+					erroresImportantes++
 					this.errores.push(error);
 				}
 			});
 			if (erroresMenores != 0) {
-				alert('Se encontraron '+ erroresMenores + ' errores no graves')
+				alert('Se encontraron:\n> '+ erroresMenores + ' errores no graves\n> ' + erroresImportantes +' errores graves')
 			}
 
 		},
