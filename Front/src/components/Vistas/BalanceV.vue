@@ -43,7 +43,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="bal in balanceMostrar" :key="bal.idbalance">
+						<tr v-for="bal in balanceMostrar" :key="bal.idbalance" :id="bal.idBalance+'fbal'">
 							<th class="align-middle text-nowrap" scope="row">
 								<input type="text" class="form-control-plaintext text-center" id="idValance" :value="bal.idBalance" style="width: 70px;">
 							</th>
@@ -51,29 +51,29 @@
 								<div v-if="bal.error==''" id="estado" class="text-success rounded text-center vertical"><i class="bi bi-check2-square"></i></div>
 								<div v-else id="estado" class="text-warning-emphasis rounded text-center" :title="bal.error"><i class="bi bi-exclamation-triangle"></i></div>
 							</td>
-							<th class="align-middle text-nowrap" scope="row">
-								<input type="text" class="text-end m-0 form-control flex-fill" style="width: min-content;" id="idCuenta" :value="bal.idCuenta">
+							<th class="text-nowrap" scope="row">
+								<input type="text" class="ps-5 form-control-plaintext" id="idCuenta" :value="bal.idCuenta" style="min-width: 120px;">
+							</th>
+							<th class="text-nowrap" scope="row">
+								<input type="text" class="px-3 text-end form-control-plaintext" id="idTercero" :value="bal.idTercero" style="min-width: 135px;">
 							</th>
 							<th class="align-middle text-nowrap" scope="row">
-								<input type="text" class="text-end m-0 form-control flex-fill" style="width: min-content;" id="idTercero" :value="bal.idTercero">
+								<input type="number" class="text-end form-control" style="min-width: 145px;" id="saldoInicial" :value="parseFloat( bal.saldoInicial)">
 							</th>
 							<th class="align-middle text-nowrap" scope="row">
-								<input type="number" class="text-end m-0 form-control flex-fill" style="width: min-content;" id="saldoInicial" :value="parseFloat( bal.saldoInicial)">
+								<input type="number" class="text-end form-control" style="min-width: 145px;" id="debito" :value="parseFloat( bal.debito)">
 							</th>
 							<th class="align-middle text-nowrap" scope="row">
-								<input type="number" class="text-end m-0 form-control flex-fill" style="width: min-content;" id="debito" :value="parseFloat( bal.debito)">
+								<input type="number" class="text-end form-control" style="min-width: 145px;" id="credito" :value="parseFloat( bal.credito)">
 							</th>
 							<th class="align-middle text-nowrap" scope="row">
-								<input type="number" class="text-end m-0 form-control flex-fill" style="width: min-content;" id="credito" :value="parseFloat( bal.credito)">
-							</th>
-							<th class="align-middle text-nowrap" scope="row">
-								<input type="number" class="text-end m-0 form-control flex-fill" style="width: min-content;" id="neto" :value="parseFloat( bal.neto)">
+								<input type="number" class="text-end form-control" style="min-width: 145px;" id="neto" :value="parseFloat( bal.neto)">
 							</th>
 							<td class="align-middle text-center text-nowrap">
 								<button class="btn btn-outline-primary me-1 " title="Corregir" @click="editar(bal.balance)">
 									<i class="bi bi-pencil-square"></i>
 								</button>
-								<button class="btn btn-outline-danger " title="Eliminar" @click="eliminar(bal.balance)">
+								<button class="btn btn-outline-danger " title="Eliminar" @click="eliminar(bal.idBalance)">
 									<i class="bi bi-x-circle"></i>
 								</button>
 							</td>
@@ -128,8 +128,21 @@ export default {
 		editar() {
 			console.log('AwantaaaaEd');
 		},
-		eliminar() {
-			console.log('AwantaaaaDel');
+		async eliminar(idUnico) {
+			const balanceEliminar = document.getElementById(idUnico+'fbal');
+			if (balanceEliminar) {
+  				// Eliminar el div
+				let temp = await datos.eliminarBalance(idUnico)
+				if(!temp){
+					alert('Error eliminando balance: '+idUnico)
+				}
+  				balanceEliminar.remove();
+				let eliminando = this.balancesCompletos.findIndex(balance => balance.idBalance == idUnico)
+				this.balancesCompletos.splice(eliminando,0)
+				console.log(eliminando);
+			} else {
+  				console.log('El balance que intentas eliminar no existe.');
+			}
 		},
 		actualizarPagina(){
 			this.paginaAcual = document.getElementById('balContador').value -1

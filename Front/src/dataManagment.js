@@ -14,7 +14,9 @@ export default {
 	pedirBalance,
 	pedirMov,
 	pedirArticulo,
-	eliminarTercero
+	eliminarTercero,
+	eliminarBalance,
+	eliminarMovimineto,
 }
 
 //Procesar informacion
@@ -131,6 +133,26 @@ async function eliminarTercero(idUnico){
 	let params = {idUnico}
 	try {
 		const response = await axios.delete(url + "/eliminar/tercero/",{params});
+		return response;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+async function eliminarBalance(idUnico){
+	let params = {idUnico}
+	try {
+		const response = await axios.delete(url + "/eliminar/balance/",{params});
+		return response;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+async function eliminarMovimineto(idUnico){
+	let params = {idUnico}
+	try {
+		const response = await axios.delete(url + "/eliminar/movimiento/",{params});
 		return response;
 	} catch (error) {
 		console.log(error);

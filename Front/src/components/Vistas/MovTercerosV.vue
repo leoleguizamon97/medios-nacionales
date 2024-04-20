@@ -33,11 +33,10 @@
 						<tr class="text-center text-nowrap">
 							<th class="" scope="col">ID</th>
 							<th class="" scope="col">Estado</th>
-							<th class="" scope="col">Tercero</th>
 							<th class="" scope="col">Cuenta</th>
-							<th class="" scope="col">ID Tercero</th>
-							<th class="" scope="col">Documento</th>
-							<th class="" scope="col">Fecha</th>
+							<th class="" scope="col" style="min-width: 140px;">ID Tercero</th>
+							<th class="" scope="col" style="min-width: 140px;">Documento</th>
+							<th class="" scope="col" style="min-width: 40px;">Fecha</th>
 							<th class="" scope="col">Concepto</th>
 							<th class="" scope="col">Debito</th>
 							<th class="" scope="col">Credito</th>
@@ -46,7 +45,7 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr v-for="mov in movTerceroMostrar" :key="mov.id">
+						<tr v-for="mov in movTerceroMostrar" :key="mov.id" :id="mov.id+'fmov'">
 							<th class="align-middle text-nowrap" scope="row">
 								<input type="text" class="form-control-plaintext text-center" id="idValance" :value="mov.id" style="width: 70px;">
 							</th>
@@ -54,14 +53,38 @@
 								<div v-if="mov.error==''" id="estado" class="text-success rounded text-center vertical"><i class="bi bi-check2-square"></i></div>
 								<div v-else id="estado" class="text-warning-emphasis rounded text-center" :title="mov.error"><i class="bi bi-exclamation-triangle"></i></div>
 							</td>
-							<th class="align-middle text-nowrap" style="width: min-content;" scope="row">
-								<input type="text" class="text-end m-0 form-control-plaintext flex-fill bg-black" id="idCuenta" :value="mov.id">
+							<td class="text-nowrap p-1 m-2" scope="row" >
+								<input type="text" class="form-control-plaintext text-center flex-fill" id="idCuenta" :value="mov.idCuenta">
+							</td>
+							<td class="text-nowrap p-1 m-2" scope="row" >
+								<input type="text" class="form-control-plaintext text-center flex-fill" id="idCuenta" :value="mov.idTercero">
+							</td>
+							<td class="text-nowrap p-1 m-2" scope="row" >
+								<input type="text" class="form-control-plaintext text-center flex-fill" id="idCuenta" :value="mov.documento">
+							</td>
+							<td class="text-nowrap p-1 m-2" scope="row" >
+								<input type="text" class="form-control-plaintext text-center flex-fill" id="idCuenta" :value="mov.fecha">
+							</td>
+							<td class="text-nowrap p-1 m-2" scope="row" >
+								<input type="text" class="form-control-plaintext text-center flex-fill" id="idCuenta" :value="mov.concepto">
+							</td>
+							<td class="text-nowrap p-1 m-2" scope="row" >
+								<input type="number" class="text-end form-control flex-fill" id="idCuenta" :value="parseInt(mov.debito)">
+							</td>
+							<th class="text-nowrap p-1 m-2" scope="row" >
+								<input type="number" class="text-end form-control flex-fill" id="idCuenta" :value="parseInt(mov.credito)">
 							</th>
-							<td class="align-middle text-center text-nowrap bg-black">
+							<td class="text-nowrap p-1 m-2" scope="row" >
+								<input type="number" class="text-end form-control flex-fill" id="idCuenta" :value="parseInt(mov.neto)">
+							</td>
+							
+
+							
+							<td class="align-middle text-center text-nowrap">
 								<button class="btn btn-outline-primary me-1 " title="Corregir" @click="editar(mov.movTercero)">
 									<i class="bi bi-pencil-square"></i>
 								</button>
-								<button class="btn btn-outline-danger " title="Eliminar" @click="eliminar(mov.movTercero)">
+								<button class="btn btn-outline-danger " title="Eliminar" @click="eliminar(mov.id)">
 									<i class="bi bi-x-circle"></i>
 								</button>
 							</td>
@@ -102,6 +125,7 @@ export default {
 		},
 		buscar() {
 			let valor = document.forms['movTerceros'].elements['buscarmovTerceros'].value
+			console.log(valor);
 			
 			if(valor == ''){
 				this.movTerceros = this.movTercerosCompletos
@@ -116,8 +140,21 @@ export default {
 		editar() {
 			console.log('AwantaaaaEd');
 		},
-		eliminar() {
-			console.log('AwantaaaaDel');
+		async eliminar(idUnico) {
+			const movimientoEliminar = document.getElementById(idUnico+'fmov');
+			if (movimientoEliminar) {
+  				// Eliminar el div
+				let temp = await datos.eliminarMovimineto(idUnico)
+				if(!temp){
+					alert('Error eliminando movimiento: '+idUnico)
+				}
+  				movimientoEliminar.remove();
+				let eliminando = this.movTercerosCompletos.findIndex(movi => movi.id == idUnico)
+				console.log(eliminando);
+				this.movTercerosCompletos.splice(eliminando,1)
+			} else {
+  				console.log('El movimiento de tercero que intentas eliminar no existe.');
+			}
 		},
 		actualizarPagina(){
 			this.paginaAcual = document.getElementById('movContador').value -1

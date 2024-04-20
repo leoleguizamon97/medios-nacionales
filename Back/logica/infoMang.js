@@ -401,8 +401,8 @@ exports.sendMov = (req, res) => {
 		mov.push({
 			id: value.id,
 			error: value.error,
-			cuenta: value.idCuenta,
-			tercero: value.tercero,
+			idCuenta: value.idCuenta,
+			idTercero: value.idTercero,
 			debito: value.debito,
 			credito: value.credito,
 			neto: value.neto,
@@ -524,6 +524,20 @@ exports.editarElementos = (req, res) => {
 exports.eliminarTercero = (req, res) => {
 	let tercero = req.query.idUnico
 	listaTercero.delete(tercero)
+	res.json({
+		val: true
+	})
+}
+exports.eliminarBalance = (req, res) => {
+	let balance = req.query.idUnico
+	listaBalance.delete(parseInt(balance))
+	res.json({
+		val: true
+	})
+}
+exports.eliminarMovimiento = (req, res) => {
+	let movimiento = req.query.idUnico
+	listaMov.delete(parseInt(movimiento))
 	res.json({
 		val: true
 	})

@@ -32,3 +32,5 @@ router.get('/elementos/mov', info.sendMov)
 router.get('/nacionales/',info.informeNacional)
 //Eliminar elementos
 router.delete('/eliminar/tercero/', info.eliminarTercero)
+router.delete('/eliminar/balance/', info.eliminarBalance)
+router.delete('/eliminar/movimiento/', info.eliminarMovimiento)

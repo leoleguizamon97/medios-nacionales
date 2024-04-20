@@ -117,6 +117,10 @@ export default {
 					alert('Error eliminando tercero: '+idUnico)
 				}
   				terceroEliminar.remove();
+				let eliminando = this.tercerosCompletos.findIndex(tercero => tercero.idUnico == idUnico)
+				this.tercerosCompletos.splice(eliminando,1)
+				eliminando = this.terceros.findIndex(tercero => tercero.idUnico == idUnico)
+				this.terceros.splice(eliminando,0)
 			} else {
   				console.log('El tercero que intentas eliminar no existe.');
 			}
