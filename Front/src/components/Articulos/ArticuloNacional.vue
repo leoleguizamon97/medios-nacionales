@@ -5,14 +5,17 @@
 				<div>
 					<a class="navbar-brand" href="#">Nacionales: {{ articuloConfig.Titulo }}</a>
 				</div>
-				<form :name="'n'+articuloConfig.Titulo" class="d-flex" role="search" @submit.prevent="">
-					<button class="btn btn-outline-secondary me-1" :title="'Imprimir '+articuloConfig.Titulo" @click="imprimir()">
+				<form :name="'n' + articuloConfig.Titulo" class="d-flex" role="search" @submit.prevent="">
+					<button class="btn btn-outline-secondary me-1" :title="'Imprimir ' + articuloConfig.Titulo"
+						@click="imprimir()">
 						<i class="bi bi-file-earmark-arrow-down"></i>
 					</button>
-					<button class="btn btn-outline-secondary me-1" :title="'Sincronizar '+articuloConfig.Titulo" @click="pedirArticulo()">
+					<button class="btn btn-outline-secondary me-1" :title="'Sincronizar ' + articuloConfig.Titulo"
+						@click="pedirArticulo()">
 						<i class="bi bi-arrow-repeat"></i>
 					</button>
-					<input class="form-control" type="search" :placeholder="'Buscar en '+articuloConfig.Titulo" :name="'buscarn'+articuloConfig.Titulo" @input="buscar()">
+					<input class="form-control" type="search" :placeholder="'Buscar en ' + articuloConfig.Titulo"
+						:name="'buscarn' + articuloConfig.Titulo" @input="buscar()">
 				</form>
 			</div>
 		</div>
@@ -27,7 +30,8 @@
 					<thead class="sticky-top">
 						<tr class="text-center gap-3">
 							<th class="px-2 text-center text-nowrap" scope="col">ID</th>
-							<th class="px-2 text-center text-nowrap" scope="col" v-for="title in articuloConfig.Encabezados" :key="title">
+							<th class="px-2 text-center text-nowrap" scope="col"
+								v-for="title in articuloConfig.Encabezados" :key="title">
 								{{ title }}
 							</th>
 							<th class="text-center text-nowrap" scope="col">Editar</th>
@@ -99,8 +103,12 @@
 								Aca va la info
 							</td>
 							<td class="align-middle text-center">
+								<button class="btn btn-outline-primary me-1 " title="Corregir"
+									@click="editar()">
+									<i class="bi bi-pencil-square"></i>
+								</button>
 								<button class="btn btn-outline-danger " title="Eliminar"
-									@click="eliminar(linea.tercero)">
+									@click="eliminar()">
 									<i class="bi bi-x-circle"></i>
 								</button>
 							</td>
@@ -120,7 +128,7 @@ export default {
 			this.articulo = []
 			this.articuloCompletos = []
 			this.inicial = false
-			let temp = await datos.pedirArticulo(this.articuloConfig.Titulo,this.articuloConfig.Cuentas)
+			let temp = await datos.pedirArticulo(this.articuloConfig.Titulo, this.articuloConfig.Cuentas)
 			this.articuloCompletos = temp.data.articulo
 			this.articulo = this.articuloCompletos
 		},

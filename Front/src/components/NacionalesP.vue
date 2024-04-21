@@ -14,6 +14,7 @@
 					<button class="nav-link p-1 mx-1" id="medNal-1010-tab" data-bs-toggle="pill" data-bs-target="#medNal-1010" type="button" aria-controls="medNal-1010" aria-selected="false">1010</button>
 					<button class="nav-link p-1 mx-1" id="medNal-1011-tab" data-bs-toggle="pill" data-bs-target="#medNal-1011" type="button" aria-controls="medNal-1011" aria-selected="false">1011</button>
 					<button class="nav-link p-1 mx-1" id="medNal-1012-tab" data-bs-toggle="pill" data-bs-target="#medNal-1012" type="button" aria-controls="medNal-1012" aria-selected="false">1012</button>
+					<button class="nav-link p-1 mx-1" id="medNal-2276-tab" data-bs-toggle="pill" data-bs-target="#medNal-2276" type="button" aria-controls="medNal-2276" aria-selected="false">2276</button>
 				</div>
 			</div>
 			<div class="card h-100 tab-content flex-fill" id="medNal-tabContent">
@@ -28,7 +29,7 @@
 				<div class="h-100 tab-pane fade" id="medNal-1010" role="tabpanel" aria-labelledby="medNal-1010-tab" tabindex="10"><articuloNacional :articuloConfig="n1010" key='n1010'/></div>
 				<div class="h-100 tab-pane fade" id="medNal-1011" role="tabpanel" aria-labelledby="medNal-1011-tab" tabindex="11"><articuloNacional :articuloConfig="n1011" key='n1011'/></div>
 				<div class="h-100 tab-pane fade" id="medNal-1012" role="tabpanel" aria-labelledby="medNal-1012-tab" tabindex="12"><articuloNacional :articuloConfig="n1012" key='n1012'/></div>
-				<div class="h-100 tab-pane fade" id="medNal-1012" role="tabpanel" aria-labelledby="medNal-1012-tab" tabindex="12"><articuloNacional :articuloConfig="n2276" key='n2276'/></div>
+				<div class="h-100 tab-pane fade" id="medNal-2276" role="tabpanel" aria-labelledby="medNal-2276-tab" tabindex="13"><articuloNacional :articuloConfig="n2276" key='n2276'/></div>
 			</div>
 		</div>
 	</div>
