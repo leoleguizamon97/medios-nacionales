@@ -1,20 +1,20 @@
 {
   "NombreEmpresa": "DEFAULT",
-  "NIT":123456789,
-  "DV":0,
-  "AñoActual":2023,
-  "TiposDocumentos":{
-	  "11": "Registro civil de nacimiento",
-	  "12": "Tarjeta de identidad",
-	  "13": "Cédula de ciudadanía",
-	  "21": "Tarjeta de extranjería",
-	  "22": "Cédula de extranjería",
-	  "31": "NIT",
-	  "41": "Pasaporte",
-	  "42": "Tipo de documento extranjero",
-	  "47": "Permiso Especial de Permanencia",
-	  "48": "Permiso por Protección Temporal",
-	  "43": "Sin identificación del exterior o para uso definido por la DIAN."
+  "NIT": 123456789,
+  "DV": 0,
+  "AñoActual": 2023,
+  "TiposDocumentos": {
+    "11": "Registro civil de nacimiento",
+    "12": "Tarjeta de identidad",
+    "13": "Cédula de ciudadanía",
+    "21": "Tarjeta de extranjería",
+    "22": "Cédula de extranjería",
+    "31": "NIT",
+    "41": "Pasaporte",
+    "42": "Tipo de documento extranjero",
+    "47": "Permiso Especial de Permanencia",
+    "48": "Permiso por Protección Temporal",
+    "43": "Sin identificación del exterior o para uso definido por la DIAN."
   },
   "Nacionales": {
     "n1001": {
@@ -41,7 +41,15 @@
         "Retención en la fuente practicada IVA a responsables del IVA",
         "Retención en la fuente practivada IVA a no residentes o no domiciliarios"
       ],
-      "Cuentas": [14, 15, 5, 6, 7]
+      "Cuentas": {
+        "14": "",
+        "15": "",
+        "5": "",
+        "6": "",
+        "7": "",
+		"2365":"",
+		"53":""
+      }
     },
     "n1003": {
       "Titulo": "1003",
@@ -61,8 +69,10 @@
         "Valor acumulado del pago o abono sujeto a Retención en la fuente",
         "Retención en la fuente que le practicaron"
       ],
-      "Cuentas": [135515,
-      135517]
+      "Cuentas": {
+        "135515": "",
+        "135517": ""
+      }
     },
     "n1004": {
       "Titulo": "1004",
@@ -82,7 +92,7 @@
         "Valor del descuentro tributario total del año",
         "Valor del descuentro tributario efectivamente solicitado en el año gravable"
       ],
-      "Cuentas": []
+      "Cuentas": {}
     },
     "n1005": {
       "Titulo": "1005",
@@ -98,7 +108,10 @@
         "Impuesto descontable",
         "IVA resultante por devoluciones en ventas anuladas, rescindidas o resueltas"
       ],
-      "Cuentas": [240802, 240810]
+      "Cuentas": {
+        "240802": "db",
+        "240810": "db"
+      }
     },
     "n1006": {
       "Titulo": "1006",
@@ -115,7 +128,11 @@
         "Iva recuperado en devoluciones en compras anuladas, rescindidas o resueltas",
         "Impuesto nacional al consumo"
       ],
-      "Cuentas": [240805, 240810, 240802]
+      "Cuentas": {
+        "240805": "cr",
+        "240810": "cr",
+        "240802": ""
+      }
     },
     "n1007": {
       "Titulo": "1007",
@@ -132,7 +149,9 @@
         "Ingresos brutos recibidos",
         "Devoluciones, rebajas y descuentos"
       ],
-      "Cuentas": [4]
+      "Cuentas": {
+        "4": ""
+      }
     },
     "n1008": {
       "Titulo": "1008",
@@ -152,7 +171,11 @@
         "País de Residencia o domicilio",
         "Saldo cuentas por Cobrar al 31 de diciembre"
       ],
-      "Cuentas": [13, 135515, 135518]
+      "Cuentas": {
+        "13": "",
+        "135515": "",
+        "135518": ""
+      }
     },
     "n1009": {
       "Titulo": "1009",
@@ -172,7 +195,12 @@
         "País de Residencia o domicilio",
         "Saldo cuentas por pagar al 31 de diciembre"
       ],
-      "Cuentas": [2, 2365, 2368, 2408]
+      "Cuentas": {
+        "2": "",
+        "2365": "",
+        "2368": "",
+        "2408": ""
+      }
     },
     "n1010": {
       "Titulo": "1010",
@@ -198,15 +226,12 @@
         "Retención en la fuente practicada IVA a responsables del IVA",
         "Retención en la fuente practivada IVA a no residentes o no domiciliarios"
       ],
-      "Cuentas": []
+      "Cuentas": {}
     },
     "n1011": {
       "Titulo": "1011",
-      "Encabezados": [
-        "Concepto",
-        "Saldos al 31 de diciembre"
-      ],
-      "Cuentas": []
+      "Encabezados": ["Concepto", "Saldos al 31 de diciembre"],
+      "Cuentas": {}
     },
     "n1012": {
       "Titulo": "1012",
@@ -223,7 +248,7 @@
         "País de Residencia o domicilio",
         "Valor al 31 de diciembre"
       ],
-      "Cuentas": []
+      "Cuentas": {}
     },
     "n2276": {
       "Titulo": "2276",
@@ -274,7 +299,7 @@
         "Tipo documento participante del contrato",
         "Identificación participante del contrato"
       ],
-      "Cuentas": []
+      "Cuentas": {}
     }
   },
   "Distritales": {}

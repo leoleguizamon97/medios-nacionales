@@ -115,13 +115,13 @@ async function pedirMov(){
 	}
 }
 //Solicitar informes
-async function pedirArticulo(tipo,cuentas){
+async function pedirArticulo(data){
 	try {
 		let params ={
-			tipo,
-			cuentas
+			data
 		}
 		const response = await axios.get(url + "/nacionales/",{params});
+		console.log();
 		return response;
 	} catch (error) {
 		console.log(error);

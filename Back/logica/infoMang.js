@@ -3,6 +3,7 @@ const Tercero = require('../modelos/Tercero.js');
 const Cuenta = require('../modelos/Cuenta.js');
 const Balance = require('../modelos/Balance.js');
 const Movimiento = require('../modelos/Movimiento.js');
+const informes = require('./informes.js')
 
 //Datos de la empresa
 let año = 2023;
@@ -15,6 +16,8 @@ let listaTercero = new Map();
 let listaBalance = new Map();
 let listaMov = new Map();
 let listaCuenta = new Map();
+
+
 
 //Funciones generales
 function limpiarLinea(linea) {
@@ -111,7 +114,7 @@ function crearMovimiento(cuenta, tercero, campos, id) {
 	if (listaMov.has(id)) {
 		console.log("ERRORRRRRR");
 	} else {
-	//ANDRES DEL FUTURO; ESTAS REVISANDO LA ESTRUCTURA DE GUARDADO DEL LOS MOVIMIENTOS PARA HACERLAS UN SOLO MAP
+		//ANDRES DEL FUTURO; ESTAS REVISANDO LA ESTRUCTURA DE GUARDADO DEL LOS MOVIMIENTOS PARA HACERLAS UN SOLO MAP
 		listaMov.set(id, movimiento);
 	}
 	//cargar movimiento
@@ -330,7 +333,7 @@ exports.corregirErrores = (req, res) => {
 //Enviar informacion
 exports.sendCuentas = (req, res) => {
 	let cuentas = []
-	let clavesOrdenadas = Array.from( listaCuenta.keys()).sort();
+	let clavesOrdenadas = Array.from(listaCuenta.keys()).sort();
 
 	clavesOrdenadas.forEach((key) => {
 		let value = listaCuenta.get(key);
@@ -419,101 +422,15 @@ exports.sendMov = (req, res) => {
 
 //Crear informes
 exports.informeNacional = (req, res) => {
-	let tipo = req.query.tipo
-	let cuentas = req.query.cuentas
 	let informe = []
-	let articulo = [
-		{ i: 1, aaa: "asdasdas1" },
-		{ i: 2, aaa: "asdasdas2" },
-		{ i: 3, aaa: "asdasdas3" },
-		{ i: 4, aaa: "asdasdas4" },
-		{ i: 5, aaa: "asdasdas5" },
-		{ i: 6, aaa: "asdasdas6" },
-		{ i: 7, aaa: "asdasdas7" },
-		{ i: 8, aaa: "asdasdas8" },
-		{ i: 9, aaa: "asdasdas9" },
-		{ i: 10, aaa: "asdasdas10" },
-		{ i: 11, aaa: "asdasdas11" },
-		{ i: 12, aaa: "asdasdas12" },
-		{ i: 13, aaa: "asdasdas13" },
-		{ i: 14, aaa: "asdasdas14" },
-		{ i: 15, aaa: "asdasdas15" },
-		{ i: 16, aaa: "asdasdas16" },
-		{ i: 17, aaa: "asdasdas17" },
-		{ i: 18, aaa: "asdasdas18" },
-		{ i: 19, aaa: "asdasdas19" },
-		{ i: 20, aaa: "asdasdas20" },
-		{ i: 21, aaa: "asdasdas21" },
-		{ i: 22, aaa: "asdasdas22" },
-		{ i: 23, aaa: "asdasdas23" },
-		{ i: 24, aaa: "asdasdas24" },
-		{ i: 25, aaa: "asdasdas25" },
-		{ i: 26, aaa: "asdasdas26" },
-		{ i: 27, aaa: "asdasdas27" },
-		{ i: 28, aaa: "asdasdas28" },
-		{ i: 29, aaa: "asdasdas29" },
-		{ i: 30, aaa: "asdasdas30" },
-		{ i: 31, aaa: "asdasdas31" },
-		{ i: 32, aaa: "asdasdas32" },
-		{ i: 33, aaa: "asdasdas33" },
-		{ i: 34, aaa: "asdasdas34" },
-		{ i: 35, aaa: "asdasdas35" },
-		{ i: 36, aaa: "asdasdas36" },
-		{ i: 37, aaa: "asdasdas37" },
-		{ i: 38, aaa: "asdasdas38" },
-		{ i: 39, aaa: "asdasdas39" },
-		{ i: 40, aaa: "asdasdas40" },
-		{ i: 41, aaa: "asdasdas41" },
-		{ i: 42, aaa: "asdasdas42" },
-		{ i: 43, aaa: "asdasdas43" },
-		{ i: 44, aaa: "asdasdas44" },
-		{ i: 45, aaa: "asdasdas45" },
-		{ i: 46, aaa: "asdasdas46" },
-		{ i: 47, aaa: "asdasdas47" },
-		{ i: 48, aaa: "asdasdas48" },
-		{ i: 49, aaa: "asdasdas49" },
-		{ i: 50, aaa: "asdasdas50" }
-	]
+	informes.helloWorld(req.query)
+	informe = informes.generarInforme(req.query.data,listaCuenta,listaTercero,listaBalance,listaMov)
+	console.log(informe);
 	res.json({
-		articulo
+		informe
 	})
 }
-function informe1001() {
-	return
-}
-function informe1003() {
-	return
-}
-function informe1004() {
-	return
-}
-function informe1005() {
-	return
-}
-function informe1006() {
-	return
-}
-function informe1007() {
-	return
-}
-function informe1008() {
-	return
-}
-function informe1009() {
-	return
-}
-function informe1010() {
-	return
-}
-function informe1011() {
-	return
-}
-function informe1012() {
-	return
-}
-function informe2276() {
-	return
-}
+
 //Funciones de editar informacion
 exports.editarElementos = (req, res) => {
 	res.json({

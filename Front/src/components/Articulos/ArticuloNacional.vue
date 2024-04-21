@@ -42,75 +42,16 @@
 							<th class="align-middle" scope="row">
 								{{ linea.i }}
 							</th>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
-							<td class="align-middle text-center text-nowrap">
-								Aca va la info
-							</td>
+							<td class="text-nowrap align-middle text-center">VFOR PENDIENTE ACA {{ linea.aaa }} </td>
 							<td class="align-middle text-center">
-								<button class="btn btn-outline-primary me-1 " title="Corregir"
-									@click="editar()">
-									<i class="bi bi-pencil-square"></i>
-								</button>
-								<button class="btn btn-outline-danger " title="Eliminar"
-									@click="eliminar()">
-									<i class="bi bi-x-circle"></i>
-								</button>
+								<div class="d-flex">
+									<button class="btn btn-outline-primary me-1 " title="Corregir" @click="editar()">
+										<i class="bi bi-pencil-square"></i>
+									</button>
+									<button class="btn btn-outline-danger " title="Eliminar" @click="eliminar()">
+										<i class="bi bi-x-circle"></i>
+									</button>
+								</div>
 							</td>
 						</tr>
 					</tbody>
@@ -128,8 +69,8 @@ export default {
 			this.articulo = []
 			this.articuloCompletos = []
 			this.inicial = false
-			let temp = await datos.pedirArticulo(this.articuloConfig.Titulo, this.articuloConfig.Cuentas)
-			this.articuloCompletos = temp.data.articulo
+			let temp = await datos.pedirArticulo(this.articuloConfig)
+			this.articuloCompletos = temp.data.informe
 			this.articulo = this.articuloCompletos
 		},
 		buscar() {
