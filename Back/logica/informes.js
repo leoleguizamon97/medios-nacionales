@@ -1,6 +1,6 @@
 module.exports = {
 	helloWorld,
-	generarInforme
+	generarInforme,
 }
 
 let cuentas = []

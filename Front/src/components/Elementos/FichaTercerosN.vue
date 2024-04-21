@@ -9,10 +9,9 @@
 					<input id="dvTercero" class="form-control-plaintext text-center" placeholder="-" type="text" :value="ter.dv" title="Digito Verificacion" style="width: 30px;" disabled>
 				</div>
 				<div class="d-flex">
-					<select id="tipoDocumento" class="form-select form-select-sm flex-fill me-1" title="Tipo de documento">
-						<option class="" selected>{{ ter.tipoDocumento }}</option>
-						<option v-for="(key, doc) in tiposDocumentos" :key="key" :value="key">
-							{{ doc + " " + key }}
+					<select id="tipoDocumento" class="form-select form-select-sm flex-fill me-1" v-model="tipoDoc" title="Tipo de documento">
+						<option v-for="(value, key) in tiposDocumentos" :key="key" :value="key">
+							{{ value }}
 						</option>
 					</select>
 					<select id="tipoPersona" class="form-select form-select-sm" style="width: 95px;" v-model="tipoPer" title="Tipo de persona">
@@ -53,7 +52,8 @@ export default {
 	data() {
 		return {
 			tiposDocumentos: configuracion.TiposDocumentos,
-			tipoPer : this.ter.tipoPersona
+			tipoPer : this.ter.tipoPersona,
+			tipoDoc : this.ter.tipoDocumento
 		}
 	},
 	props: {

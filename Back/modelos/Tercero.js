@@ -28,7 +28,7 @@ module.exports = class Tercero {
 		this.id = campos[0];
 		this.dv = campos[1];
 		this.idUnico = this.id +'-'+ this.dv
-		this.tipoDocumento = campos[2];
+		this.tipoDocumento = this.tipoDocumento(campos[2]);
 		this.tipoPersona = campos[15];
 		this.nombre1 = campos[13];
 		this.nombre2 = campos[14];
@@ -87,5 +87,32 @@ module.exports = class Tercero {
 	}
 	esEmpresa(nitEmpresa, dvEmpresa) {
 		return this.id == nitEmpresa && this.dv == dvEmpresa;
+	}
+	tipoDocumento(tipo) {
+		switch (tipo) {
+			case "A":
+				tipo = "31";
+				break;
+			case "C":
+				tipo = "13";
+				break;
+			case "E":
+				tipo = "21";
+				break;
+			case "P":
+				tipo = "41";
+				break;
+			case "T":
+				tipo = "12";
+				break;
+			case "X":
+				tipo = "X";
+				break;
+			default:
+				tipo = "Desconocido";
+				this.error = 'Error: Tipo de documento desconocido';
+				break;
+		}
+		return tipo
 	}
 }

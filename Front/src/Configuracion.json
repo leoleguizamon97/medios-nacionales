@@ -14,7 +14,9 @@
     "42": "Tipo de documento extranjero",
     "47": "Permiso Especial de Permanencia",
     "48": "Permiso por Protección Temporal",
-    "43": "Sin identificación del exterior o para uso definido por la DIAN."
+    "43": "Sin identificación del exterior o para uso definido por la DIAN.",
+    "X": "X",
+    "Desconocido": "No reconocido"
   },
   "Nacionales": {
     "n1001": {
@@ -47,8 +49,8 @@
         "5": "",
         "6": "",
         "7": "",
-		"2365":"",
-		"53":""
+        "2365": "",
+        "53": ""
       }
     },
     "n1003": {

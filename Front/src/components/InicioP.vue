@@ -239,6 +239,7 @@ export default {
 				'Error: DV de tercero incorrecto',
 				'Error: Formato de tercero incorrecto',
 				'Error: Nombre incompleto o mal suministrado',
+				'Error: Tipo de documento desconocido',
 			]
 
 			errores.forEach(error => {
