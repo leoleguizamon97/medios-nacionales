@@ -11,6 +11,7 @@ test/
 *.env.*.local
 package-lock.json
 bundle.js
+*.pem
 
 # Log files
 npm-debug.log*

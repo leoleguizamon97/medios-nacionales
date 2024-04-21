@@ -1,10 +1,12 @@
 const express = require('express');
-const mysql = require("mysql2");
+//npm const mysql = require("mysql2");
 const app = express();
 const port = 3000;
 const cors = require('cors');
 const router = require('./logica/router.js');
 var bodyParser = require('body-parser');
+const https = require('https');
+const fs = require('fs');
 require('dotenv').config();
 
 //Permite el acceso a la API desde el front
@@ -13,6 +15,14 @@ app.use(
 		origin: '*',
 	})
 );
+//SSL certificado
+const sslOptions = {
+	key: fs.readFileSync('key.pem'),
+	passphrase: process.env.PRIVATE_KEY_PASSWORD,
+	cert: fs.readFileSync('cert.pem')
+};
+// Crear el servidor HTTPS
+const server = https.createServer(sslOptions, app);
 
 //Permite el manejo de archivos grandes
 app.use(bodyParser.json({ limit: '100mb' }));

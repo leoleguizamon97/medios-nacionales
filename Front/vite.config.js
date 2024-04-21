@@ -3,10 +3,12 @@ import { fileURLToPath, URL } from 'node:url'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
-// https://vitejs.dev/config/
+import basicSsl from '@vitejs/plugin-basic-ssl';
+
 export default defineConfig({
   plugins: [
     vue(),
+	basicSsl()
   ],
   resolve: {
     alias: {
