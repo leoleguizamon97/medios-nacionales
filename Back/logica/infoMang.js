@@ -425,7 +425,6 @@ exports.informeNacional = (req, res) => {
 	let informe = []
 	informes.helloWorld(req.query)
 	informe = informes.generarInforme(req.query.data,listaCuenta,listaTercero,listaBalance,listaMov)
-	console.log(informe);
 	res.json({
 		informe
 	})

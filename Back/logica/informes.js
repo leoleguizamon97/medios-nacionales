@@ -9,7 +9,7 @@ let balances = []
 let movimientos = []
 
 function helloWorld(config) {
-	console.log('Hola perros. Estos son los datos: ')
+	return true
 }
 
 function generarInforme(data, cuentas, terceros, balances, movimientos) {

@@ -121,7 +121,6 @@ async function pedirArticulo(data){
 			data
 		}
 		const response = await axios.get(url + "/nacionales/",{params});
-		console.log();
 		return response;
 	} catch (error) {
 		console.log(error);
