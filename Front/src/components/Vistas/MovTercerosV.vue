@@ -77,11 +77,8 @@
 							<td class="text-nowrap p-1 m-2" scope="row" >
 								<input type="number" class="text-end form-control flex-fill" id="idCuenta" :value="parseInt(mov.neto)">
 							</td>
-							
-
-							
 							<td class="align-middle text-center text-nowrap">
-								<button class="btn btn-outline-primary me-1 " title="Corregir" @click="editar(mov.movTercero)">
+								<button class="btn btn-outline-dark me-1 " title="Corregir" @click="editar(mov.movTercero)" disabled>
 									<i class="bi bi-pencil-square"></i>
 								</button>
 								<button class="btn btn-outline-danger " title="Eliminar" @click="eliminar(mov.id)">

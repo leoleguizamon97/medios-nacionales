@@ -114,7 +114,6 @@ function crearMovimiento(cuenta, tercero, campos, id) {
 	if (listaMov.has(id)) {
 		console.log("ERRORRRRRR");
 	} else {
-		//ANDRES DEL FUTURO; ESTAS REVISANDO LA ESTRUCTURA DE GUARDADO DEL LOS MOVIMIENTOS PARA HACERLAS UN SOLO MAP
 		listaMov.set(id, movimiento);
 	}
 	//cargar movimiento
@@ -424,7 +423,7 @@ exports.sendMov = (req, res) => {
 exports.informeNacional = (req, res) => {
 	let informe = []
 	informes.helloWorld(req.query)
-	informe = informes.generarInforme(req.query.data,listaCuenta,listaTercero,listaBalance,listaMov)
+	informe = informes.generarInforme(req.query.data, listaCuenta, listaTercero, listaBalance, listaMov)
 	res.json({
 		informe
 	})
@@ -432,8 +431,33 @@ exports.informeNacional = (req, res) => {
 
 //Funciones de editar informacion
 exports.editarElementos = (req, res) => {
+	let tipo = req.params.tipo
+	let idUnico = req.body.idUnico
+	let datos = req.body.datos
+	let estado = true
+	console.log(datos);
+	console.log(idUnico);
+
+	switch (tipo) {
+		case "Tercero":
+			let tercero = listaTercero.get(idUnico)
+			estado = tercero.actualizar(datos)
+			break;
+		case "Balance":
+			let balance = listaBalance.get(idUnico)
+			estado = balance.actualizar(datos)
+			break;
+		case "Movimiento":
+			let movimiento = listaMov.get(idUnico)
+			estado = movimiento.actualizar(datos)
+			break;
+		default:
+			estado = false
+			break;
+	}
+
 	res.json({
-		condicion: false
+		estado
 	})
 }
 //Funciones de eliminar informacion

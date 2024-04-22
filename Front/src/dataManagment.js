@@ -17,6 +17,7 @@ export default {
 	eliminarTercero,
 	eliminarBalance,
 	eliminarMovimineto,
+	editarElementos,
 }
 
 //Procesar informacion
@@ -74,8 +75,7 @@ async function corregirErrores(id, linea) {
 	}
 }
 //Solicitar elementos
-
-async function pedirTerceros(){
+async function pedirTerceros() {
 	try {
 		const response = await axios.get(url + "/elementos/terceros");
 		return response;
@@ -85,7 +85,7 @@ async function pedirTerceros(){
 	}
 }
 
-async function pedirCuentas(){
+async function pedirCuentas() {
 	try {
 		const response = await axios.get(url + "/elementos/cuentas");
 		return response;
@@ -95,7 +95,7 @@ async function pedirCuentas(){
 	}
 }
 
-async function pedirBalance(){
+async function pedirBalance() {
 	try {
 		const response = await axios.get(url + "/elementos/balance");
 		return response;
@@ -105,7 +105,7 @@ async function pedirBalance(){
 	}
 }
 
-async function pedirMov(){
+async function pedirMov() {
 	try {
 		const response = await axios.get(url + "/elementos/mov");
 		return response;
@@ -115,12 +115,12 @@ async function pedirMov(){
 	}
 }
 //Solicitar informes
-async function pedirArticulo(data){
+async function pedirArticulo(data) {
 	try {
-		let params ={
+		let params = {
 			data
 		}
-		const response = await axios.get(url + "/nacionales/",{params});
+		const response = await axios.get(url + "/nacionales/", { params });
 		return response;
 	} catch (error) {
 		console.log(error);
@@ -128,31 +128,46 @@ async function pedirArticulo(data){
 	}
 }
 //Eliminar elementos
-async function eliminarTercero(idUnico){
-	let params = {idUnico}
+async function eliminarTercero(idUnico) {
+	let params = { idUnico }
 	try {
-		const response = await axios.delete(url + "/eliminar/tercero/",{params});
+		const response = await axios.delete(url + "/eliminar/tercero/", { params });
 		return response;
 	} catch (error) {
 		console.log(error);
 		return false;
 	}
 }
-async function eliminarBalance(idUnico){
-	let params = {idUnico}
+async function eliminarBalance(idUnico) {
+	let params = { idUnico }
 	try {
-		const response = await axios.delete(url + "/eliminar/balance/",{params});
+		const response = await axios.delete(url + "/eliminar/balance/", { params });
 		return response;
 	} catch (error) {
 		console.log(error);
 		return false;
 	}
 }
-async function eliminarMovimineto(idUnico){
-	let params = {idUnico}
+async function eliminarMovimineto(idUnico) {
+	let params = { idUnico }
 	try {
-		const response = await axios.delete(url + "/eliminar/movimiento/",{params});
+		const response = await axios.delete(url + "/eliminar/movimiento/", { params });
 		return response;
+	} catch (error) {
+		console.log(error);
+		return false;
+	}
+}
+//Editar elementos
+async function editarElementos(idUnico, tipo, datos) {
+	let data = {
+		idUnico,
+		datos
+	}
+	try {
+		const response = await axios.put(url + "/editar/"+tipo, data);
+		console.log(response.data.estado);
+		return response.data.estado;
 	} catch (error) {
 		console.log(error);
 		return false;

@@ -20,9 +20,26 @@ module.exports = class Balance {
 		} else {
 			if (temp.length != 2) {
 				this.error = 'Error: Formato de tercero incorrecto';
+				return
 			} else if (temp[1].length != 1) {
 				this.error = 'Error: DV de tercero incorrecto';
+				return
 			}
 		}
+		this.error = ''
+		return
+	}
+	actualizar(datos){
+		this.debito = datos.debito
+		this.saldoInicial = datos.saldoInicial
+		this.debito = datos.debito
+		this.credito = datos.credito
+		this.neto = datos.neto
+		this.idTercero = datos.idTercero
+		this.verErrores()
+		if(this.error != ''){
+			return false
+		}
+		return true
 	}
 }

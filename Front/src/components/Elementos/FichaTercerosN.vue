@@ -1,7 +1,7 @@
 <template>
 	<div class="card p-1 bg-body-tertiary">
 		<div class="d-flex">
-			<div id="tipoTercero" class="w-25 border-end border-2 border-secondary pe-1" style="min-width: 250px;">
+			<div id="tipoTercero" class="w-25 border-end border-2 border-secondary pe-1" style="min-width: 270px;">
 				<div class="d-flex">
 					<div v-if="ter.error==''" id="estado" class="text-success rounded text-center vertical"><i class="bi bi-check2-square"></i></div>
 					<div v-else id="estado" class="text-warning-emphasis rounded text-center" :title="ter.error"><i class="bi bi-exclamation-triangle"></i></div>
@@ -21,13 +21,14 @@
 				</div>
 				<div class="d-flex mt-1">
 					<input id="actEconomica" type="text" placeholder="CodActEc" class="text-center flex-fill form-control" :value="ter.actEconomica" style="width: 80px" title="Actividad economica (Codigo)">
-					<input id="idMunicipio" type="text" placeholder="CodDpto" class="text-center flex-fill form-control mx-1" :value="ter.idMunicipio" style="width: 72px" title="Codigo de departamento+Ciudad">
-					<input id="idPais" type="text" placeholder="CodPais" class="text-center flex-fill form-control" :value="ter.idPais" style="width: 72px" title="Codigo de Departamento + Municipio">
+					<input id="idMunicipio" type="number" placeholder="CodDpto" class="text-center flex-fill form-control mx-1" :value="ter.idMunicipio" style="width: 72px" title="Codigo de departamento+Ciudad">
+					<input id="idPais" type="number" placeholder="CodPais" class="text-center flex-fill form-control" :value="ter.idPais" style="width: 72px" title="Codigo de Departamento + Municipio">
 				</div>
 			</div>
 			<div id="infoTercero" class="ms-1 flex-fill w-75">
 				<div class="d-flex">
-					<input type="text" class="w-100 text-center form-control" placeholder="Razon social" :value="ter.nombreCompleto"  title="Razon Social">
+					<input v-if="tipoPer == 'NATURAL'" type="text" class="w-100 text-center form-control-plaintext" id="razonSocial" placeholder="Razon social" :value="ter.nombreCompleto"  title="Razon Social">
+					<input v-else type="text" class="w-100 text-center form-control" id="razonSocial" placeholder="Razon social" :value="ter.nombreCompleto"  title="Razon Social">
 				</div>
 				<div class="d-flex my-1">
 					<input type="text" class="flex-fill text-center form-control me-1" id="nombre1" placeholder="Nombre 1" :value="ter.nombre1">
@@ -37,9 +38,9 @@
 				</div>
 				<div class="d-flex">
 					<input type="text" class="flex-fill text-center form-control me-1" id="direccion" placeholder="Direccion" :value="ter.direccion">
-					<input type="text" class="flex-fill text-center form-control me-1" id="correo" placeholder="Correo" :value="ter.correo">
-					<input type="text" class="flex-fill text-center form-control me-1" id="telefono" placeholder="Telefono" :value="ter.telefono">
-					<input type="text" class="flex-fill text-center form-control" id="celular" placeholder="Celular" :value="ter.celular">
+					<input type="email" class="flex-fill text-center form-control me-1" id="correo" placeholder="Correo" :value="ter.correo">
+					<input type="number" class="flex-fill text-center form-control me-1" id="telefono" placeholder="Telefono" :value="ter.telefono">
+					<input type="number" class="flex-fill text-center form-control" id="celular" placeholder="Celular" :value="ter.celular">
 				</div>
 			</div>
 		</div>

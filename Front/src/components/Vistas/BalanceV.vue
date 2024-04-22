@@ -55,7 +55,7 @@
 								<input type="text" class="ps-5 form-control-plaintext" id="idCuenta" :value="bal.idCuenta" style="min-width: 120px;">
 							</th>
 							<th class="text-nowrap" scope="row">
-								<input type="text" class="px-3 text-end form-control-plaintext" id="idTercero" :value="bal.idTercero" style="min-width: 135px;">
+								<input type="text" class="px-3 text-end form-control" id="idTercero" :value="bal.idTercero" style="min-width: 135px;">
 							</th>
 							<th class="align-middle text-nowrap" scope="row">
 								<input type="number" class="text-end form-control" style="min-width: 145px;" id="saldoInicial" :value="parseFloat( bal.saldoInicial)">
@@ -70,7 +70,7 @@
 								<input type="number" class="text-end form-control" style="min-width: 145px;" id="neto" :value="parseFloat( bal.neto)">
 							</th>
 							<td class="align-middle text-center text-nowrap">
-								<button class="btn btn-outline-primary me-1 " title="Corregir" @click="editar(bal.balance)">
+								<button class="btn btn-outline-primary me-1 " title="Corregir" @click="editar(bal.idBalance)">
 									<i class="bi bi-pencil-square"></i>
 								</button>
 								<button class="btn btn-outline-danger " title="Eliminar" @click="eliminar(bal.idBalance)">
@@ -125,8 +125,22 @@ export default {
 			}
 			this.calcularPaginas()
 		},
-		editar() {
-			console.log('AwantaaaaEd');
+		async editar(idUnico) {
+			let balanceEditar = document.getElementById(idUnico + 'fbal');
+			let data = {
+				idTercero: balanceEditar.querySelector("#idTercero").value.trim(),
+				saldoInicial : balanceEditar.querySelector('#saldoInicial').value.trim(),
+				debito : balanceEditar.querySelector('#debito').value.trim(),
+				credito : balanceEditar.querySelector('#credito').value.trim(),
+				neto : balanceEditar.querySelector('#neto').value.trim(),
+			}
+			let temp = await datos.editarElementos(idUnico, "Balance", data);
+			console.log(temp);
+			if (temp) {
+				alert('Linea de balance ' + idUnico + ' editada correctamente')
+			} else {
+				alert('Error editando linea de balance: ' + idUnico)
+			}
 		},
 		async eliminar(idUnico) {
 			const balanceEliminar = document.getElementById(idUnico+'fbal');

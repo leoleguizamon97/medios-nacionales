@@ -16,9 +16,6 @@ module.exports = class Tercero {
 		//Guardar campos
 		this.guardarCampos(campos, nitEmpresa, dvEmpresa);
 
-		// Verificar nombres
-		this.verificarNombre();
-
 		// Verificar errores
 		this.verErrores();
 
@@ -28,7 +25,7 @@ module.exports = class Tercero {
 		this.id = campos[0];
 		this.dv = campos[1];
 		this.idUnico = this.id +'-'+ this.dv
-		this.tipoDocumento = this.tipoDocumento(campos[2]);
+		this.tipoDocumento = this.tDoc(campos[2]);
 		this.tipoPersona = campos[15];
 		this.nombre1 = campos[13];
 		this.nombre2 = campos[14];
@@ -79,6 +76,8 @@ module.exports = class Tercero {
 		}
 	}
 	verErrores() {
+		// Verificar nombres
+		this.verificarNombre();
 		//Empresas con id de natural
 		if (this.id.length == 9 && this.id[0] == '9' && this.naturaleza == 'NATURAL') {
 			//Agregar funcion para descartar errores
@@ -88,7 +87,7 @@ module.exports = class Tercero {
 	esEmpresa(nitEmpresa, dvEmpresa) {
 		return this.id == nitEmpresa && this.dv == dvEmpresa;
 	}
-	tipoDocumento(tipo) {
+	tDoc(tipo) {
 		switch (tipo) {
 			case "A":
 				tipo = "31";
@@ -114,5 +113,23 @@ module.exports = class Tercero {
 				break;
 		}
 		return tipo
+	}
+	actualizar(datos){ 
+		this.tipoDocumento = datos.tipoDocumento 
+		this.tipoPersona = datos.tipoPersona 
+		this.actEconomica = datos.actEconomica 
+		this.idMunicipio = datos.idMunicipio 
+		this.idPais = datos.idPais
+		this.nombre1 = datos.nombre1 
+		this.nombre2 = datos.nombre2 
+		this.apellido1 = datos.apellido1 
+		this.apellido2 = datos.apellido2 
+		this.direccion = datos.direccion 
+		this.correo = datos.correo 
+		this.telefono = datos.telefono 
+		this.celular = datos.celular 
+		this.nombreCompleto = datos.razonSocial 
+		this.verErrores()
+		return true
 	}
 }
