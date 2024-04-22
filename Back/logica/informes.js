@@ -13,48 +13,44 @@ function helloWorld(config) {
 }
 
 function generarInforme(data, cuentas, terceros, balances, movimientos) {
-	this.cuentas = cuentas
-	this.terceros = terceros
-	this.balances = balances
-	this.movimientos = movimientos
 	let resultado = []
-
+	console.log(movimientos);
 	switch (data.Titulo) {
 		case "1001":
-			resultado = informe1001(data)
+			resultado = informe1001(data, cuentas, terceros, balances, movimientos)
 			break;
 		case "1003":
-			resultado = informe1003(data)
+			resultado = informe1003(data, cuentas, terceros, balances, movimientos)
 			break;
 		case "1004":
-			resultado = informe1004(data)
+			resultado = informe1004(data, cuentas, terceros, balances, movimientos)
 			break;
 		case "1005":
-			resultado = informe1005(data)
+			resultado = informe1005(data, cuentas, terceros, balances, movimientos)
 			break;
 		case "1006":
-			resultado = informe1006(data)
+			resultado = informe1006(data, cuentas, terceros, balances, movimientos)
 			break;
 		case "1007":
-			resultado = informe1007(data)
+			resultado = informe1007(data, cuentas, terceros, balances, movimientos)
 			break;
 		case "1008":
-			resultado = informe1008(data)
+			resultado = informe1008(data, cuentas, terceros, balances, movimientos)
 			break;
 		case "1009":
-			resultado = informe1009(data)
+			resultado = informe1009(data, cuentas, terceros, balances, movimientos)
 			break;
 		case "1010":
-			resultado = informe1010(data)
+			resultado = informe1010(data, cuentas, terceros, balances, movimientos)
 			break;
 		case "1011":
-			resultado = informe1011(data)
+			resultado = informe1011(data, cuentas, terceros, balances, movimientos)
 			break;
 		case "1012":
-			resultado = informe1012(data)
+			resultado = informe1012(data, cuentas, terceros, balances, movimientos)
 			break;
 		case "2276":
-			resultado = informe2276(data)
+			resultado = informe2276(data, cuentas, terceros, balances, movimientos)
 			break;
 		default:
 			console.log("ERROR")
@@ -64,73 +60,106 @@ function generarInforme(data, cuentas, terceros, balances, movimientos) {
 
 }
 
-function informe1001(data) {
+function buscarCuentas(cuentas, filtro) {
+	cuentasFiltradas = []
+	filtro = Object.keys(filtro)
+	cuentas.forEach((value, key) => {
+		filtro.forEach(val => {
+			if (key.startsWith(val)) {
+				cuentasFiltradas.push(key)
+			}
+		});
+	});
+	return cuentasFiltradas
+}
+
+function buscarMovimientos(movimientos, filtro) {
+	movimientosFiltrados = []
+	console.log(filtro);
+	movimientos.forEach(mov => {
+		if (filtro.includes(mov.idCuenta)) {
+			movimientosFiltrados.push(mov)
+			console.log(mov.idCuenta);
+		}
+	});
+	return movimientosFiltrados
+}
+//GENERACION DE INFORMES -----------------------------------------
+
+function informe1001(data, cuentas, terceros, balances, movimientos) {
+	let informe = []
+	let errorInforme = true
+	let cuentasFiltradas = buscarCuentas(cuentas, data.Cuentas)
+	let movimientosFiltrados = buscarMovimientos(movimientos, cuentasFiltradas)
+	let sumaTerceros = []
+
+	return {
+		informe,
+		error: errorInforme
+	}
+}
+function informe1003(data, cuentas, terceros, balances, movimientos) {
+
 	return [{
 		error: "",
 	}]
 }
-function informe1003(data) {
-	
+function informe1004(data, cuentas, terceros, balances, movimientos) {
+
 	return [{
 		error: "",
 	}]
 }
-function informe1004(data) {
-	
+function informe1005(data, cuentas, terceros, balances, movimientos) {
+
 	return [{
 		error: "",
 	}]
 }
-function informe1005(data) {
-	
+function informe1006(data, cuentas, terceros, balances, movimientos) {
+
 	return [{
 		error: "",
 	}]
 }
-function informe1006(data) {
-	
+function informe1007(data, cuentas, terceros, balances, movimientos) {
+
 	return [{
 		error: "",
 	}]
 }
-function informe1007(data) {
-	
+function informe1008(data, cuentas, terceros, balances, movimientos) {
+
 	return [{
 		error: "",
 	}]
 }
-function informe1008(data) {
-	
+function informe1009(data, cuentas, terceros, balances, movimientos) {
+
 	return [{
 		error: "",
 	}]
 }
-function informe1009(data) {
-	
+function informe1010(data, cuentas, terceros, balances, movimientos) {
+
 	return [{
 		error: "",
 	}]
 }
-function informe1010(data) {
-	
+function informe1011(data, cuentas, terceros, balances, movimientos) {
+
 	return [{
 		error: "",
 	}]
 }
-function informe1011(data) {
-	
+function informe1012(data, cuentas, terceros, balances, movimientos) {
+
 	return [{
 		error: "",
 	}]
 }
-function informe1012(data) {
-	
-	return [{
-		error: "",
-	}]
-}
-function informe2276(data) {
-	
+function informe2276(data, cuentas, terceros, balances, movimientos) {
+
 	return [{
 		error: "",
 	}]

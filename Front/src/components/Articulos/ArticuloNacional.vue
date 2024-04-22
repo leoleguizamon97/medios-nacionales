@@ -70,8 +70,10 @@ export default {
 			this.articuloCompletos = []
 			this.inicial = false
 			let temp = await datos.pedirArticulo(this.articuloConfig)
-			this.articuloCompletos = temp.data.informe
+			this.articuloCompletos = temp.data.informe.informe
 			this.articulo = this.articuloCompletos
+			this.estadoInforme = temp.data.informe.error;
+			console.log(temp.data.informe);
 		},
 		buscar() {
 			console.log('Awantaaaa');
