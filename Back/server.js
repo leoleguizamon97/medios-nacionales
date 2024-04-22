@@ -15,14 +15,6 @@ app.use(
 		origin: '*',
 	})
 );
-//SSL certificado
-const sslOptions = {
-	key: fs.readFileSync('key.pem'),
-	passphrase: process.env.PRIVATE_KEY_PASSWORD,
-	cert: fs.readFileSync('cert.pem')
-};
-// Crear el servidor HTTPS
-const server = https.createServer(sslOptions, app);
 
 //Permite el manejo de archivos grandes
 app.use(bodyParser.json({ limit: '100mb' }));

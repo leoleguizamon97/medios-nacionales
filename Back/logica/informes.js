@@ -116,7 +116,6 @@ function informe1001(data, cuentas, terceros, balances, movimientos) {
 	});
 	sumaTerceros.forEach((elemento,key) => {
 		if ((elemento.debito - elemento.credito)<100000) {
-			console.log('Zi');
 			sumaTerceros.delete(key)
 		}
 	});
@@ -128,28 +127,48 @@ function informe1001(data, cuentas, terceros, balances, movimientos) {
 	}
 }
 function informe1003(data, cuentas, terceros, balances, movimientos) {
+	let informe = []
+	let errorInforme = true
+	let cuentasFiltradas = buscarCuentas(cuentas, data.Cuentas)
+	let movimientosFiltrados = buscarMovimientos(movimientos, cuentasFiltradas)
+	//Criterio de aparicion
+	informe = movimientosFiltrados
+	//Falta sumar los movimientos de un mismo que pertenecen a la misma cuenta
+	return {
+		informe,
+		error: errorInforme
+	}
 
-	return [{
-		error: "",
-	}]
 }
 function informe1004(data, cuentas, terceros, balances, movimientos) {
 
 	return [{
-		error: "",
+		error: "NO SE IMPLEMENTA",
 	}]
 }
 function informe1005(data, cuentas, terceros, balances, movimientos) {
-
-	return [{
-		error: "",
-	}]
+	let informe = []
+	let errorInforme = true
+	let cuentasFiltradas = buscarCuentas(cuentas, data.Cuentas)
+	let movimientosFiltrados = buscarMovimientos(movimientos, cuentasFiltradas)
+	//Criterio de aparicion 
+	informe = movimientosFiltrados
+	return {
+		informe,
+		error: errorInforme
+	}
 }
 function informe1006(data, cuentas, terceros, balances, movimientos) {
-
-	return [{
-		error: "",
-	}]
+	let informe = []
+	let errorInforme = true
+	let cuentasFiltradas = buscarCuentas(cuentas, data.Cuentas)
+	let movimientosFiltrados = buscarMovimientos(movimientos, cuentasFiltradas)
+	//Criterio de aparicion 
+	informe = movimientosFiltrados
+	return {
+		informe,
+		error: errorInforme
+	}
 }
 function informe1007(data, cuentas, terceros, balances, movimientos) {
 

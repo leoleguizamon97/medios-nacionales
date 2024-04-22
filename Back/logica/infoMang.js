@@ -279,7 +279,7 @@ exports.procMov = (req, res) => {
 	//console.log('Cuentas creadas: ' + cuentas);
 	//console.log('Errores encontrados: ' + errores.length);
 	//console.log('Lineas descartadas : ' + descartadas);
-
+	console.log(listaMov);
 	res.json({
 		estado,
 		errores,
