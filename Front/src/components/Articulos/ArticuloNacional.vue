@@ -42,7 +42,7 @@
 							<th class="align-middle" scope="row">
 								{{ linea.i }}
 							</th>
-							<td class="text-nowrap align-middle text-center">VFOR PENDIENTE ACA {{ linea.aaa }} </td>
+							<td class="text-nowrap align-middle text-center">{{ linea }} </td>
 							<td class="align-middle text-center">
 								<div class="d-flex">
 									<button class="btn btn-outline-primary me-1 " title="Corregir" @click="editar()">
@@ -73,7 +73,7 @@ export default {
 			this.articuloCompletos = temp.data.informe.informe
 			this.articulo = this.articuloCompletos
 			this.estadoInforme = temp.data.informe.error;
-			console.log(temp.data.informe);
+			console.log(this.articuloCompletos);
 		},
 		buscar() {
 			console.log('Awantaaaa');

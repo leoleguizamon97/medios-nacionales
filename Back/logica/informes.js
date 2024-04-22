@@ -14,7 +14,6 @@ function helloWorld(config) {
 
 function generarInforme(data, cuentas, terceros, balances, movimientos) {
 	let resultado = []
-	console.log(movimientos);
 	switch (data.Titulo) {
 		case "1001":
 			resultado = informe1001(data, cuentas, terceros, balances, movimientos)
@@ -60,6 +59,7 @@ function generarInforme(data, cuentas, terceros, balances, movimientos) {
 
 }
 
+//UTILIDADES
 function buscarCuentas(cuentas, filtro) {
 	cuentasFiltradas = []
 	filtro = Object.keys(filtro)
@@ -75,15 +75,23 @@ function buscarCuentas(cuentas, filtro) {
 
 function buscarMovimientos(movimientos, filtro) {
 	movimientosFiltrados = []
-	console.log(filtro);
 	movimientos.forEach(mov => {
 		if (filtro.includes(mov.idCuenta)) {
 			movimientosFiltrados.push(mov)
-			console.log(mov.idCuenta);
 		}
 	});
 	return movimientosFiltrados
 }
+function mapToArray(miMapa) {
+	let arrayResultante = [];
+
+	for (let [clave, valor] of miMapa) {
+		arrayResultante.push([clave, valor]);
+	}
+
+	return arrayResultante;
+}
+
 //GENERACION DE INFORMES -----------------------------------------
 
 function informe1001(data, cuentas, terceros, balances, movimientos) {
@@ -91,7 +99,28 @@ function informe1001(data, cuentas, terceros, balances, movimientos) {
 	let errorInforme = true
 	let cuentasFiltradas = buscarCuentas(cuentas, data.Cuentas)
 	let movimientosFiltrados = buscarMovimientos(movimientos, cuentasFiltradas)
-	let sumaTerceros = []
+	let sumaTerceros = new Map()
+
+	//Suma los valores en la cuenta
+	movimientosFiltrados.forEach(mov => {
+		let tercero = mov.idTercero
+		let debito = parseInt(mov.debito)
+		let credito = parseInt(mov.credito)
+		if (!sumaTerceros.has(tercero)) {
+			sumaTerceros.set(tercero, { debito, credito })
+		} else {
+			let val = sumaTerceros.get(tercero)
+			val.debito = val.debito + debito
+			val.credito = val.credito + credito
+		}
+	});
+	sumaTerceros.forEach((elemento,key) => {
+		if ((elemento.debito - elemento.credito)<100000) {
+			console.log('Zi');
+			sumaTerceros.delete(key)
+		}
+	});
+	informe = mapToArray(sumaTerceros)
 
 	return {
 		informe,
