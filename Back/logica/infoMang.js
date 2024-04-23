@@ -223,7 +223,7 @@ exports.procMov = (req, res) => {
 		let temp = limpiarLinea(linea);
 		linea = temp[0];
 		let campos = temp[1];
-
+		
 		if (head) {									//Obtener nombre de la empresa general
 			head = false;
 			nombreEmpresa = campos[1];
@@ -264,20 +264,25 @@ exports.procMov = (req, res) => {
 			} else if (tamaño == 4) {				//Descartar totales
 				descartadas++;
 			} else if (tamaño == 5) {				//Informacion de tercero
-				//Si el . es cifra decimal
-				console.log(campos[1].replace(/[^0-9\-]/g, ''))
-				let temp = campos[1].replace(/[^0-9\-]/g, '')
+				//Si el "." es cifra decimal
+				let temp = campos[1].split(' ')[0]
+				temp = temp.replace(/[^0-9\-]/g, '')
 				if (/-/.test(temp)) {
-					console.log('Tiene');
+					if(temp.split('-')[1].length > 1){		//Si no tiene guion, es un nit
+						temp = temp.replace(/-/g, '');
+					}
 				}
-				//Si la, es cifra decimal
+				nit = temp;
+				//Si la "," es cifra decimal
 				//nit = campos[1].split(',')[0].replace(/\./g, '');
-			} else if (tamaño == 8) {				//Lineas de movimientos
+			} else if (tamaño == 8 || tamaño == 7 || tamaño == 6) {				//Lineas de movimientos
 				let error = crearMovimiento(cuentaLinea, nit, campos, errorId);
+				//console.log(linea);
 				if (error != 'null') {
 					errores.push(error);
 				}
 			} else {
+				console.log(linea +"\t " +tamaño);
 				descartadas++;
 			}
 		}
