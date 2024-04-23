@@ -1,40 +1,32 @@
-const express = require('express');
+const express = require("express");
 //npm const mysql = require("mysql2");
 const app = express();
 const port = 3000;
-const cors = require('cors');
-const router = require('./logica/router.js');
-var bodyParser = require('body-parser');
-const https = require('https');
-const fs = require('fs');
-require('dotenv').config();
+const cors = require("cors");
+const router = require("./logica/router.js");
+var bodyParser = require("body-parser");
+const https = require("https");
+const fs = require("fs");
+require("dotenv").config();
 
 //Permite el acceso a la API desde el front
 app.use(
-	cors({
-		origin: '*',
-	})
+  cors({
+    origin: "*",
+  }),
 );
-//SSL certificado
-const sslOptions = {
-	key: fs.readFileSync('key.pem'),
-	passphrase: process.env.PRIVATE_KEY_PASSWORD,
-	cert: fs.readFileSync('cert.pem')
-};
-// Crear el servidor HTTPS
-const server = https.createServer(sslOptions, app);
 
 //Permite el manejo de archivos grandes
-app.use(bodyParser.json({ limit: '100mb' }));
-app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+app.use(bodyParser.json({ limit: "100mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 
 //Permite el manejo de JSON
 app.use(express.json());
 
 //Inicia el servidor en el puerto indicado
 app.listen(port, () => {
-	console.log(`Servicio corriendo en ${port}`);
-})
+  console.log(`Servicio corriendo en ${port}`);
+});
 
 /*
 //Conexión a la base de datos
@@ -58,4 +50,4 @@ conexion.connect((error) => {
 module.exports = conexion;
 */
 //uso del router
-app.use('/', router);
+app.use("/", router);

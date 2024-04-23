@@ -82,7 +82,32 @@ export default {
 			console.log('AwantaaaaDel');
 		},
 		imprimir() {
-			console.log('AwantaaaaPrint');
+
+			const data = [
+				{ name: "test1", email: "test1@me.com", age: 20 },
+				{ name: "test2", email: "test2@me.com", age: 21 },
+				{ name: "test3", email: "test3@me.com", age: 22 },
+				{ name: "test4", email: "test4@me.com", age: 23 },
+				{ name: "test5", email: "test5@me.com", age: 24 },
+			]
+
+			const csvContent = this.convertToCSV(this.articuloCompletos);
+			const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8" });
+			const url = URL.createObjectURL(blob);
+			const link = document.createElement("a");
+			link.href = url;
+			link.setAttribute("download", "export_data.csv");
+			link.click();
+
+			console.log("Imprimir");
+			console.log(this.articuloCompletos);
+		},
+		convertToCSV(data) {
+			const headers = Object.keys(data[0]);
+			const rows = data.map(obj =>headers.map(header => obj[header]));
+			const headerRow = headers.join(",");
+			const csvRows = [headerRow, ...rows.map(row => row.join(","))];
+			return csvRows.join("\n");
 		}
 	},
 	data() {
