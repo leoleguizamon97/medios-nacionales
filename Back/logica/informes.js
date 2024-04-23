@@ -118,13 +118,19 @@ function informe1001(data, cuentas, terceros, balances, movimientos) {
 		if ((elemento.debito - elemento.credito)<100000) {
 			sumaTerceros.delete(key)
 		}
+		else {
+			let tercero = terceros.get(key)
+		}
+
 	});
+
+	//Genera el informe
 	informe = mapToArray(sumaTerceros)
 
 	return {
 		informe,
 		error: errorInforme
-	}
+	}	
 }
 function informe1003(data, cuentas, terceros, balances, movimientos) {
 	let informe = []
@@ -195,10 +201,21 @@ function informe1010(data, cuentas, terceros, balances, movimientos) {
 	}]
 }
 function informe1011(data, cuentas, terceros, balances, movimientos) {
+	let errorInforme = true
 
-	return [{
-		error: "",
-	}]
+	const data2 = [
+		{ name: "test1", email: "test1@me.com", age: 20 },
+		{ name2: "test2", email: "test2@me.com", age: 21 },
+		{ name3: "test3", email: "test3@me.com", age: 22 },
+		{ name4: "test4", email: "test4@me.com", age: 23 },
+		{ name3: "test5", email: "test5@me.com", age: 24 },
+	]
+
+	return {
+		informe: data2,
+		error: errorInforme
+	}	
+	
 }
 function informe1012(data, cuentas, terceros, balances, movimientos) {
 
