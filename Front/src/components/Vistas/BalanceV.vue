@@ -58,16 +58,16 @@
 								<input type="text" class="px-3 text-end form-control" id="idTercero" :value="bal.idTercero" style="min-width: 135px;">
 							</th>
 							<th class="align-middle text-nowrap" scope="row">
-								<input type="number" class="text-end form-control" style="min-width: 145px;" id="saldoInicial" :value="parseFloat( bal.saldoInicial)">
+								<input type="number" class="text-end form-control" style="min-width: 145px;" id="saldoInicial" :value="bal.saldoInicial">
 							</th>
 							<th class="align-middle text-nowrap" scope="row">
-								<input type="number" class="text-end form-control" style="min-width: 145px;" id="debito" :value="parseFloat( bal.debito)">
+								<input type="number" class="text-end form-control" style="min-width: 145px;" id="debito" :value="bal.debito">
 							</th>
 							<th class="align-middle text-nowrap" scope="row">
-								<input type="number" class="text-end form-control" style="min-width: 145px;" id="credito" :value="parseFloat( bal.credito)">
+								<input type="number" class="text-end form-control" style="min-width: 145px;" id="credito" :value="bal.credito">
 							</th>
 							<th class="align-middle text-nowrap" scope="row">
-								<input type="number" class="text-end form-control" style="min-width: 145px;" id="neto" :value="parseFloat( bal.neto)">
+								<input type="number" class="text-end form-control" style="min-width: 145px;" id="neto" :value="bal.neto">
 							</th>
 							<td class="align-middle text-center text-nowrap">
 								<button class="btn btn-outline-primary me-1 " title="Corregir" @click="editar(bal.idBalance)">

@@ -264,7 +264,14 @@ exports.procMov = (req, res) => {
 			} else if (tamaño == 4) {				//Descartar totales
 				descartadas++;
 			} else if (tamaño == 5) {				//Informacion de tercero
-				nit = campos[1].split(',')[0].replace(/\./g, '');
+				//Si el . es cifra decimal
+				console.log(campos[1].replace(/[^0-9\-]/g, ''))
+				let temp = campos[1].replace(/[^0-9\-]/g, '')
+				if (/-/.test(temp)) {
+					console.log('Tiene');
+				}
+				//Si la, es cifra decimal
+				//nit = campos[1].split(',')[0].replace(/\./g, '');
 			} else if (tamaño == 8) {				//Lineas de movimientos
 				let error = crearMovimiento(cuentaLinea, nit, campos, errorId);
 				if (error != 'null') {
@@ -279,7 +286,7 @@ exports.procMov = (req, res) => {
 	//console.log('Cuentas creadas: ' + cuentas);
 	//console.log('Errores encontrados: ' + errores.length);
 	//console.log('Lineas descartadas : ' + descartadas);
-	console.log(listaMov);
+	
 	res.json({
 		estado,
 		errores,
@@ -435,8 +442,6 @@ exports.editarElementos = (req, res) => {
 	let idUnico = req.body.idUnico
 	let datos = req.body.datos
 	let estado = true
-	console.log(datos);
-	console.log(idUnico);
 
 	switch (tipo) {
 		case "Tercero":

@@ -10,9 +10,9 @@ module.exports = class Movimiento {
 	}
 
 	guardarCampos(campos) {
-		this.debito = campos[4].replace(/\./g, '');
-		this.credito = campos[5].replace(/\./g, '');
-		this.neto = campos[6].replace(/\./g, '');
+		this.debito = parseInt(campos[4].replace(/\,/g, ''));
+		this.credito = parseInt(campos[5].replace(/\,/g, ''));
+		this.neto = parseInt(campos[6].replace(/\,/g, ''));
 		this.concepto = campos[3];
 		this.fecha = campos[1];
 		this.documento = campos[2];

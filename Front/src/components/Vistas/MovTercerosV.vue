@@ -69,13 +69,13 @@
 								<input type="text" class="form-control-plaintext text-center flex-fill" id="idCuenta" :value="mov.concepto">
 							</td>
 							<td class="text-nowrap p-1 m-2" scope="row" >
-								<input type="number" class="text-end form-control flex-fill" id="idCuenta" :value="parseInt(mov.debito)">
+								<input type="number" class="text-end form-control flex-fill" id="idCuenta" :value="mov.debito">
 							</td>
 							<th class="text-nowrap p-1 m-2" scope="row" >
-								<input type="number" class="text-end form-control flex-fill" id="idCuenta" :value="parseInt(mov.credito)">
+								<input type="number" class="text-end form-control flex-fill" id="idCuenta" :value="mov.credito">
 							</th>
 							<td class="text-nowrap p-1 m-2" scope="row" >
-								<input type="number" class="text-end form-control flex-fill" id="idCuenta" :value="parseInt(mov.neto)">
+								<input type="number" class="text-end form-control flex-fill" id="idCuenta" :value="mov.neto">
 							</td>
 							<td class="align-middle text-center text-nowrap">
 								<button class="btn btn-outline-dark me-1 " title="Corregir" @click="editar(mov.movTercero)" disabled>

@@ -3,11 +3,11 @@ module.exports = class Balance {
 		this.error = '';
 		this.idCuenta = cuenta;
 		this.año = año;
-		this.saldoInicial = parseFloat(campos[3].replace(/\./g, ''));
-		this.debito = parseFloat(campos[4].replace(/\./g, ''));
-		this.credito = parseFloat(campos[5].replace(/\./g, ''));
-		this.neto = parseFloat(campos[6].replace(/\./g, ''));
-		this.idTercero = campos[2].replace(/\./g, '');
+		this.saldoInicial = parseInt(campos[3].replace(/\,/g, ''));
+		this.debito = parseInt(campos[4].replace(/\,/g, ''));
+		this.credito = parseInt(campos[5].replace(/\,/g, ''));
+		this.neto = parseInt(campos[6].replace(/\,/g, ''));
+		this.idTercero = campos[2].replace(/\,/g, '');
 		this.idEmpresa = nitEmpresa;
 		this.verErrores();
 	}
@@ -30,11 +30,10 @@ module.exports = class Balance {
 		return
 	}
 	actualizar(datos){
-		this.debito = datos.debito
-		this.saldoInicial = datos.saldoInicial
-		this.debito = datos.debito
-		this.credito = datos.credito
-		this.neto = datos.neto
+		this.saldoInicial = parseInt(datos.saldoInicial)
+		this.debito = parseInt(datos.debito)
+		this.credito = parseInt(datos.credito)
+		this.neto = parseInt(datos.neto)
 		this.idTercero = datos.idTercero
 		this.verErrores()
 		if(this.error != ''){
